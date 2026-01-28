@@ -1,0 +1,45 @@
+@startuml mvp-vp
+
+actor User
+User -> vista_html_js_ajax  
+activate vista_html_js_ajax
+
+' --- Flujo de solicitud ---
+note right of restController
+  **Flujo de Solicitud:**
+  Cliente → Controlador (DTO) → Servicio (Entidad) → Repositorio → BD
+end note
+vista_html_js_ajax -> restController: GET/POST/PUT/DELETE (JSON)
+activate restController
+
+
+restController -> servicio: procesarSolicitud(DTO)
+activate servicio
+
+servicio -> repositorio: operacionCRUD(Entidad)
+activate repositorio
+
+repositorio -> bbdd: SQL
+activate bbdd
+bbdd --> repositorio: ResultSet
+deactivate bbdd
+
+repositorio --> servicio: Entidad
+deactivate repositorio
+
+' --- Flujo de respuesta ---
+servicio --> restController: DTO
+deactivate servicio
+
+note left of restController
+  **Flujo de Respuesta:**
+  BD → Repositorio (Entidad) → Servicio (DTO) → Controlador → Cliente (JSON)
+end note
+
+restController --> vista_html_js_ajax: ResponseEntity<DTO> (JSON)
+deactivate restController
+
+vista_html_js_ajax -> User: Actualizar UI
+deactivate vista_html_js_ajax
+
+@enduml

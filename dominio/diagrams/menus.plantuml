@@ -1,0 +1,226 @@
+@startuml menus
+
+abstract class Menu #lightred {
+
+}
+
+abstract class Option #lightred {
+
+}
+
+abstract class BackMenu #lightred {
+
+}
+
+abstract class NavigatorMenu #lightred {
+
+}
+
+abstract class QuitMenu #lightred {
+
+}
+
+
+abstract class MessagesMenu #lightblue {
+
+}
+
+abstract class MessagesOption #lightblue {
+
+}
+note left
+    todas las opciones heredan de esta
+end note
+
+class Messages <@Entity> #4A90E2 {
+}
+
+class Settings <@Entity> #4A90E2 {
+}
+
+class PartyGame <@Entity> #4A90E2 {
+}
+
+class MainMenu {
+}
+
+class SettingsMenu {
+}
+
+class LanguageMenu {
+}
+
+class GameModeMenu {
+}
+
+class BoardMenu {
+}
+
+class PartyGameMenu {
+    listPartyGames[]
+}
+
+class NavigatorOption #f7b33fff{
+}
+
+class ListMenus  {
+    Map<String, Menu> listMenus{}
+}
+note right
+    singleton
+end note
+
+class QuitOption #f7b33fff{
+}
+
+class BackOption #f7b33fff{
+}
+
+class MenuOfMenus {
+}
+
+class GoMenuOption #f7b33fff{
+}
+
+
+class PlayOption #f7b33fff{
+}
+
+class PartyGameOption #f7b33fff{
+}
+
+class PlayPartyOption #f7b33fff{
+}
+
+class EditSettingsOption #f7b33fff{
+}
+
+class ExitOption #f7b33fff{
+}
+
+
+
+class LanguageOption #f7b33fff{
+}
+
+class GameModeOption #f7b33fff{
+}
+
+class PlayersOption #f7b33fff{
+}
+
+class BoardOption #f7b33fff{
+}
+
+class BackOption #f7b33fff{
+}
+
+class EnglishOption #f7b33fff{
+}
+
+class SpanishOption #f7b33fff{
+}
+
+class DemoOption #f7b33fff{
+}
+
+class SinglePlayerOption #f7b33fff{
+}
+
+class MultiPlayerOption #f7b33fff{
+}
+
+class ConectToWinOption #f7b33fff{
+}
+
+class NumberColumnsOption #f7b33fff{
+}
+
+class NumberRowsOption #f7b33fff{
+}
+
+
+
+
+
+
+Menu <|-- MessagesMenu
+MessagesMenu *-- Messages
+
+Menu *-- Option
+
+Option <|-- MessagesOption
+MessagesOption *-- Messages
+
+MessagesMenu <|-- NavigatorMenu
+NavigatorMenu <|-- QuitMenu
+NavigatorMenu <|-- BackMenu
+
+NavigatorMenu *-- ListMenus
+
+QuitMenu <|-- MainMenu
+
+NavigatorMenu *-- NavigatorOption
+BackMenu *-- BackOption
+QuitMenu *-- QuitOption
+
+
+
+NavigatorOption ..> MenuOfMenus
+MenuOfMenus *-- GoMenuOption
+MessagesMenu <|-- MenuOfMenus
+
+
+MainMenu *-- PlayOption
+MainMenu *-- PartyGameOption
+MainMenu *-- EditSettingsOption
+MainMenu *-- ExitOption
+
+BackMenu <|-- PartyGameMenu
+BackMenu <|--SettingsMenu
+BackMenu <|-- GameModeMenu
+BackMenu <|-- BoardMenu
+BackMenu <|-- LanguageMenu
+
+
+
+
+PartyGameOption ..> PartyGameMenu
+PartyGameMenu *-- PlayPartyOption
+
+EditSettingsOption ..> SettingsMenu
+
+SettingsMenu *-- LanguageOption
+SettingsMenu *-- GameModeOption
+SettingsMenu *-- PlayersOption
+SettingsMenu *-- BoardOption
+
+LanguageOption ..> LanguageMenu
+GameModeOption ..> GameModeMenu
+BoardOption ..> BoardMenu
+
+
+LanguageMenu *-- EnglishOption
+LanguageMenu *-- SpanishOption
+
+GameModeMenu *-- DemoOption
+GameModeMenu *-- SinglePlayerOption
+GameModeMenu *-- MultiPlayerOption
+
+BoardMenu *-- ConectToWinOption
+BoardMenu *-- NumberColumnsOption
+BoardMenu *-- NumberRowsOption
+
+SettingsMenu *-- Settings
+PartyGameMenu *-- PartyGame
+
+
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,37 @@
+@startuml menus
+
+package "Menus" {
+
+    package "controller" {
+        
+    }
+
+    package "service" {
+        class menuService {
+            
+        }
+        
+    }
+
+    package "model" {
+        abstract class Menu {
+            
+        }
+        interface MenuService {
+            
+        }
+    }
+    
+}
+
+
+
+controller ..> service
+service ..> model
+
+
+Menu ..> MenuService
+
+menuService ..|> MenuService
+
+@enduml

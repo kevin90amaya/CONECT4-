@@ -1,0 +1,207 @@
+@startuml app
+
+class Connect4 {
+    +Menu
+    +View
+    start() 
+}
+
+class Game {
+   
+}
+
+class Resumed {
+    
+}
+
+class Menu {
+    
+}
+
+class SINGLETONSettings {
+    
+}
+
+
+class Mode {
+    
+}
+
+class Players {
+    
+}
+
+class ComputerPlayer {
+    
+}
+
+class HumanPlayer {
+    
+}
+
+
+
+
+class Turn {
+    
+}
+
+class Board {
+    
+}
+
+
+
+
+
+
+class Idiomas {
+    
+}
+class Inglés {
+    
+}
+class Español {
+    
+}
+
+class Messages {
+    
+}
+
+
+
+class MessageGame {
+    
+}
+
+class MessageResumed {
+    
+}
+
+class MessageMenu {
+    
+}
+
+
+
+class MessageTurn {
+    
+}
+
+class MessagePlayers {
+    
+}
+
+
+abstract class View {
+    
+}
+
+
+abstract class ViewConsole {
+ 
+}
+
+abstract class ViewHTML {
+ 
+}
+class Console {
+ 
+}
+
+
+
+
+
+
+class ViewGame {
+    
+}
+
+class ViewResumed {
+    
+}
+
+class ViewMenu {
+    
+}
+
+
+abstract class ViewPlayers {
+    
+}
+
+class ViewComputerPlayer {
+    
+}
+
+class ViewHumanPlayer {
+    
+}
+
+
+class ViewTurn {
+    
+}
+
+class ViewBoard {
+    
+}
+
+
+
+Connect4 *---> View
+Connect4 *-RIGHT-> Menu
+
+View <|-- ViewConsole
+View <|-- ViewHTML 
+
+ViewConsole *-down-> Console
+ViewConsole <|-- ViewMenu 
+ViewConsole <|-- ViewGame 
+ViewConsole <|-- ViewResumed
+ViewConsole <|-- ViewPlayers 
+ViewConsole <|-- ViewTurn 
+ViewConsole <|-- ViewBoard 
+ViewMenu ..> ViewGame 
+ViewMenu ..> ViewResumed 
+
+Menu ..> Game 
+Menu ..> Resumed 
+
+Menu ..> SINGLETONSettings 
+
+Messages *-down-> Idiomas 
+Idiomas <|-- Inglés 
+Idiomas <|-- Español 
+
+Game *-down--> Mode 
+Game *-down--> Turn 
+Game *-down--> Board 
+
+Turn *-down-> Players 
+Players <|-- ComputerPlayer 
+Players <|-- HumanPlayer 
+
+Game*-down--> MessageGame 
+Resumed*-down--> MessageResumed 
+Menu*-down--> MessageMenu 
+Players*-down-> MessagePlayers 
+Turn*-down-> MessageTurn 
+
+
+MessageMenu --|> Messages 
+MessageResumed --|> Messages 
+MessageGame --|> Messages 
+MessageTurn --|> Messages 
+MessagePlayers --|> Messages 
+
+
+ViewGame*-down-> ViewBoard 
+ViewGame*-down-> ViewTurn 
+ViewTurn*-down-> ViewPlayers 
+ViewPlayers <|-- ViewComputerPlayer 
+ViewPlayers <|-- ViewHumanPlayer 
+
+@enduml 
