@@ -28,6 +28,8 @@ describe('@unit @config Configuración de Jest - Tests Unitarios', () => {
   });
 
   test('debe crear mock de menú correctamente', () => {
+    // Importar helper específico de menús
+    const { createMockMenu } = require('../memus/testHelpers.js');
     const menuElement = createMockMenu();
     
     expect(menuElement).toBeInTheDocument();
@@ -37,6 +39,8 @@ describe('@unit @config Configuración de Jest - Tests Unitarios', () => {
   });
 
   test('debe crear CustomEvents correctamente', () => {
+    // Importar helper específico de menús
+    const { createCustomEvent } = require('../memus/testHelpers.js');
     const mockData = { option: 'test-option' };
     const event = createCustomEvent('menuOptionSelected', mockData);
     
@@ -44,9 +48,11 @@ describe('@unit @config Configuración de Jest - Tests Unitarios', () => {
     expect(event.type).toBe('menuOptionSelected');
     expect(event.detail).toEqual(mockData);
   });
-
-  test('❌ TEST QUE FALLA A PROPÓSITO - para demostrar que all.test.js lo ejecuta', () => {
+  /*
+  test('❌ TEST QUE FALLA A PROPÓSITO - demostrando que all.test.js lo ejecuta', () => {
     // Este test va a fallar intencionalmente
     expect(true).toBe(false); // ← Esto siempre falla
   });
+  */
+
 });

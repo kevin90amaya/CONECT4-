@@ -2,6 +2,9 @@
 // import './MenuMvc.test.js';      // Descomentar cuando exista
 // import './Navigation.test.js';    // Descomentar cuando exista
 
+// Importar helpers específicos de menús
+import { createMockMenu, createCustomEvent } from './testHelpers.js';
+
 describe('@suite @memus Tests del Sistema de Menús', () => {
   test('estructura de menús cargada correctamente', () => {
     expect(true).toBe(true);

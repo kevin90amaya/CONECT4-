@@ -8,8 +8,8 @@ describe('@suite @view Tests de Vistas', () => {
   });
   
   test('DOM helpers disponibles', () => {
+    // Solo helpers genéricos del setup.js
     expect(typeof createMockElement).toBe('function');
-    expect(typeof createMockMenu).toBe('function');
     expect(typeof clearDOM).toBe('function');
   });
 });
