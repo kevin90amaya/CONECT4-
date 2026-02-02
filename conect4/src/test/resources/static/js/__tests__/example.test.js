@@ -1,5 +1,5 @@
 // Test de ejemplo para verificar que Jest funciona correctamente
-describe('Configuración de Jest', () => {
+describe('@unit @config Configuración de Jest - Tests Unitarios', () => {
   test('debe crear elementos DOM correctamente', () => {
     // Usar helper global del setup.js
     const element = createMockElement('test-element', '<p>Contenido de prueba</p>');
@@ -43,5 +43,10 @@ describe('Configuración de Jest', () => {
     expect(event).toBeInstanceOf(CustomEvent);
     expect(event.type).toBe('menuOptionSelected');
     expect(event.detail).toEqual(mockData);
+  });
+
+  test('❌ TEST QUE FALLA A PROPÓSITO - para demostrar que all.test.js lo ejecuta', () => {
+    // Este test va a fallar intencionalmente
+    expect(true).toBe(false); // ← Esto siempre falla
   });
 });
