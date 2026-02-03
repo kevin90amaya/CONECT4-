@@ -1,3 +1,9 @@
+
+import Menu from "./Menu.js";
+import ListMenus from "./ListMenus.js";
+import Message from "../../../Messages/Message.js";
+import GoMenuOption from "./GoMenuOption.js";
+
 class MenuOfMenus extends Menu {
 
     listMenus;
@@ -7,7 +13,7 @@ class MenuOfMenus extends Menu {
         this.listMenus = ListMenus.getInstance();
     }
     updateTitle() {
-        this.title = new MessagemainMenu().getTitleMenuOfMenus();
+        this.title = Message.getInstance().getMessages("Common").menuOfMenus;
     }
     addOptions() {
         for (let name of this.listMenus.getMenuNames()) {

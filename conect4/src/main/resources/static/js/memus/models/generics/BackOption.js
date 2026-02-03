@@ -1,3 +1,7 @@
+import Option from "./Option.js";
+import ListMenus from "./ListMenus.js";
+import Message from "../../../Messages/Message.js";
+
 class BackOption extends Option {
     
     title;
@@ -10,7 +14,7 @@ class BackOption extends Option {
     }
 
     updateTitle() {
-        this.title = new MessageOption().getBackOptionTitle();
+        this.title = Message.getInstance().getMessages("Common").back;
     }
 
 

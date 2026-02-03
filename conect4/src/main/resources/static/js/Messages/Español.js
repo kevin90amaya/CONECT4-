@@ -72,8 +72,9 @@ class Español extends Idiomas {
             tokenChanged: "Token cambiado a",
             newType: "Nuevo tipo",
             typeChanged: "Tipo cambiado a",
-            back: "Volver",
             navigation: "Navegar",
+            menuOfMenus: "Menú de Menús",
+            back: "Volver",
             exit: "Salir"
         };
     }

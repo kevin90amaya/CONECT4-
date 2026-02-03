@@ -1,3 +1,8 @@
+
+import Menu from "./Menu.js";
+import ListMenus from "./ListMenus.js";
+import NavigatorOption from "./NavigatorOption.js";
+
 class NavigatorMenu extends Menu {
     
     nameActualMenu;

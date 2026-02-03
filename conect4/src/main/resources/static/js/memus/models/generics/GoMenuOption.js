@@ -1,3 +1,7 @@
+
+import Option from "./Option.js";
+import ListMenus from "./ListMenus.js";
+
 class GoMenuOption extends Option {
 
     constructor(title) {

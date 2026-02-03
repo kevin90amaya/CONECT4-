@@ -74,8 +74,9 @@ class Ingles extends Idiomas {
             tokenChanged: "Token changed to",
             newType: "New type",
             typeChanged: "Type changed to",
-            back: "Back",
             navigation: "Navigation",
+            menuOfMenus: "Menu of Menus",
+            back: "Back",
             exit: "Exit"
         };
     }

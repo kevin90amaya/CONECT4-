@@ -1,4 +1,4 @@
-import controllerMenu from './memus/app.js';
+import controllerMenu from './memus/controllers/ControllerMenu.js';
 
 class AppController {
 

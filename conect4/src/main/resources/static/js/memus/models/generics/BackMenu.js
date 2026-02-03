@@ -1,3 +1,6 @@
+import NavigatorMenu from "./NavigatorMenu.js";
+import BackOption from "./BackOption.js";
+
 class BackMenu extends NavigatorMenu {
 
     previousMenu;

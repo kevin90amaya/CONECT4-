@@ -1,3 +1,5 @@
+import Option from "./Option.js";
+import Message from "../../../Messages/Message.js";
 class QuitOption extends Option {
 
     title;
@@ -7,7 +9,7 @@ class QuitOption extends Option {
     }
     
     updateTitle() {
-        this.title = new MessageOption().getQuitOptionTitle();
+        this.title = Message.getInstance().getMessages("Common").exit;
     }
     
     execute() {

@@ -1,3 +1,5 @@
+import NavigatorMenu from "./models/generics/NavigatorMenu.js";
+import QuitOption from "./models/generics/QuitOption.js";
 class QuitMenu extends NavigatorMenu {
     
     #quitOption;

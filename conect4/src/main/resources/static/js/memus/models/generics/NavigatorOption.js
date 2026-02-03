@@ -1,3 +1,8 @@
+
+import Option from "./Option.js";
+import Message from "../../../Messages/Message.js";
+import MenuOfMenus from "./MenuOfMenus.js";
+
 class NavigatorOption extends Option {
 
     title;
@@ -7,7 +12,7 @@ class NavigatorOption extends Option {
     }
 
     updateTitle() {
-        this.title = new MessageOption().getNavigatorOptionTitle();
+        this.title = Message.getInstance().getMessages("Common").navigator;
     }
 
     execute() {
