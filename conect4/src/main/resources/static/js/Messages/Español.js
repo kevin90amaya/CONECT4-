@@ -3,8 +3,7 @@ class Español extends Idiomas {
         return {
             title: "Menú Principal",
             play: "Jugar",
-            editSettings: "Editar Configuración",
-            exit: "Salir"
+            editSettings: "Editar Configuración"
         };
     }
 

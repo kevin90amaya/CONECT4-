@@ -1,9 +1,17 @@
 class Message {
 
     idioma = "Español";
+    instance;
 
     constructor() {
         this.actualizarIdioma();
+    }
+
+    static getInstance(){
+        if(!this.instance){
+            this.instance = new Message();
+        }
+        return this.instance;
     }
 
     actualizarIdioma() {
@@ -17,4 +25,6 @@ class Message {
     static getIdioma() {
         return this.idioma;
     }
+
+    getMessages(menuType) {}
 }
