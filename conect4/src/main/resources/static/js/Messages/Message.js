@@ -1,3 +1,6 @@
+import Español from "./Español.js";
+import Ingles from "./Ingles.js";
+
 class Message {
 
     idioma = "Español";
@@ -28,3 +31,5 @@ class Message {
 
     getMessages(menuType) {}
 }
+
+export default Message;

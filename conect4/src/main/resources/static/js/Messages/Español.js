@@ -1,3 +1,4 @@
+import Idiomas from "./Idiomas.js";
 class Español extends Idiomas {
     getMainMenuMessages() {
         return {
@@ -110,3 +111,5 @@ class Español extends Idiomas {
         return messagesMenu.getMessagesForEspañol(menuType);
     }
 }
+
+export default Español;

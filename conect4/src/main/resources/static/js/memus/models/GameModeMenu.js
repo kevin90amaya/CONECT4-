@@ -1,4 +1,4 @@
-import BackMenu from "./generics/BackMenu";
+import BackMenu from "./generics/BackMenu.js";
 import Message from "../../Messages/Message.js";
 import DemoOption from "./DemoOption.js";
 import PlayerVsCPUOption from "./PlayerVsCPUOption.js";

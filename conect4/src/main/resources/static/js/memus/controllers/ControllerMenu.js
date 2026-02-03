@@ -1,5 +1,5 @@
-import { Menu } from "../models/MainMenu.js";
-import { ViewMenu } from "../views/ViewMenu.js";
+import MainMenu from "../models/MainMenu.js";
+import ViewMenu from "../views/ViewMenu.js";
 
 class ControllerMenu {
 

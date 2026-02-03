@@ -1,8 +1,8 @@
 import Option from "./generics/Option.js";
 import Message from "../../Messages/Message.js";
-import LanguageMenu from "./LanguageMenu.js";
+import LenguageMenu from "./LenguageMenu.js";
 
-class LanguageOption extends Option {
+class LenguageOption extends Option {
     
     constructor() {
         super();
@@ -13,8 +13,8 @@ class LanguageOption extends Option {
     }
  
     execute() {
-        return new LanguageMenu();
+        return new LenguageMenu();
     }
 }
 
-export default LanguageOption;
+export default LenguageOption;

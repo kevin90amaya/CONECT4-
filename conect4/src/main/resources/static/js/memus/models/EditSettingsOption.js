@@ -1,5 +1,5 @@
 import Option from "./generics/Option.js";
-import Message from "../../Messages/Messages.js";
+import Message from "../../Messages/Message.js";
 import SettingsMenu from "./SettingsMenu.js";
 
 class EditSettingsOption extends Option {

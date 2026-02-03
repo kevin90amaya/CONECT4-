@@ -1,3 +1,4 @@
+import Message from "./Message.js";
 class MessagesMenu extends Message {
     getMessages(menuType) {
         switch (menuType) {
@@ -28,3 +29,5 @@ class MessagesMenu extends Message {
         return this.getMessages(menuType);
     }
 }
+
+export default MessagesMenu;

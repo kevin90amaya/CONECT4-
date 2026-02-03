@@ -10,7 +10,7 @@ class MainMenu extends QuitMenu {
     }
 
     updateTitle() {
-        this.title = Message.getInstance().getMessages("mainMenu").title;
+        this.title = Message.getInstance().getMessages("MainMenu").title;
     }
 
     addOptions() {
