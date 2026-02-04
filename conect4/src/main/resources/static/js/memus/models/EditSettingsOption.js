@@ -9,7 +9,7 @@ class EditSettingsOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("mainMenu").editSettings;
+        this.title = Message.getInstance().getMessages("MainMenu").editSettings;
     }
  
     execute() {

@@ -9,7 +9,7 @@ class EditBoardOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").editBoard;
+        this.title = Message.getInstance().getMessages("SettingsMenu").editBoard;
     }
  
     execute() {

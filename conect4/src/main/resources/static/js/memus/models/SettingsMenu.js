@@ -6,13 +6,13 @@ import NumberOfPlayersOption from "./NumberOfPlayersOption.js";
 import EditBoardOption from "./EditBoardOption.js";
 
 class SettingsMenu extends BackMenu {
-    
+
     constructor() {
-        super();
+        super(Message.getInstance().getMessages("MainMenu").title);
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").title;
+        this.title = Message.getInstance().getMessages("SettingsMenu").title;
     }
     
     addOptions() {

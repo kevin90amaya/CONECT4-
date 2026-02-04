@@ -7,7 +7,7 @@ class InglesOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("lenguageMenu").english;
+        this.title = Message.getInstance().getMessages("LenguageMenu").english;
     }
     
     execute() {

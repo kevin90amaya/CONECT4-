@@ -12,7 +12,7 @@ class NavigatorOption extends Option {
     }
 
     updateTitle() {
-        this.title = Message.getInstance().getMessages("Common").navigator;
+        this.title = Message.getInstance().getMessages("Common").navigation;
     }
 
     execute() {

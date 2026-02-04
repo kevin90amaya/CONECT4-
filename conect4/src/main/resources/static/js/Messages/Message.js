@@ -4,7 +4,7 @@ import Ingles from "./Ingles.js";
 class Message {
 
     idioma = "Español";
-    instance;
+    static instance;
 
     constructor() {
         this.actualizarIdioma();
@@ -21,15 +21,34 @@ class Message {
         this.idioma = this.getIdioma() === "Ingles" ? new Ingles() : new Español();
     }
     
-    static setIdioma(idioma) {
+    setIdioma(idioma) {
         this.idioma = idioma;
     }
 
-    static getIdioma() {
+    getIdioma() {
         return this.idioma;
     }
 
-    getMessages(menuType) {}
+    getMessages(menuType) {
+        switch(menuType) {
+            case "MainMenu":
+                return this.idioma.getMainMenuMessages();
+            case "SettingsMenu":
+                return this.idioma.getSettingsMenuMessages();
+            case "GameModeMenu":
+                return this.idioma.getGameModeMenuMessages();
+            case "LenguageMenu":
+                return this.idioma.getLanguageMenuMessages();
+            case "PlayersMenu":
+                return this.idioma.getPlayersMenuMessages();
+            case "Common":
+                return this.idioma.getCommonMessages();
+            case "BoardMenu":
+                return this.idioma.getBoardMenuMessages();
+            default:
+                return {};
+        }
+    }
 }
 
 export default Message;

@@ -9,7 +9,7 @@ class LenguageOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").language;
+        this.title = Message.getInstance().getMessages("SettingsMenu").language;
     }
  
     execute() {

@@ -10,7 +10,7 @@ class LenguageMenu extends BackMenu {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("lenguageMenu").title;
+        this.title = Message.getInstance().getMessages("LenguageMenu").title;
     }
     
     addOptions() {

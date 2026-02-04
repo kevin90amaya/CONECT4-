@@ -9,7 +9,7 @@ class NumberOfPlayersOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").numberOfPlayers;
+        this.title = Message.getInstance().getMessages("SettingsMenu").numberOfPlayers;
     }
  
     execute() {

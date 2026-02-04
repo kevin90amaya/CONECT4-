@@ -7,7 +7,7 @@ class EspañolOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("lenguageMenu").spanish;
+        this.title = Message.getInstance().getMessages("LenguageMenu").spanish;
     }
     
     execute() {

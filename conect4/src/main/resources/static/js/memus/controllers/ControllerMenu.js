@@ -1,5 +1,7 @@
 import MainMenu from "../models/MainMenu.js";
 import ViewMenu from "../views/ViewMenu.js";
+import Menu from "../models/generics/Menu.js";
+
 
 class ControllerMenu {
 

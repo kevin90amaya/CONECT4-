@@ -8,7 +8,7 @@ class PlayOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("mainMenu").play;
+        this.title = Message.getInstance().getMessages("MainMenu").play;
     }
  
     execute() {

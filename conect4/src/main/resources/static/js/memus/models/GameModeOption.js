@@ -9,7 +9,7 @@ class GameModeOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").gameMode;
+        this.title = Message.getInstance().getMessages("SettingsMenu").gameMode;
     }
  
     execute() {
