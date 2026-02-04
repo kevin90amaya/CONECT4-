@@ -8,7 +8,7 @@ import EditBoardOption from "./EditBoardOption.js";
 class SettingsMenu extends BackMenu {
 
     constructor() {
-        super(Message.getInstance().getMessages("MainMenu").title);
+        super("MainMenu");
     }
     
     updateTitle() {

@@ -6,7 +6,7 @@ import EditColumnsOption from "./EditColumnsOption.js";
 class BoardMenu extends BackMenu {
     
     constructor() {
-        super(Message.getInstance().getMessages("SettingsMenu").title);
+        super("SettingsMenu");
     }
 
     updateTitle() {

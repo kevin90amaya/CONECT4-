@@ -13,7 +13,7 @@ class NavigatorMenu extends Menu {
     constructor() {
         super();
         this.updateTitle();
-        this.nameActualMenu = this.getTitle();
+        this.nameActualMenu = this.constructor.name;
         this.actualMenu = this.getMenu();
         this.listMenus = ListMenus.getInstance();
         this.listMenus.addMenu(this.nameActualMenu, this.actualMenu);
