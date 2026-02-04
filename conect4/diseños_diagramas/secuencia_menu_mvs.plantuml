@@ -1,0 +1,105 @@
+@startuml secuencia_menu_mvc
+
+title Diagrama de Secuencia - Captura y Ejecución de Opciones de Menú
+
+actor Usuario as user
+participant "ViewMenu" as view #4682B4
+participant "DOM" as dom #FFA500
+participant "ControllerMenu" as controller #4643e5ff
+participant "Menu" as menu #lightred
+participant "Option" as option #f7b33fff
+participant "Messages" as messages #4A90E2
+
+== Inicialización del Menú ==
+user -> view : loadMenu()
+activate view
+
+view -> menu : updateTitle()
+activate menu
+menu -> messages : getMessages("MainMenu")
+activate messages
+messages --> menu : {title: "Menú Principal", ...}
+deactivate messages
+menu --> view : getTitle()
+deactivate menu
+
+view -> view : showTitleOptions()
+activate view
+loop Para cada opción
+    view -> option : updateTitle()
+    activate option
+    option -> messages : getMessages("MainMenu").play
+    activate messages
+    messages --> option : "Jugar"
+    deactivate messages
+    option --> view : getTitle()
+    deactivate option
+end
+view -> dom : createElement("button")
+dom --> view : button element
+view -> dom : appendChild(button)
+deactivate view
+
+
+
+
+== Usuario hace clic en una opción ==
+user -> dom : click(button)
+dom -> view : onclick event
+activate view
+
+view -> view : dispatchEvent('menuOptionSelected')
+note right: Evento personalizado con la opción
+
+view -> controller : handleMenuOption(option)
+activate controller
+
+controller -> option : execute()
+activate option
+
+alt Opción retorna nuevo Menu
+    option --> controller : new SettingsMenu()
+    deactivate option
+    
+    controller -> controller : handleNavigation(newMenu)
+    activate controller
+    controller -> view : setMenu(newMenu)
+    activate view
+    view --> controller : menú actualizado
+    deactivate view
+    
+    controller -> view : loadMenu()
+    activate view
+    view -> view : showMenu()
+    note right: Repite el ciclo de inicialización
+    deactivate view
+    deactivate controller
+
+else Opción retorna comando (idioma)
+    option --> controller : "change-language-english"
+    deactivate option
+    
+    controller -> controller : handleCommand(command)
+    activate controller
+    controller -> messages : setIdioma("Ingles")
+    activate messages
+    messages --> controller : idioma actualizado
+    deactivate messages
+    
+    controller -> messages : actualizarIdioma()
+    activate messages
+    messages --> controller : instancia de idioma creada
+    deactivate messages
+    
+    controller -> view : loadMenu()
+    activate view
+    view -> view : showMenu()
+    note right: Vuelve a renderizar con nuevo idioma
+    deactivate view
+    deactivate controller
+end
+
+deactivate controller
+note over user, messages : El flujo se repite para cada interacción
+
+@enduml

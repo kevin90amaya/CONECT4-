@@ -1,0 +1,201 @@
+@startuml menus
+
+
+class ControllerMenu #4643e5ff{
+}
+
+class ViewMenu #db3f31ff{
+}
+
+
+
+abstract class Menu #lightred {
+}
+
+abstract class Option #lightred {
+}
+note left
+    todas las opciones heredan de esta
+end note
+
+abstract class BackMenu #lightred {
+
+}
+
+abstract class NavigatorMenu #lightred {
+
+}
+
+abstract class QuitMenu #lightred {
+
+}
+
+
+class Messages <<singleton>> #4A90E2 {
+}
+class Idioma #LightBlue{}
+class Español #LightBlue{}
+class Ingles #LightBlue{}
+
+
+
+class MainMenu {
+}
+
+class SettingsMenu {
+}
+
+class LanguageMenu {
+}
+
+class GameModeMenu {
+}
+
+class BoardMenu {
+}
+
+
+
+class NavigatorOption #f7b33fff{
+}
+
+class ListMenus <<singleton>> {
+    Map<String, Menu> listMenus{}
+}
+
+
+class QuitOption #f7b33fff{
+}
+
+class BackOption #f7b33fff{
+}
+
+class MenuOfMenus {
+}
+
+class GoMenuOption #f7b33fff{
+}
+
+
+class PlayOption #f7b33fff{
+}
+
+
+class EditSettingsOption #f7b33fff{
+}
+
+class ExitOption #f7b33fff{
+}
+
+
+
+class LanguageOption #f7b33fff{
+}
+
+class GameModeOption #f7b33fff{
+}
+
+class PlayersOption #f7b33fff{
+}
+
+class BoardOption #f7b33fff{
+}
+
+class BackOption #f7b33fff{
+}
+
+class EnglishOption #f7b33fff{
+}
+
+class SpanishOption #f7b33fff{
+}
+
+class DemoOption #f7b33fff{
+}
+
+class SinglePlayerOption #f7b33fff{
+}
+
+class MultiPlayerOption #f7b33fff{
+}
+
+class ConectToWinOption #f7b33fff{
+}
+
+class NumberColumnsOption #f7b33fff{
+}
+
+class NumberRowsOption #f7b33fff{
+}
+
+
+
+
+
+ControllerMenu *---- MainMenu
+ControllerMenu *-- ViewMenu
+
+
+Menu *-- Option
+
+Menu <|-- NavigatorMenu
+NavigatorMenu <|-- QuitMenu
+NavigatorMenu <|-- BackMenu
+
+NavigatorMenu *-- ListMenus
+
+QuitMenu <|-- MainMenu
+
+NavigatorMenu *-- NavigatorOption
+BackMenu *-- BackOption
+QuitMenu *-- QuitOption
+
+
+
+NavigatorOption ..> MenuOfMenus
+MenuOfMenus *-- GoMenuOption
+Menu <|-- MenuOfMenus
+
+
+Messages *-- Idioma
+Idioma <|-- Español
+Idioma <|-- Ingles
+
+
+MainMenu *-- PlayOption
+MainMenu *-- EditSettingsOption
+MainMenu *-- ExitOption
+
+BackMenu <|-- SettingsMenu
+BackMenu <|-- GameModeMenu
+BackMenu <|-- BoardMenu
+BackMenu <|-- LanguageMenu
+
+
+
+
+EditSettingsOption ..> SettingsMenu
+
+SettingsMenu *-- LanguageOption
+SettingsMenu *-- GameModeOption
+SettingsMenu *-- PlayersOption
+SettingsMenu *-- BoardOption
+
+LanguageOption ..> LanguageMenu
+GameModeOption ..> GameModeMenu
+BoardOption ..> BoardMenu
+
+
+LanguageMenu *-- EnglishOption
+LanguageMenu *-- SpanishOption
+
+GameModeMenu *-- DemoOption
+GameModeMenu *-- SinglePlayerOption
+GameModeMenu *-- MultiPlayerOption
+
+BoardMenu *-- ConectToWinOption
+BoardMenu *-- NumberColumnsOption
+BoardMenu *-- NumberRowsOption
+
+
+@enduml
