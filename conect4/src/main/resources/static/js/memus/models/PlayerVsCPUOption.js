@@ -7,7 +7,7 @@ class PlayerVsCPUOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("gameModeMenu").playerVsCPU;
+        this.title = Message.getInstance().getMessages("GameModeMenu").playerVsCPU;
     }
     
     execute() {

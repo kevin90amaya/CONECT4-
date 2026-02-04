@@ -6,7 +6,7 @@ import EspañolOption from "./EspañolOption.js";
 class LenguageMenu extends BackMenu {
     
     constructor() {
-        super();
+        super(Message.getInstance().getMessages("MainMenu").title);
     }
     
     updateTitle() {

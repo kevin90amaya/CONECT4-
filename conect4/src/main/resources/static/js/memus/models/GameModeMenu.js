@@ -6,11 +6,11 @@ import PlayerVsPlayerOption from "./PlayerVsPlayerOption.js";
 
 class GameModeMenu extends BackMenu {
     constructor(){
-        super();
+        super(Message.getInstance().getMessages("SettingsMenu").title);
     }
 
     updateTitle(){
-        this.title = Message.getInstance().getMessages("gameModeMenu").title;
+        this.title = Message.getInstance().getMessages("GameModeMenu").title;
     }
     
     addOptions(){

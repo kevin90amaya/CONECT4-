@@ -7,7 +7,7 @@ class DemoOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("gameModeMenu").demo;
+        this.title = Message.getInstance().getMessages("GameModeMenu").demo;
     }
 
     execute() {

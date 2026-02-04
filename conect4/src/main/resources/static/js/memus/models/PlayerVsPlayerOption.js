@@ -7,7 +7,7 @@ class PlayerVsPlayerOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("gameModeMenu").playerVsPlayer;
+        this.title = Message.getInstance().getMessages("GameModeMenu").playerVsPlayer;
     }
     
     execute() {

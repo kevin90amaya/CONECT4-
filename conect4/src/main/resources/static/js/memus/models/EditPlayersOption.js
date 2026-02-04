@@ -7,7 +7,7 @@ class EditPlayerOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("gameModeMenu").editPlayer;
+        this.title = Message.getInstance().getMessages("PlayersMenu").editPlayers;
     }
     
     execute() {

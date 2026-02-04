@@ -6,11 +6,11 @@ import EditColumnsOption from "./EditColumnsOption.js";
 class BoardMenu extends BackMenu {
     
     constructor() {
-        super();
+        super(Message.getInstance().getMessages("SettingsMenu").title);
     }
 
     updateTitle() {
-        this.title = Message.getInstance().getMessages("settingsMenu").boardMenu;
+        this.title = Message.getInstance().getMessages("SettingsMenu").editBoard;
     }
     
     addOptions() {

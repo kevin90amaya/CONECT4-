@@ -4,11 +4,11 @@ import EditNumberPlayersOption from "./EditNumberPlayersOption.js";
 import EditPlayersOption from "./EditPlayersOption.js";
 class PlayersMenu extends BackMenu {
     constructor() {
-        super();
+        super(Message.getInstance().getMessages("SettingsMenu").title);
     }
 
     updateTitle() {
-        this.title = Message.getInstance().getMessages("playersMenu").title;
+        this.title = Message.getInstance().getMessages("PlayersMenu").title;
     }
 
     addOptions() {

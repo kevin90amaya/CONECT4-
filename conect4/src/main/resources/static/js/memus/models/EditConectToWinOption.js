@@ -8,7 +8,7 @@ class EditConectToWinOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("gameModeMenu").editConectToWin;
+        this.title = Message.getInstance().getMessages("BoardMenu").editConectToWin;
     }
     
     execute() {

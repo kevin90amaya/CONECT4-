@@ -1,6 +1,8 @@
 import MainMenu from "../models/MainMenu.js";
 import ViewMenu from "../views/ViewMenu.js";
 import Menu from "../models/generics/Menu.js";
+import Message from "../../Messages/Message.js";
+
 
 
 class ControllerMenu {
@@ -56,9 +58,18 @@ class ControllerMenu {
         this.loadMenu();
     }
     async handleCommand(command) {
-        // Aquí manejas comandos específicos
-        console.log('Ejecutando comando:', command);
-        // Ejemplo: this[command]?.();
+            switch(command) {
+        case "change-lenguage-english":
+            Message.getInstance().setIdioma("Ingles");
+            Message.getInstance().actualizarIdioma();
+            this.loadMenu();
+            break;
+        case "change-lenguage-spanish":
+            Message.getInstance().setIdioma("Español");
+            Message.getInstance().actualizarIdioma();
+            this.loadMenu();
+            break;
+            }
     }
 
     setMenu(menu) {
