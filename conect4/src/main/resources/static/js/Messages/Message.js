@@ -1,5 +1,7 @@
 import Español from "./Español.js";
 import Ingles from "./Ingles.js";
+import assert from "assert";
+
 
 class Message {
 
@@ -22,6 +24,9 @@ class Message {
     }
     
     setIdioma(idioma) {
+        assert(idioma !== undefined);
+        assert(idioma !== "Español" || idioma !== "Ingles");
+
         this.idioma = idioma;
     }
 

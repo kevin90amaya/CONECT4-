@@ -34,11 +34,6 @@ class Idiomas {
     getMessagesPlayers() {
         throw new Error("Este método debe ser implementado por la subclase.");
     }
-    dispatch(menuType, messagesMenu) {
-        throw new Error("Este método debe ser implementado por la subclase.");
-    }
 }
 
 export default Idiomas;
-
-//

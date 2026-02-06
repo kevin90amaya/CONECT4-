@@ -1,6 +1,6 @@
 import Idiomas from "./Idiomas.js";
 class Ingles extends Idiomas {
-    getMainMenuMessages() {
+     getMainMenuMessages() {
         return {
             title: "Main Menu",
             play: "Play",

@@ -2,18 +2,18 @@ import Idiomas from "./Idiomas.js";
 class Español extends Idiomas {
     getMainMenuMessages() {
         return {
-            title: "Menú Principal",
+            title: "Menu Principal",
             play: "Jugar",
-            editSettings: "Editar Configuración"
+            editSettings: "Editar Configuracion"
         };
     }
 
     getSettingsMenuMessages() {
         return {
-            title: "Configuración",
+            title: "Configuracion",
             language: "Idioma",
             gameMode: "Modo de Juego",
-            numberOfPlayers: "Número de Jugadores",
+            numberOfPlayers: "Numero de Jugadores",
             editBoard: "Editar Tablero"
         };
     }
@@ -107,9 +107,6 @@ class Español extends Idiomas {
         };
     }
 
-    dispatch(menuType, messagesMenu) {
-        return messagesMenu.getMessagesForEspañol(menuType);
-    }
 }
 
 export default Español;

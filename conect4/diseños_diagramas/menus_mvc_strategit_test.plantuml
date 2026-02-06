@@ -1,0 +1,63 @@
+@startuml menus_mvc_strategit_test
+
+package "menus" {
+    package "models" {
+        package "generics"{
+        }
+    } 
+    package "views"{
+    }   
+    package "controllers"{
+    }   
+}
+package "messages"{  
+}
+note right of models
+    
+     Bottom-Up
+
+    // Nivel 0: Sin dependencias
+Idiomas.test.js
+Español.test.js  
+Ingles.test.js
+ListMenus.test.js
+
+// Nivel 1: Dependen del Nivel 0
+Message.test.js
+Menu.test.js
+Option.test.js
+
+// Nivel 2: Dependen del Nivel 1
+NavigatorMenu.test.js
+NavigatorOption.test.js
+BackOption.test.js
+QuitOption.test.js
+GoMenuOption.test.js
+BackMenu.test.js
+QuitMenu.test.js
+MenuOfMenus.test.js
+
+// Nivel 3: Dependen del Nivel 2
+MainMenu.test.js
+SettingsMenu.test.js
+LenguageMenu.test.js
+GameModeMenu.test.js
+BoardMenu.test.js
+PlayersMenu.test.js
+// + todas las Options específicas
+
+// Nivel 4: Dependen del Nivel 3
+ViewMenu.test.js
+ControllerMenu.test.js
+
+
+end note
+
+models --> messages
+controllers --> models
+controllers --> views
+views --> models
+models --> generics
+generics --> messages
+
+@enduml

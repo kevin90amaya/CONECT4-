@@ -1,9 +1,10 @@
 // Test principal que importa todos los tests del sistema
-import './__tests__/example.test.js';
 import './views/all.test.js';
 import './controllers/all.test.js';
 import './models/all.test.js';
 import './memus/all.test.js';
+import './Messages/all.test.js';
+
 
 describe('@suite Todos los Tests del Sistema MVC', () => {
   test('estructura de tests cargada correctamente', () => {
@@ -16,3 +17,4 @@ describe('@suite Todos los Tests del Sistema MVC', () => {
     expect(typeof expect).toBe('function');
   });
 });
+    
