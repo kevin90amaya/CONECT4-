@@ -1,7 +1,9 @@
+
 class Menu {
     
     title;
     options;
+    maxOptions = 20
     
     constructor() {
         this.options = [];
@@ -11,9 +13,11 @@ class Menu {
     
     addOptions(){}
     
-    add(option) {
-        this.options.push(option);
-    }
+add(option) {
+    option === undefined && (() => { throw new Error("Option is undefined"); })();
+    this.options.length >= this.maxOptions && (() => { throw new Error("Menu is full"); })();
+    this.options.push(option);
+}
 
     addLast() {}
     
@@ -26,6 +30,7 @@ class Menu {
     }
     
     hasOption(option) {
+       option === undefined && (() => { throw new Error("Option is undefined"); })();
         return this.options.includes(option);
     }
 

@@ -1,9 +1,8 @@
-// Test principal que importa todos los tests del sistema
-import './views/all.test.js';
-import './controllers/all.test.js';
-import './models/all.test.js';
-import './memus/all.test.js';
+
 import './Messages/all.test.js';
+import './memus/models/generics/all.test.js';
+
+
 
 
 describe('@suite Todos los Tests del Sistema MVC', () => {

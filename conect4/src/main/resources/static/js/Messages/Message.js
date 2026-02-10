@@ -1,15 +1,15 @@
 import Español from "./Español.js";
 import Ingles from "./Ingles.js";
-import assert from "assert";
+
 
 
 class Message {
 
-    idioma = "Español";
+    idioma = new Español();
+
     static instance;
 
     constructor() {
-        this.actualizarIdioma();
     }
 
     static getInstance(){
@@ -18,42 +18,70 @@ class Message {
         }
         return this.instance;
     }
-
-    actualizarIdioma() {
-        this.idioma = this.getIdioma() === "Ingles" ? new Ingles() : new Español();
-    }
     
-    setIdioma(idioma) {
-        assert(idioma !== undefined);
-        assert(idioma !== "Español" || idioma !== "Ingles");
+    setIdiomaIngles() {
+        this.idioma = new Ingles();
+    }
 
-        this.idioma = idioma;
+    setIdiomaEspañol() {
+        this.idioma = new Español();
     }
 
     getIdioma() {
         return this.idioma;
     }
 
-    getMessages(menuType) {
-        switch(menuType) {
+    getMessages(tipemenu) {
+        switch(tipemenu) {
             case "MainMenu":
-                return this.idioma.getMainMenuMessages();
+                return this.getMainMenuMessages();
             case "SettingsMenu":
-                return this.idioma.getSettingsMenuMessages();
+                return this.getSettingsMenuMessages();
             case "GameModeMenu":
-                return this.idioma.getGameModeMenuMessages();
-            case "LenguageMenu":
-                return this.idioma.getLanguageMenuMessages();
-            case "PlayersMenu":
-                return this.idioma.getPlayersMenuMessages();
-            case "Common":
-                return this.idioma.getCommonMessages();
+                return this.getGameModeMenuMessages();
             case "BoardMenu":
-                return this.idioma.getBoardMenuMessages();
-            default:
-                return {};
+                return this.getBoardMenuMessages();
+            case "LenguageMenu":
+                return this.getLanguageMenuMessages();
+            case "PlayersMenu":
+                return this.getPlayersMenuMessages();
+            case "Common":
+                return this.getCommonMessages();
         }
     }
+    
+    getMessagesResumed() {
+        return this.idioma.getMessagesResumed();
+    }
+    
+    getMainMenuMessages() {
+        return this.idioma.getMainMenuMessages();
+    }
+    
+    getSettingsMenuMessages() {
+        return this.idioma.getSettingsMenuMessages();
+    }
+    
+    getGameModeMenuMessages() {
+        return this.idioma.getGameModeMenuMessages();
+    }
+
+    getBoardMenuMessages() {
+        return this.idioma.getBoardMenuMessages();
+    }
+
+    getLanguageMenuMessages() {
+        return this.idioma.getLanguageMenuMessages();
+    }
+
+    getPlayersMenuMessages() {
+        return this.idioma.getPlayersMenuMessages();
+    }
+
+    getCommonMessages() {
+        return this.idioma.getCommonMessages();
+    }
+    
 }
 
 export default Message;

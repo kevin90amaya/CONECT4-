@@ -60,13 +60,11 @@ class ControllerMenu {
     async handleCommand(command) {
             switch(command) {
         case "change-lenguage-english":
-            Message.getInstance().setIdioma("Ingles");
-            Message.getInstance().actualizarIdioma();
+            Message.getInstance().setIdiomaIngles();
             this.loadMenu();
             break;
         case "change-lenguage-spanish":
-            Message.getInstance().setIdioma("Español");
-            Message.getInstance().actualizarIdioma();
+            Message.getInstance().setIdiomaEspañol();
             this.loadMenu();
             break;
             }

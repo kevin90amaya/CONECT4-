@@ -45,12 +45,12 @@ describe('Message', () => {
         });
 
         afterEach(() => {
-            message.setIdioma(new Español());
+            message.setIdiomaEspañol();
         });
         
         test('debe establecer el idioma a Ingles', () => {
             // Act
-            message.setIdioma(new Ingles());
+            message.setIdiomaIngles();
             
             // Assert
             expect(message.getIdioma()).toBeInstanceOf(Ingles);
