@@ -8,12 +8,12 @@ import Message from "../../Messages/Message.js";
 class ControllerMenu {
 
     #menu;
-    #viewMenu;
+    viewMenu;
 
     constructor() {
      this.#menu = new MainMenu();
-     this.#viewMenu = new ViewMenu();
-     this.#viewMenu.setMenu(this.#menu);
+     this.viewMenu = new ViewMenu();
+     this.viewMenu.setMenu(this.#menu);
     }
 
      initialize() {
@@ -27,7 +27,7 @@ class ControllerMenu {
         this.#menu.removeOption();
         this.#menu.addOptions();
         this.#menu.addLast();
-        this.#viewMenu.showMenu();
+        this.viewMenu.showMenu();
     }
     setupMenuEventHandlers() {
         document.addEventListener('menuOptionSelected', async (event) => {
@@ -54,7 +54,7 @@ class ControllerMenu {
     }
     async handleNavigation(menu) {
         this.setMenu(menu);
-        this.#viewMenu.setMenu(menu);
+        this.viewMenu.setMenu(menu);
         this.loadMenu();
     }
     async handleCommand(command) {
@@ -72,6 +72,10 @@ class ControllerMenu {
 
     setMenu(menu) {
         this.#menu = menu;
+    }
+
+    getMenu() {
+        return this.#menu;
     }
     
 
