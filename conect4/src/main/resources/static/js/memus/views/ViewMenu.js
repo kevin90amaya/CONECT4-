@@ -73,6 +73,10 @@ showTitleOptions() {
     setMenu(menu) {
         this.#menu = menu;
     }
+
+    getMenuElement() {
+        return this.#menuElement;
+    }
     
 }
 

@@ -2,6 +2,7 @@ import ControllerMenu from "../../../../../../main/resources/static/js/memus/con
 import LenguageMenu from "../../../../../../main/resources/static/js/memus/models/LenguageMenu.js";
 import SettingsMenu from "../../../../../../main/resources/static/js/memus/models/SettingsMenu.js";
 import Message from "../../../../../../main/resources/static/js/Messages/Message.js";
+import ViewMenu from "../../../../../../main/resources/static/js/memus/views/ViewMenu.js";
 
 describe('ControllerMenu - Flujo completo con clases reales', () => {
     let controllerMenu;
@@ -28,6 +29,55 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
         document.body.innerHTML = '';
         Message.getInstance().setIdiomaEspañol();
     });
+    
+    
+    describe('Verificación de DOM mockeado', () => {
+    test('ViewMenu usa DOM mockeado', () => {
+        // ✅ Verificar que ViewMenu usa jsdom
+        const viewMenu = new ViewMenu();
+        
+        // Verificar que el DOM es de JSDOM
+        expect(window.navigator.userAgent).toContain('jsdom');
+        expect(document.constructor.name).toBe('Document');
+        
+        // Verificar que ViewMenu encuentra el elemento mockeado
+        expect(viewMenu.getMenuElement()).toBe(document.getElementById('menu'));
+    });
+
+    test('ControllerMenu usa DOM mockeado', () => {
+        // ✅ Verificar que ControllerMenu usa jsdom
+        const controllerMenu = new ControllerMenu();
+        
+        // Verificar que el DOM es de JSDOM
+        expect(window.navigator.userAgent).toContain('jsdom');
+        
+        // Verificar que ViewMenu de Controller usa el mismo DOM
+        expect(controllerMenu.viewMenu.getMenuElement()).toBe(document.getElementById('menu'));
+    });
+
+    test('Test usa DOM mockeado y todos comparten el mismo', () => {
+        // ✅ Verificar que el test usa jsdom
+        expect(window.navigator.userAgent).toContain('jsdom');
+        expect(document.constructor.name).toBe('Document');
+        
+        // ✅ Crear elementos y verificar que todos los ven
+        document.body.innerHTML = '<div id="menu"></div>';
+        
+        const viewMenu = new ViewMenu();
+        const controllerMenu = new ControllerMenu();
+        
+        // Verificar que todos apuntan al mismo elemento
+        const menuElement = document.getElementById('menu');
+        expect(viewMenu.getMenuElement()).toBe(menuElement);
+        expect(controllerMenu.viewMenu.getMenuElement()).toBe(menuElement);
+        
+        // Verificar que modificaciones en uno afectan a todos
+        menuElement.innerHTML = '<p>Test</p>';
+        expect(viewMenu.getMenuElement().innerHTML).toBe('<p>Test</p>');
+        expect(controllerMenu.viewMenu.getMenuElement().innerHTML).toBe('<p>Test</p>');
+    });
+    });
+
 
     describe('Flujo: LenguageMenu → Cambiar a inglés', () => {
 
@@ -58,7 +108,7 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
             englishButton.click();
             
             // ✅ ESPERAR procesamiento asíncrono
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 100));
             
             // ✅ VERIFICAR flujo completo
             expect(spyHandleCommand).toHaveBeenCalledWith('change-lenguage-english');
@@ -120,5 +170,6 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
             spyHandleNavigation.mockRestore();
         });
     });
+
 
 });

@@ -1,9 +1,8 @@
 
 import './Messages/all.test.js';
-import './memus/all.test.js';
+import './memus/views/all.test.js';
 import './memus/models/generics/all.test.js';
-import './memus/views/ViewMenu.test.js';
-import './memus/controllers/ControllerMenu.test.js';
+import './memus/controllers/all.test.js';
 
 
 
