@@ -108,7 +108,7 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
             englishButton.click();
             
             // ✅ ESPERAR procesamiento asíncrono
-            await new Promise(resolve => setTimeout(resolve, 100));
+            await new Promise(resolve => setTimeout(resolve, 10));
             
             // ✅ VERIFICAR flujo completo
             expect(spyHandleCommand).toHaveBeenCalledWith('change-lenguage-english');
@@ -170,6 +170,5 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
             spyHandleNavigation.mockRestore();
         });
     });
-
 
 });
