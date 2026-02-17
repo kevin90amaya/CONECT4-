@@ -14,7 +14,6 @@ class BackMenu extends NavigatorMenu {
 
     addOptions() {
         super.addOptions();
-        //this.addLast(this.backOption);
     }
     
     addLast() {
