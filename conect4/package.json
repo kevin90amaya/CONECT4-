@@ -4,21 +4,31 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testNamePattern=@unit",
+    "test:integration": "jest --testNamePattern=@integration",
+    "test:view": "jest --testNamePattern=@view",
+    "test:controller": "jest --testNamePattern=@controller",
+    "test:model": "jest --testNamePattern=@model",
+    "test:memus": "jest --testNamePattern=@memus",
+    "test:config": "jest --testNamePattern=@config",
+    "test:suite": "jest --testNamePattern=@suite",
+    "test:all": "jest src/test/resources/static/js/all.test.js",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "test": "cypress run",
-    "test:open": "cypress open",
-    "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
-    "test:e2e:open": "start-server-and-test dev http://localhost:3000 cypress:open",
-    "cypress:run": "cypress run",
-    "cypress:open": "cypress open",
-    "cypress:verify": "cypress verify"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^9.0.0",
-    "cypress": "^13.0.0",
-    "start-server-and-test": "^2.0.0",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "babel-jest": "^30.2.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^27.4.0",
     "vite": "^5.0.0"
   }
 }

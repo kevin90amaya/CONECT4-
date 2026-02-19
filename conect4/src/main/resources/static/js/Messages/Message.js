@@ -1,0 +1,87 @@
+import Español from "./Español.js";
+import Ingles from "./Ingles.js";
+
+
+
+class Message {
+
+    idioma = new Español();
+
+    static instance;
+
+    constructor() {
+    }
+
+    static getInstance(){
+        if(!this.instance){
+            this.instance = new Message();
+        }
+        return this.instance;
+    }
+    
+    setIdiomaIngles() {
+        this.idioma = new Ingles();
+    }
+
+    setIdiomaEspañol() {
+        this.idioma = new Español();
+    }
+
+    getIdioma() {
+        return this.idioma;
+    }
+
+    getMessages(tipemenu) {
+        switch(tipemenu) {
+            case "MainMenu":
+                return this.getMainMenuMessages();
+            case "SettingsMenu":
+                return this.getSettingsMenuMessages();
+            case "GameModeMenu":
+                return this.getGameModeMenuMessages();
+            case "BoardMenu":
+                return this.getBoardMenuMessages();
+            case "LenguageMenu":
+                return this.getLanguageMenuMessages();
+            case "PlayersMenu":
+                return this.getPlayersMenuMessages();
+            case "Common":
+                return this.getCommonMessages();
+        }
+    }
+    
+    getMessagesResumed() {
+        return this.idioma.getMessagesResumed();
+    }
+    
+    getMainMenuMessages() {
+        return this.idioma.getMainMenuMessages();
+    }
+    
+    getSettingsMenuMessages() {
+        return this.idioma.getSettingsMenuMessages();
+    }
+    
+    getGameModeMenuMessages() {
+        return this.idioma.getGameModeMenuMessages();
+    }
+
+    getBoardMenuMessages() {
+        return this.idioma.getBoardMenuMessages();
+    }
+
+    getLanguageMenuMessages() {
+        return this.idioma.getLanguageMenuMessages();
+    }
+
+    getPlayersMenuMessages() {
+        return this.idioma.getPlayersMenuMessages();
+    }
+
+    getCommonMessages() {
+        return this.idioma.getCommonMessages();
+    }
+    
+}
+
+export default Message;

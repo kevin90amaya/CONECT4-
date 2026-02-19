@@ -1,0 +1,27 @@
+import BackMenu from "./generics/BackMenu.js";
+import Message from "../../Messages/Message.js";
+import LenguageOption from "./LenguageOption.js";
+import GameModeOption from "./GameModeOption.js";
+import NumberOfPlayersOption from "./NumberOfPlayersOption.js";
+import EditBoardOption from "./EditBoardOption.js";
+
+class SettingsMenu extends BackMenu {
+
+    constructor() {
+        super("MainMenu");
+    }
+    
+    updateTitle() {
+        this.title = Message.getInstance().getMessages("SettingsMenu").title;
+    }
+    
+    addOptions() {
+        super.addOptions();
+        this.add(new LenguageOption());
+        this.add(new GameModeOption());
+        this.add(new NumberOfPlayersOption());
+        this.add(new EditBoardOption());
+    }
+}
+
+export default SettingsMenu;

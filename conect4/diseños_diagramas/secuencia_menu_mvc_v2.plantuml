@@ -1,0 +1,74 @@
+@startuml secuencia_menu_mvc__v2
+
+title Diagrama de Secuencia - Flujo MVC Simplificado
+
+actor Usuario as user
+participant "ViewMenu" as view #4682B4
+participant "DOM" as dom #FFA500
+participant "ControllerMenu" as controller #4643e5ff
+participant "Menu" as menu #lightred
+participant "Option" as option #f7b33fff
+
+== Inicialización del Menú ==
+user -> view : loadMenu()
+activate view
+
+view -> menu : updateTitle()
+activate menu
+menu --> view : getTitle()
+deactivate menu
+
+view -> view : showTitleOptions()
+activate view
+loop Para cada opción
+    view -> option : updateTitle()
+    activate option
+    option --> view : getTitle()
+    deactivate option
+end
+view -> dom : createElement("button")
+dom --> view : button element
+view -> dom : appendChild(button)
+deactivate view
+
+== Usuario hace clic en una opción ==
+user -> dom : click(button)
+dom -> view : onclick event
+activate view
+
+view -> controller : handleMenuOption(option)
+activate controller
+
+controller -> option : execute()
+activate option
+
+alt Opción retorna nuevo Menu
+    option --> controller : new SettingsMenu()
+    deactivate option
+    
+    controller -> view : setMenu(newMenu)
+    activate view
+    view --> controller : menú actualizado
+    deactivate view
+    
+    controller -> view : loadMenu()
+    activate view
+    view -> view : showMenu()
+    note right: Repite ciclo de inicialización
+    deactivate view
+
+else Opción retorna comando
+    option --> controller : "change-language-english"
+    deactivate option
+    
+    controller -> view : loadMenu()
+    activate view
+    view -> view : showMenu()
+    note right: Vuelve a renderizar
+    deactivate view
+end
+
+deactivate controller
+note over user, option : El flujo se repite para cada interacción
+
+@enduml
