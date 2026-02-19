@@ -217,11 +217,7 @@ class Settings {
             this.PROPERTI_PLAYERS[i][2] = console.readNumber(`${mensage.tipe}${i + 1} ${mensage.optionTipe}`);
             this.PROPERTI_PLAYERS[i][3] = i;
         }
-    }
-   
-
-    
-   
+    }   
 }
 
 

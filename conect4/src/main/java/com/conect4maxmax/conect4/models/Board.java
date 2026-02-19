@@ -1,5 +1,6 @@
 package com.conect4maxmax.conect4.models;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Board {
@@ -11,28 +12,32 @@ public class Board {
         this.BOARD = new Object();
         this.tokenQuantityOnBoard = 0;
     }
+public Map<String, Map<String, String>> getBoard() {
+    return new LinkedHashMap<>();  // Devuelve mapa vacío temporalmente
+}
 
-    public void createBoard() {}
+public int getTokenQuantityOnBoard() {
+    return 0;  // Sin tokens inicialmente
+}
 
-    private void createColumns(int columnNumber) {}
+private boolean completeColumn(int proposedColumn) {
+    return false;  // Por defecto no está completa
+}
 
-    private void createRow(int columnNumber, int rowNumber) {}
-    public Map getBoard() {}
-    public int getTokenQuantityOnBoard() {}
+private int isOcupiedRow() {
+    return -1;  // Valor indicando que no hay fila ocupada
+}
 
+public boolean checkEndGame() {
+    return false;  // Por defecto el juego no ha terminado
+}
 
+public boolean isFullBoard() {
+    return false;  // Por defecto el tablero no está lleno
+}
 
-
-    private boolean completeColumn(int proposedColumn) {}
-    private int isOcupiedRow() {}
-
-    public void dropToken(String token) {}
-
-    
-
-
-    public boolean checkEndGame() {}
-    public boolean isFullBoard() {}
-    public boolean isConectToWin() {}
+public boolean isConectToWin() {
+    return false;  // Por defecto no hay ganador
+}
 }
 

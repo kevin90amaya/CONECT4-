@@ -1,5 +1,5 @@
 package com.conect4maxmax.conect4.models;
 
-public class HumanPlayesr {
-    
+public class HumanPlayer extends Players {
+
 }
