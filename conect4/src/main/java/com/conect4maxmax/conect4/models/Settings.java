@@ -1,10 +1,15 @@
 package com.conect4maxmax.conect4.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Settings {
 
 
     static public Settings instance;
-
+    
+    private int minNumberPlayers;
+    private int maxNumberPlayers;
     private int numberColumns;
     private int numberRows;
     private int numberToWin;
@@ -12,7 +17,7 @@ public class Settings {
 	private int mode;
 	private int number_players;
     private Object players;
-    private Object [][] Properti_Players;
+    private List<Object[]> Properti_Players;
     
     
      Settings() {
@@ -20,10 +25,14 @@ public class Settings {
 		this.numberRows = 6;
 		this.numberToWin = 4;
 		this.mode = 2;
-		this.number_players = 2;
 		this.turn = 0;
+        this.minNumberPlayers = 2;
+        this.maxNumberPlayers = 10;
+		this.number_players = 2;
 		this.players = new Object[number_players];
-		this.Properti_Players = new Object[][]{{"RED", "R", 1, 0}, {"YELLOW", "Y", 2, 1}};
+		this.Properti_Players = new ArrayList<>();
+		this.Properti_Players.add(new Object[]{"RED", "R", 1, 0});
+		this.Properti_Players.add(new Object[]{"YELLOW", "Y", 2, 1});
 	}
 
 
@@ -73,6 +82,7 @@ public class Settings {
     public void changedMode() {
     }
     public void setPlayers() {
+        
     }
     public int getTurn() {
         return this.turn;
@@ -82,11 +92,15 @@ public class Settings {
         return this.number_players;
         }
 
-    public void setNumberPlayers() {
-       
+    public void setNumberPlayers(int number_players) {
+        if (number_players < this.minNumberPlayers || number_players > this.maxNumberPlayers) {
+            throw new IllegalArgumentException("El número de jugadores no puede ser menor a " + this.minNumberPlayers + " o mayor a " + this.maxNumberPlayers);
+        }
+
+        this.number_players = number_players;
     }
     
-    public Object[][]getPropertiPlayers() {
+    public List<Object[]> getPropertiPlayers() {
         return this.Properti_Players;
         }
     

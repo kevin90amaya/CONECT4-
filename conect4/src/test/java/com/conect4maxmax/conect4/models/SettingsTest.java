@@ -1,6 +1,6 @@
 package com.conect4maxmax.conect4.models;
 
-import static org.hamcrest.Matchers.arrayContaining;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -36,7 +36,37 @@ public class SettingsTest {
         assertThat(settings.getNumberToWin(), is(equalTo(4)));
         assertThat(settings.getTurn(), is(equalTo(0)));
         assertThat(settings.getMode(), is(equalTo(2)));
-        assertThat(settings.getPropertiPlayers(), is(arrayContaining(arrayContaining("RED", "R", 1, 0),arrayContaining("YELLOW", "Y", 2, 1))));
+        assertThat(settings.getPropertiPlayers().size(), is(equalTo(2)));
+        assertThat(settings.getPropertiPlayers().get(0)[0], is(equalTo("RED")));
+        assertThat(settings.getPropertiPlayers().get(0)[1], is(equalTo("R")));
+        assertThat(settings.getPropertiPlayers().get(0)[2], is(equalTo(1)));
+        assertThat(settings.getPropertiPlayers().get(0)[3], is(equalTo(0)));
+        assertThat(settings.getPropertiPlayers().get(1)[0], is(equalTo("YELLOW")));
+        assertThat(settings.getPropertiPlayers().get(1)[1], is(equalTo("Y")));
+        assertThat(settings.getPropertiPlayers().get(1)[2], is(equalTo(2)));
+        assertThat(settings.getPropertiPlayers().get(1)[3], is(equalTo(1)));
+        }
+
+    @Test    
+    public void testSetNumberPlayersMenorException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            settings.setNumberPlayers(1);
+        });
+        }
+    
+    @Test
+    public void testSetNumberPlayersMayorException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            settings.setNumberPlayers(11);
+        });
+        }
+
+    @Test
+    public void testSetNumberPlayers() {
+        settings.setNumberPlayers(2);
+        assertThat(settings.getNumberPlayers(), is(equalTo(2)));
+        settings.setNumberPlayers(10);
+        assertThat(settings.getNumberPlayers(), is(equalTo(10)));
         }
 
     @Test
