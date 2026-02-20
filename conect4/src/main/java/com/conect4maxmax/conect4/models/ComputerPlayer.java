@@ -1,6 +1,6 @@
 package com.conect4maxmax.conect4.models;
 
-public class ComputerPlayer extends Players {
+public class ComputerPlayer {
 
 
     

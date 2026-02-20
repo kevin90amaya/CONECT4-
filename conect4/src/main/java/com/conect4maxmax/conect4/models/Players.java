@@ -12,21 +12,26 @@ public class Players {
     private int minNumberPlayers;
     private int maxNumberPlayers;
     private int number_players;
-    private Object players;
-    private List<Object[]> Properti_Players;
+    private List<PlayerProperties> players;
 
     public Players() {
         this.minNumberPlayers = 2;
         this.maxNumberPlayers = 10;
         this.number_players = 2;
-        this.players = new Object[number_players];
-        this.Properti_Players = new ArrayList<>();
-        this.Properti_Players.add(new Object[]{"RED", "R", 1, 0});
-        this.Properti_Players.add(new Object[]{"YELLOW", "Y", 2, 1});
+        this.players = new ArrayList<>();
+        this.players.add(new PlayerProperties("RED", "R", 1, 0));
+        this.players.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+    }
+
+    public void setPlayers(List<PlayerProperties> listPlayers) {
+        if (listPlayers.size() != this.number_players) {
+            throw new IllegalArgumentException("El número de jugadores no puede ser diferente al número de jugadores configurados");
+        }
+        this.players.clear();
+        this.players.addAll(listPlayers);
     }
     
-
-    public Players getTipe(int tipe) {
+    public Object getTipe(int tipe) {
         if (tipe < 1 || tipe > 2) {
             throw new IllegalArgumentException("El tipo no puede ser mayor a 2 o menor a 1");
         }
@@ -48,15 +53,12 @@ public class Players {
         this.number_players = number_players;
     }
 
-    public Object getPlayers() {
-        return players;
-    }
-
-    public List<Object[]> getPropertiPlayers() {
-        return Properti_Players;
+    public List<PlayerProperties> getPlayers() {
+        return this.players;
     }
 
     public int getNumberPlayers() {
         return number_players;
     }
+
 }

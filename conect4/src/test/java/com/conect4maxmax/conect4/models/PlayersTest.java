@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,10 +25,10 @@ public class PlayersTest {
 
     @BeforeEach
     public void setUp() {
-        players.getPropertiPlayers().clear();
-        players.getPropertiPlayers().add(new Object[]{"RED", "R", 1, 0});
-        players.getPropertiPlayers().add(new Object[]{"YELLOW", "Y", 2, 1});
         players.setNumberPlayers(2);
+        players.getPlayers().clear();
+        players.getPlayers().add(new PlayerProperties("RED", "R", 1, 0));
+        players.getPlayers().add(new PlayerProperties("YELLOW", "Y", 2, 1));
     }
 
     @AfterEach
@@ -39,15 +38,15 @@ public class PlayersTest {
 
     @Test
     public void testInitialProperties() {
-        assertThat(players.getPropertiPlayers().size(), is(equalTo(2)));
-        assertThat(players.getPropertiPlayers().get(0)[0], is(equalTo("RED")));
-        assertThat(players.getPropertiPlayers().get(0)[1], is(equalTo("R")));
-        assertThat(players.getPropertiPlayers().get(0)[2], is(equalTo(1)));
-        assertThat(players.getPropertiPlayers().get(0)[3], is(equalTo(0)));
-        assertThat(players.getPropertiPlayers().get(1)[0], is(equalTo("YELLOW")));
-        assertThat(players.getPropertiPlayers().get(1)[1], is(equalTo("Y")));
-        assertThat(players.getPropertiPlayers().get(1)[2], is(equalTo(2)));
-        assertThat(players.getPropertiPlayers().get(1)[3], is(equalTo(1)));
+        assertThat(players.getPlayers().size(), is(equalTo(2)));
+        assertThat(players.getPlayers().get(0).getName(), is(equalTo("RED")));
+        assertThat(players.getPlayers().get(0).getToken(), is(equalTo("R")));
+        assertThat(players.getPlayers().get(0).getTipe(), is(equalTo(1)));
+        assertThat(players.getPlayers().get(0).getTurn(), is(equalTo(0)));
+        assertThat(players.getPlayers().get(1).getName(), is(equalTo("YELLOW")));
+        assertThat(players.getPlayers().get(1).getToken(), is(equalTo("Y")));
+        assertThat(players.getPlayers().get(1).getTipe(), is(equalTo(2)));
+        assertThat(players.getPlayers().get(1).getTurn(), is(equalTo(1)));
         }
 
     @Test    
@@ -64,6 +63,43 @@ public class PlayersTest {
         });
         }
 
+    @Test
+    public void testSetPlayersExeption() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
+            playersList.add(new PlayerProperties("RED", "R", 1, 0));
+            playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+            playersList.add(new PlayerProperties("BLUE", "B", 2, 2));   
+            players.setPlayers(playersList);
+            });
+        }
+
+    @Test    
+    public void testSetPlayers() {
+        java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
+        playersList.add(new PlayerProperties("RED", "R", 1, 0));
+        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        playersList.add(new PlayerProperties("BLUE", "B", 3, 2)); 
+        players.setNumberPlayers(3);
+        players.setPlayers(playersList);
+        assertThat(players.getPlayers().size(), is(equalTo(3)));
+
+        playersList.clear();
+        playersList.add(new PlayerProperties("RED", "R", 1, 0));
+        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
+        playersList.add(new PlayerProperties("RED", "R", 1, 0));
+        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
+        playersList.add(new PlayerProperties("RED", "R", 1, 0));
+        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
+        players.setNumberPlayers(9);
+        players.setPlayers(playersList);
+        assertThat(players.getPlayers().size(), is(equalTo(9)));
+
+        }
+    
     @Test
     public void testSetNumberPlayers() {
         players.setNumberPlayers(2);
@@ -98,4 +134,21 @@ public class PlayersTest {
         });
     }
 
+    @Test
+    public void testGetPlayers() {
+        java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
+        playersList.add(new PlayerProperties("RED", "R", 1, 0));
+        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        playersList.add(new PlayerProperties("RED", "R", 1, 2));
+        playersList.add(new PlayerProperties("ORANGE", "O", 1, 3));
+        playersList.add(new PlayerProperties("PURPLE", "P", 1, 4));
+        players.setNumberPlayers(5);
+        players.setPlayers(playersList);
+        assertThat(players.getPlayers().size(), is(equalTo(5)));
+        assertThat(players.getPlayers().get(0).getName(), is(equalTo("RED")));
+        assertThat(players.getPlayers().get(1).getName(), is(equalTo("YELLOW")));
+        assertThat(players.getPlayers().get(2).getName(), is(equalTo("RED")));
+        assertThat(players.getPlayers().get(3).getName(), is(equalTo("ORANGE")));
+        assertThat(players.getPlayers().get(4).getName(), is(equalTo("PURPLE")));
+    }
 }
