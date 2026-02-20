@@ -5,10 +5,16 @@ import java.util.Map;
 
 public class Board {
     
+    int numberColumns;
+    int numberRows;
+    int numberToWin;
     Object BOARD;
     int tokenQuantityOnBoard;
     
     public Board() {
+        this.numberColumns = 7;
+        this.numberRows = 6;
+        this.numberToWin = 4;
         this.BOARD = new Object();
         this.tokenQuantityOnBoard = 0;
     }
