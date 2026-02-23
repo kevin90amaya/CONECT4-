@@ -23,6 +23,7 @@ public class PlayersTest {
     @Autowired
     Players players;
 
+
     @BeforeEach
     public void setUp() {
         players.setNumberPlayers(2);
@@ -67,9 +68,9 @@ public class PlayersTest {
     public void testSetPlayersExeption() {
         assertThrows(IllegalArgumentException.class, () -> {
             java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
-            playersList.add(new PlayerProperties("RED", "R", 1, 0));
-            playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-            playersList.add(new PlayerProperties("BLUE", "B", 2, 2));   
+            playersList.add(new PlayerPropertiesBuilder().build());
+            playersList.add(new PlayerPropertiesBuilder().build());
+            playersList.add(new PlayerPropertiesBuilder().build());   
             players.setPlayers(playersList);
             });
         }
@@ -77,23 +78,23 @@ public class PlayersTest {
     @Test    
     public void testSetPlayers() {
         java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
-        playersList.add(new PlayerProperties("RED", "R", 1, 0));
-        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-        playersList.add(new PlayerProperties("BLUE", "B", 3, 2)); 
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
         players.setNumberPlayers(3);
         players.setPlayers(playersList);
         assertThat(players.getPlayers().size(), is(equalTo(3)));
 
         playersList.clear();
-        playersList.add(new PlayerProperties("RED", "R", 1, 0));
-        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
-        playersList.add(new PlayerProperties("RED", "R", 1, 0));
-        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
-        playersList.add(new PlayerProperties("RED", "R", 1, 0));
-        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-        playersList.add(new PlayerProperties("BLUE", "B", 3, 2));
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
+        playersList.add(new PlayerPropertiesBuilder().build());
         players.setNumberPlayers(9);
         players.setPlayers(playersList);
         assertThat(players.getPlayers().size(), is(equalTo(9)));
@@ -106,10 +107,6 @@ public class PlayersTest {
         assertThat(players.getNumberPlayers(), is(equalTo(2)));
         players.setNumberPlayers(10);
         assertThat(players.getNumberPlayers(), is(equalTo(10)));
-        }
-
-    @Test
-    public void testCreatePlayers() {
         }
 
     @Test
@@ -137,11 +134,11 @@ public class PlayersTest {
     @Test
     public void testGetPlayers() {
         java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
-        playersList.add(new PlayerProperties("RED", "R", 1, 0));
-        playersList.add(new PlayerProperties("YELLOW", "Y", 2, 1));
-        playersList.add(new PlayerProperties("RED", "R", 1, 2));
-        playersList.add(new PlayerProperties("ORANGE", "O", 1, 3));
-        playersList.add(new PlayerProperties("PURPLE", "P", 1, 4));
+        playersList.add(new PlayerPropertiesBuilder().name("RED").build());
+        playersList.add(new PlayerPropertiesBuilder().name("YELLOW").build());
+        playersList.add(new PlayerPropertiesBuilder().name("RED").build());
+        playersList.add(new PlayerPropertiesBuilder().name("ORANGE").build());
+        playersList.add(new PlayerPropertiesBuilder().name("PURPLE").build());
         players.setNumberPlayers(5);
         players.setPlayers(playersList);
         assertThat(players.getPlayers().size(), is(equalTo(5)));

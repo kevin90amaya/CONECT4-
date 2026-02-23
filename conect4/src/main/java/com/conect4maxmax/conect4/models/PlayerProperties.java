@@ -1,7 +1,6 @@
 package com.conect4maxmax.conect4.models;
 
 public class PlayerProperties {
-    
     public String name;
     public String token;
     public int tipe;
@@ -28,5 +27,21 @@ public class PlayerProperties {
     
     public int getTurn() {
         return turn;
+    }
+
+    public void setName(String name) { 
+        this.name = name; 
+    }
+
+    public void setToken(String token) { 
+        this.token = token; 
+    }
+
+    public void setTipe(int tipe) { 
+        this.tipe = tipe; 
+    }
+    
+    public void setTurn(int turn) { 
+        this.turn = turn; 
     }
 }
