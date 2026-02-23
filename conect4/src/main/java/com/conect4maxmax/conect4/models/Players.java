@@ -8,15 +8,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Players {
-
-    private int minNumberPlayers;
-    private int maxNumberPlayers;
+    private int turn;
     private int number_players;
     private List<PlayerProperties> players;
 
     public Players() {
-        this.minNumberPlayers = 2;
-        this.maxNumberPlayers = 10;
+        this.turn = 0;
         this.number_players = 2;
         this.players = new ArrayList<>();
         this.players.add(new PlayerProperties("RED", "R", 1, 0));
@@ -46,8 +43,10 @@ public class Players {
     }
 
     public void setNumberPlayers(int number_players) {
-        if (number_players < this.minNumberPlayers || number_players > this.maxNumberPlayers) {
-            throw new IllegalArgumentException("El número de jugadores no puede ser menor a " + this.minNumberPlayers + " o mayor a " + this.maxNumberPlayers);
+        final int minNumberPlayers = 2;
+        final int maxNumberPlayers = 10;
+        if (number_players < minNumberPlayers || number_players > maxNumberPlayers) {
+            throw new IllegalArgumentException("El número de jugadores no puede ser menor a " + minNumberPlayers + " o mayor a " + maxNumberPlayers);
         }
 
         this.number_players = number_players;
@@ -61,4 +60,23 @@ public class Players {
         return number_players;
     }
 
+    public int getTurn() {
+        return turn;
+    }
+
+    public void incrementTurn() {
+       this.turn++;
+       if (this.turn >= this.number_players) {
+           this.turn = 0;
+       }
+    }
+    
+    public PlayerProperties getCurrentPlayer() {
+        for (PlayerProperties player : this.players) {
+            if (player.getTurn() == this.turn) {
+                return player;
+            }
+        }
+        throw new IllegalStateException("no player found for turn " + this.turn);
+    }
 }

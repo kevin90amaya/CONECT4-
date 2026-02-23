@@ -148,4 +148,65 @@ public class PlayersTest {
         assertThat(players.getPlayers().get(3).getName(), is(equalTo("ORANGE")));
         assertThat(players.getPlayers().get(4).getName(), is(equalTo("PURPLE")));
     }
+
+    @Test
+    public void testGetCurrentPlayer() {
+        players.getCurrentPlayer();
+        assertThat(players.getCurrentPlayer().getName(), is(equalTo("RED")));
+
+        players.incrementTurn();
+        players.getCurrentPlayer();
+        assertThat(players.getCurrentPlayer().getName(), is(equalTo("YELLOW")));
+    
+        players.incrementTurn();
+        assertThat(players.getTurn(), is(equalTo(0)));
+    }
+
+    @Test
+    public void testGetCurrentPlayerException() {
+        java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
+        playersList.add(new PlayerPropertiesBuilder().turn(1).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(2).build());
+        players.setNumberPlayers(2);
+        players.setPlayers(playersList);
+
+       assertThrows(IllegalStateException.class, () -> {
+            players.getCurrentPlayer();
+        });
+    }
+
+    @Test
+    public void testGetCurrentPlayerOnMaxPlayers() {
+        java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
+        playersList.add(new PlayerPropertiesBuilder().turn(0).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(1).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(2).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(3).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(4).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(5).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(6).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(7).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(8).build());
+        playersList.add(new PlayerPropertiesBuilder().turn(9).build());
+        players.setNumberPlayers(10);
+        players.setPlayers(playersList);
+
+        players.incrementTurn();
+        assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(1)));
+
+        players.incrementTurn();
+        players.incrementTurn();
+        players.incrementTurn();
+        players.incrementTurn();
+        assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(5)));
+
+        players.incrementTurn();
+        players.incrementTurn();
+        players.incrementTurn();
+        players.incrementTurn();
+        assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(9)));
+
+        players.incrementTurn();
+        assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(0)));
+    }
 }
