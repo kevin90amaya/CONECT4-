@@ -1,6 +1,4 @@
 package com.conect4maxmax.conect4.models;
-
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -28,8 +26,8 @@ public class PlayersTest {
     public void setUp() {
         players.setNumberPlayers(2);
         players.getPlayers().clear();
-        players.getPlayers().add(new PlayerProperties("RED", "R", 1, 0));
-        players.getPlayers().add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        players.getPlayers().add(new PlayerProperties("RED", "R", PlayerTipe.HUMAN, 0));
+        players.getPlayers().add(new PlayerProperties("YELLOW", "Y", PlayerTipe.COMPUTER, 1));
     }
 
     @AfterEach
@@ -42,11 +40,11 @@ public class PlayersTest {
         assertThat(players.getPlayers().size(), is(equalTo(2)));
         assertThat(players.getPlayers().get(0).getName(), is(equalTo("RED")));
         assertThat(players.getPlayers().get(0).getToken(), is(equalTo("R")));
-        assertThat(players.getPlayers().get(0).getTipe(), is(equalTo(1)));
+        assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.HUMAN));
         assertThat(players.getPlayers().get(0).getTurn(), is(equalTo(0)));
         assertThat(players.getPlayers().get(1).getName(), is(equalTo("YELLOW")));
         assertThat(players.getPlayers().get(1).getToken(), is(equalTo("Y")));
-        assertThat(players.getPlayers().get(1).getTipe(), is(equalTo(2)));
+        assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.COMPUTER));
         assertThat(players.getPlayers().get(1).getTurn(), is(equalTo(1)));
         }
 
@@ -111,25 +109,9 @@ public class PlayersTest {
 
     @Test
     public void testGetTipe() {     
-        assertThat(players.getTipe(1), is(instanceOf(HumanPlayer.class)));
-        assertThat(players.getTipe(2), is(instanceOf(ComputerPlayer.class)));
+        assertThat(players.getTipe(PlayerTipe.HUMAN), is(instanceOf(HumanPlayer.class)));
+        assertThat(players.getTipe(PlayerTipe.COMPUTER), is(instanceOf(ComputerPlayer.class)));
         }
-
-    @Test
-    public void testGetTipeMayorException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            players.getTipe(3);
-            fail("No se lanzo la excepcion");
-        });
-    }
-
-    @Test
-    public void testGetTipeMenorException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            players.getTipe(0);
-            fail("No se lanzo la excepcion");
-        });
-    }
 
     @Test
     public void testGetPlayers() {

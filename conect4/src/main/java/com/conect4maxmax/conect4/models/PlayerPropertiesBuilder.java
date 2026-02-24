@@ -3,7 +3,7 @@ package com.conect4maxmax.conect4.models;
 public class PlayerPropertiesBuilder {
     private String name = "";
     private String token = "";
-    private int tipe = 0;
+    private PlayerTipe tipe = null;
     private int turn = 0;
     
     public PlayerPropertiesBuilder name(String name) {
@@ -16,7 +16,7 @@ public class PlayerPropertiesBuilder {
         return this;
     }
     
-    public PlayerPropertiesBuilder tipe(int tipe) {
+    public PlayerPropertiesBuilder tipe(PlayerTipe tipe) {
         this.tipe = tipe;
         return this;
     }

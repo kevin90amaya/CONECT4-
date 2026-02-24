@@ -186,6 +186,7 @@ class Settings {
           }
                     
         }
+        
     static getTurn() {
         return this.TURN;
     }

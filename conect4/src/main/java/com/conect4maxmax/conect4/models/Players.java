@@ -8,16 +8,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Players {
+    private GameMode mode;
     private int turn;
     private int number_players;
     private List<PlayerProperties> players;
 
     public Players() {
+        this.mode = GameMode.HUMAN_VS_COMPUTER; 
         this.turn = 0;
         this.number_players = 2;
         this.players = new ArrayList<>();
-        this.players.add(new PlayerProperties("RED", "R", 1, 0));
-        this.players.add(new PlayerProperties("YELLOW", "Y", 2, 1));
+        this.players.add(new PlayerProperties("RED", "R", PlayerTipe.HUMAN, 0));
+        this.players.add(new PlayerProperties("YELLOW", "Y", PlayerTipe.COMPUTER, 1));
     }
 
     public void setPlayers(List<PlayerProperties> listPlayers) {
@@ -28,17 +30,14 @@ public class Players {
         this.players.addAll(listPlayers);
     }
     
-    public Object getTipe(int tipe) {
-        if (tipe < 1 || tipe > 2) {
-            throw new IllegalArgumentException("El tipo no puede ser mayor a 2 o menor a 1");
-        }
+    public Object getTipe(PlayerTipe tipe) {
         switch (tipe) {
-            case 1:
+            case HUMAN:
                 return new HumanPlayer();
-            case 2:
+            case COMPUTER:
                 return new ComputerPlayer();
             default:
-                throw new IllegalArgumentException("Unsupported type: " + tipe);
+                throw new IllegalArgumentException("El tipo no puede ser diferente a HUMAN o COMPUTER");
         }
     }
 
@@ -79,4 +78,25 @@ public class Players {
         }
         throw new IllegalStateException("no player found for turn " + this.turn);
     }
+    
+    public void changedMode() {
+        switch (this.mode) {
+            case COMPUTER_VS_COMPUTER:
+                this.players.get(0).setTipe(PlayerTipe.COMPUTER);
+                this.players.get(1).setTipe(PlayerTipe.COMPUTER);
+                break;
+            case HUMAN_VS_COMPUTER:
+                this.players.get(0).setTipe(PlayerTipe.HUMAN);
+                this.players.get(1).setTipe(PlayerTipe.COMPUTER);
+                break;
+            case HUMAN_VS_HUMAN:
+                this.players.get(0).setTipe(PlayerTipe.HUMAN);
+                this.players.get(1).setTipe(PlayerTipe.HUMAN);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    
 }

@@ -3,10 +3,10 @@ package com.conect4maxmax.conect4.models;
 public class PlayerProperties {
     public String name;
     public String token;
-    public int tipe;
+    public PlayerTipe tipe;
     public int turn;
     
-    public PlayerProperties(String name, String token, int tipe, int turn) {
+    public PlayerProperties(String name, String token, PlayerTipe tipe, int turn) {
         this.name = name;
         this.token = token;
         this.tipe = tipe;
@@ -21,7 +21,7 @@ public class PlayerProperties {
         return token;
     }
     
-    public int getTipe() {
+    public PlayerTipe getTipe() {
         return tipe;
     }
     
@@ -37,7 +37,7 @@ public class PlayerProperties {
         this.token = token; 
     }
 
-    public void setTipe(int tipe) { 
+    public void setTipe(PlayerTipe tipe) { 
         this.tipe = tipe; 
     }
     
