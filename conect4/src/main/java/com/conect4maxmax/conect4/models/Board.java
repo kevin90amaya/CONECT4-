@@ -22,8 +22,6 @@ public class Board {
     }
 
 
-
-
 public void create() {
     this.columns = new Cell[this.numberColumns][this.numberRows];
     for (int column = 0; column < this.numberColumns; column++) {
@@ -88,7 +86,7 @@ private int isOcupiedRow() {
 }
 
 public boolean checkEndGame() {
-    return false;  // Por defecto el juego no ha terminado
+    return this.isConectToWin() || this.isFullBoard(); 
 }
 
 public boolean isFullBoard() {
@@ -96,7 +94,71 @@ public boolean isFullBoard() {
 }
 
 public boolean isConectToWin() {
-    return false;  // Por defecto no hay ganador
+    for(int col = 0; col <= this.numberColumns-1; col++) {
+        for(int row = 0; row <= this.numberRows-1; row++) {
+            Color color = this.columns[col][row].getColor();
+            if(color == this.colorActual && this.checkAllDirections(col, row))
+                return true;
+        }
+    }
+    return false;
 }
+
+public boolean checkAllDirections(int col, int row) {
+    return this.checkHorizontal(col, row) || 
+    this.checkVertical(col, row) || 
+    this.checkDiagonalUp(col, row) || 
+    this.checkDiagonalDown(col, row);
+}
+
+public boolean checkHorizontal(int col, int row) {
+    if(col + this.numberToWin -1 > this.numberColumns) {
+        return false;
+    }
+    for(int i = 0; i < this.numberToWin; i++) {
+        if(this.columns[col + i][row].getColor() != this.colorActual) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean checkVertical(int col, int row) {
+    if(row + this.numberToWin -1 > this.numberRows){
+        return false;
+    }
+    for(int i = 0; i < this.numberToWin; i++) {
+        if(this.columns[col][row + i].getColor() != this.colorActual) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean checkDiagonalUp(int col, int row) {
+    if(col + this.numberToWin -1 > this.numberColumns || row + this.numberToWin -1 > this.numberRows) {
+        return false;
+    }
+    for(int i = 0; i < this.numberToWin; i++) {
+        if(this.columns[col + i][row + i].getColor() != this.colorActual) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean checkDiagonalDown(int col, int row) {
+    if(col - this.numberToWin + 1 < 1 || row + this.numberToWin -1 > this.numberRows) {
+        return false;
+    }
+    for(int i = 0; i < this.numberToWin; i++) {
+        if(this.columns[col - i][row + i].getColor() != this.colorActual) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 }
 
