@@ -26,8 +26,8 @@ public class PlayersTest {
     public void setUp() {
         players.setNumberPlayers(2);
         players.getPlayers().clear();
-        players.getPlayers().add(new PlayerProperties("RED", "R", PlayerTipe.HUMAN, 0));
-        players.getPlayers().add(new PlayerProperties("YELLOW", "Y", PlayerTipe.COMPUTER, 1));
+        players.getPlayers().add(new PlayerProperties("RED", Color.RED, PlayerTipe.HUMAN, 0));
+        players.getPlayers().add(new PlayerProperties("YELLOW", Color.YELLOW, PlayerTipe.COMPUTER, 1));
     }
 
     @AfterEach
@@ -39,11 +39,11 @@ public class PlayersTest {
     public void testInitialProperties() {
         assertThat(players.getPlayers().size(), is(equalTo(2)));
         assertThat(players.getPlayers().get(0).getName(), is(equalTo("RED")));
-        assertThat(players.getPlayers().get(0).getToken(), is(equalTo("R")));
+        assertThat(players.getPlayers().get(0).getColor(), is(Color.RED));
         assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.HUMAN));
         assertThat(players.getPlayers().get(0).getTurn(), is(equalTo(0)));
         assertThat(players.getPlayers().get(1).getName(), is(equalTo("YELLOW")));
-        assertThat(players.getPlayers().get(1).getToken(), is(equalTo("Y")));
+        assertThat(players.getPlayers().get(1).getColor(), is(Color.YELLOW));
         assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.COMPUTER));
         assertThat(players.getPlayers().get(1).getTurn(), is(equalTo(1)));
         }

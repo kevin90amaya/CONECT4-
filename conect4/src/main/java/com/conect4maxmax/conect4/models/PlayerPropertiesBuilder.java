@@ -2,7 +2,7 @@ package com.conect4maxmax.conect4.models;
 
 public class PlayerPropertiesBuilder {
     private String name = "";
-    private String token = "";
+    private Color color = null;
     private PlayerTipe tipe = null;
     private int turn = 0;
     
@@ -11,8 +11,8 @@ public class PlayerPropertiesBuilder {
         return this;
     }
     
-    public PlayerPropertiesBuilder token(String token) {
-        this.token = token;
+    public PlayerPropertiesBuilder color(Color color) {
+        this.color = color;
         return this;
     }
     
@@ -27,6 +27,6 @@ public class PlayerPropertiesBuilder {
     }
     
     public PlayerProperties build() {
-        return new PlayerProperties(name, token, tipe, turn);
+        return new PlayerProperties(name, color, tipe, turn);
     }
 }

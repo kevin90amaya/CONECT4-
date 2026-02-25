@@ -18,8 +18,8 @@ public class Players {
         this.turn = 0;
         this.number_players = 2;
         this.players = new ArrayList<>();
-        this.players.add(new PlayerProperties("RED", "R", PlayerTipe.HUMAN, 0));
-        this.players.add(new PlayerProperties("YELLOW", "Y", PlayerTipe.COMPUTER, 1));
+        this.players.add(new PlayerProperties("RED", Color.RED, PlayerTipe.HUMAN, 0));
+        this.players.add(new PlayerProperties("YELLOW", Color.YELLOW, PlayerTipe.COMPUTER, 1));
     }
 
     public void setPlayers(List<PlayerProperties> listPlayers) {

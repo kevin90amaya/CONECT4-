@@ -1,37 +1,90 @@
 package com.conect4maxmax.conect4.models;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class Board {
     
+    int actualColumn;
+    int positionInRowLastColor;
+    Color colorActual;
     int numberColumns;
     int numberRows;
     int numberToWin;
-    Object BOARD;
-    int tokenQuantityOnBoard;
+    Cell[][] columns;
+    int colorsQuantityOnCells;
     
     public Board() {
+        this.actualColumn = 0;
+        this.positionInRowLastColor = 0;
+        this.colorActual = Color.EMPTY;
         this.numberColumns = 7;
         this.numberRows = 6;
         this.numberToWin = 4;
-        this.BOARD = new Object();
-        this.tokenQuantityOnBoard = 0;
+        this.colorsQuantityOnCells = 0;
     }
-public Map<String, Map<String, String>> getBoard() {
-    return new LinkedHashMap<>();  // Devuelve mapa vacío temporalmente
+
+
+
+
+public void create() {
+    this.columns = new Cell[this.numberColumns][this.numberRows];
+    for (int column = 0; column < this.numberColumns; column++) {
+        for (int row = 0; row < this.numberRows; row++) {
+            this.columns[column][row] = new Cell(Color.EMPTY);
+        }
+    }
 }
 
-public int getTokenQuantityOnBoard() {
-    return 0;  // Sin tokens inicialmente
+public void reset() {
+    this.create();
+    this.colorsQuantityOnCells = 0;
+}
+
+public Cell[][] getBoard() {
+    return this.columns;  
+}
+
+public int getColorsQuantityOnBoard() {
+    return this.colorsQuantityOnCells; 
+}
+
+public void asigColumn(int proposedColumn) {
+    this.actualColumn = proposedColumn;
+}
+
+public void asigPositionInRowLastColor(int RowlastColor) {
+    this.positionInRowLastColor = RowlastColor;
+}
+
+public void asigColorActual(Color colorActual) {
+    this.colorActual = colorActual;
+}
+
+public void resetState() {
+    this.actualColumn = 0;
+    this.positionInRowLastColor = 0;
+    this.colorActual = Color.EMPTY;
+}
+
+public void dropColor(Color color) {
+    this.columns[this.actualColumn][this.isOcupiedRow() ].setColor(color);
+    this.asigColorActual(color);
+    this.colorsQuantityOnCells++;
 }
 
 private boolean completeColumn(int proposedColumn) {
-    return false;  // Por defecto no está completa
+    if(this.columns[proposedColumn][this.numberRows - 1].getColor() != Color.EMPTY) {
+        return true;
+    }
+    return false;
 }
 
 private int isOcupiedRow() {
-    return -1;  // Valor indicando que no hay fila ocupada
+     for(int row = 1; row <= this.numberRows; row++) {
+        if(this.columns[this.actualColumn][row].getColor() == Color.EMPTY) {
+            this.positionInRowLastColor = row;
+            return row;
+        }
+    }
+    return 0;
 }
 
 public boolean checkEndGame() {
@@ -39,7 +92,7 @@ public boolean checkEndGame() {
 }
 
 public boolean isFullBoard() {
-    return false;  // Por defecto el tablero no está lleno
+    return this.colorsQuantityOnCells == this.numberColumns * this.numberRows;
 }
 
 public boolean isConectToWin() {

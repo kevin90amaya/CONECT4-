@@ -2,13 +2,13 @@ package com.conect4maxmax.conect4.models;
 
 public class PlayerProperties {
     public String name;
-    public String token;
+    public Color color;
     public PlayerTipe tipe;
     public int turn;
     
-    public PlayerProperties(String name, String token, PlayerTipe tipe, int turn) {
+    public PlayerProperties(String name, Color color, PlayerTipe tipe, int turn) {
         this.name = name;
-        this.token = token;
+        this.color = color;
         this.tipe = tipe;
         this.turn = turn;
     }
@@ -17,8 +17,8 @@ public class PlayerProperties {
         return name;
     }
     
-    public String getToken() {
-        return token;
+    public Color getColor() {
+        return color;
     }
     
     public PlayerTipe getTipe() {
@@ -33,8 +33,8 @@ public class PlayerProperties {
         this.name = name; 
     }
 
-    public void setToken(String token) { 
-        this.token = token; 
+    public void setColor(Color color) { 
+        this.color = color; 
     }
 
     public void setTipe(PlayerTipe tipe) { 
