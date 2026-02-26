@@ -1,5 +1,8 @@
 package com.conect4maxmax.conect4.models;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Board {
     
     int actualColumn;
@@ -34,11 +37,53 @@ public void create() {
 public void reset() {
     this.create();
     this.colorsQuantityOnCells = 0;
+    this.actualColumn = 0;
+    this.positionInRowLastColor = 0;
+    this.colorActual = Color.EMPTY;
 }
 
 public Cell[][] getBoard() {
     return this.columns;  
 }
+
+
+
+
+public void setNumberColumns(int numberColumns) {
+    int minColumns = 3;
+    int maxColumns = 30;
+
+    if(numberColumns < minColumns || numberColumns > maxColumns) {
+        throw new IllegalArgumentException("Number of columns must be between " + minColumns + " and " + maxColumns);
+    }
+
+    this.numberColumns = numberColumns;
+}
+
+public void setNumberRows(int numberRows) {
+    int minRows = 3;
+    int maxRows = 30;
+
+    if(numberRows < minRows || numberRows > maxRows) {
+        throw new IllegalArgumentException("Number of rows must be between " + minRows + " and " + maxRows);
+    }
+    
+    this.numberRows = numberRows;
+}
+
+public void setNumberToWin(int numberToWin) {
+    int minToWin = 3;
+    int maxToWin = 30;
+
+    if(numberToWin < minToWin || numberToWin > maxToWin) {
+        throw new IllegalArgumentException("Number of to win must be between " + minToWin + " and " + maxToWin);
+    }
+    
+    this.numberToWin = numberToWin;
+}
+
+
+
 
 public int getColorsQuantityOnBoard() {
     return this.colorsQuantityOnCells; 
@@ -56,16 +101,16 @@ public void asigColorActual(Color colorActual) {
     this.colorActual = colorActual;
 }
 
-public void resetState() {
-    this.actualColumn = 0;
-    this.positionInRowLastColor = 0;
-    this.colorActual = Color.EMPTY;
+public void incrementColorsQuantityOnCells() {
+    this.colorsQuantityOnCells++;
 }
+
+
 
 public void dropColor(Color color) {
     this.columns[this.actualColumn][this.isOcupiedRow() ].setColor(color);
     this.asigColorActual(color);
-    this.colorsQuantityOnCells++;
+    this.incrementColorsQuantityOnCells();
 }
 
 private boolean completeColumn(int proposedColumn) {
@@ -84,6 +129,12 @@ private int isOcupiedRow() {
     }
     return 0;
 }
+
+
+
+
+
+
 
 public boolean checkEndGame() {
     return this.isConectToWin() || this.isFullBoard(); 
@@ -158,7 +209,6 @@ public boolean checkDiagonalDown(int col, int row) {
     }
     return true;
 }
-
 
 }
 
