@@ -108,26 +108,26 @@ public void incrementColorsQuantityOnCells() {
 
 
 public void dropColor(Color color) {
-    this.columns[this.actualColumn][this.isOcupiedRow() ].setColor(color);
+    this.columns[this.actualColumn][this.findEmptyRow() ].setColor(color);
     this.asigColorActual(color);
     this.incrementColorsQuantityOnCells();
 }
 
-private boolean completeColumn(int proposedColumn) {
+public boolean isCompleteColumn(int proposedColumn) {
     if(this.columns[proposedColumn][this.numberRows - 1].getColor() != Color.EMPTY) {
         return true;
     }
     return false;
 }
 
-private int isOcupiedRow() {
-     for(int row = 1; row <= this.numberRows; row++) {
+private int findEmptyRow() {
+     for(int row = 0 ; row <= this.numberRows -1 ; row++) {
         if(this.columns[this.actualColumn][row].getColor() == Color.EMPTY) {
             this.positionInRowLastColor = row;
             return row;
         }
     }
-    return 0;
+    throw new IllegalStateException("Column is full");
 }
 
 
@@ -156,49 +156,98 @@ public boolean isConectToWin() {
 }
 
 public boolean checkAllDirections(int col, int row) {
-    return this.checkHorizontal(col, row) || 
-    this.checkVertical(col, row) || 
-    this.checkDiagonalUp(col, row) || 
-    this.checkDiagonalDown(col, row);
+    return this.checkHorizontal() || 
+    this.checkVertical() || 
+    this.checkDiagonalUp() || 
+    this.checkDiagonalDown();
 }
 
-public boolean checkHorizontal(int col, int row) {
-    if(col + this.numberToWin -1 > this.numberColumns) {
-        return false;
-    }
-    for(int i = 0; i < this.numberToWin; i++) {
-        if(this.columns[col + i][row].getColor() != this.colorActual) {
-            return false;
+public boolean checkHorizontal() {
+    for(int row = 0; row < this.numberRows; row++) {
+        int consecutiveCount = 0;
+        
+        for(int col = 0; col < this.numberColumns; col++) {
+            if(this.columns[col][row].getColor() == this.colorActual) {
+                consecutiveCount++;
+                if(consecutiveCount == this.numberToWin) {
+                    return true;
+                }
+            } else {
+                consecutiveCount = 0;
+            }
         }
     }
-    return true;
+    return false;
 }
 
-public boolean checkVertical(int col, int row) {
-    if(row + this.numberToWin -1 > this.numberRows){
-        return false;
-    }
-    for(int i = 0; i < this.numberToWin; i++) {
-        if(this.columns[col][row + i].getColor() != this.colorActual) {
-            return false;
+public boolean checkVertical() {
+    for(int col = 0; col < this.numberColumns; col++) {
+        int consecutiveCount = 0;
+        
+        for(int row = 0; row < this.numberRows; row++) {
+            if(this.columns[col][row].getColor() == this.colorActual) {
+                consecutiveCount++;
+                if(consecutiveCount == this.numberToWin) {
+                    return true;
+                }
+            } else {
+                consecutiveCount = 0;
+            }
         }
     }
-    return true;
+    return false;
 }
 
-public boolean checkDiagonalUp(int col, int row) {
-    if(col + this.numberToWin -1 > this.numberColumns || row + this.numberToWin -1 > this.numberRows) {
-        return false;
-    }
-    for(int i = 0; i < this.numberToWin; i++) {
-        if(this.columns[col + i][row + i].getColor() != this.colorActual) {
-            return false;
+public boolean checkDiagonalUp() {
+    int consecutiveCount = 0;
+    
+    for (int row = 0; haySuficientesFilasParaVerificar(row, consecutiveCount); row++) {
+        for (int col = this.dameLaColumnaMaximaYSuficienteParaVerificar(); haySuficientesFilasParaVerificar(row, consecutiveCount); col--) {
+            
+            for (int i = 0; sePuedeVerificarSiguientePosicion(row, col, i, consecutiveCount); i++) {
+                if (laCeldaTieneElColorActual(col + i, row + i)) {
+                    consecutiveCount++;
+                    if (seAlcanzoNumeroParaGanar(consecutiveCount)) {
+                        return true;
+                    }
+                } else {
+                    consecutiveCount = 0;
+                }
+            }
         }
     }
-    return true;
+    return false;
 }
 
-public boolean checkDiagonalDown(int col, int row) {
+public int dameLaColumnaMaximaYSuficienteParaVerificar() {
+    return this.numberColumns - this.numberToWin;
+}
+
+// Métodos descriptivos para condiciones
+public boolean haySuficientesFilasParaVerificar(int row, int consecutiveCount) {
+    int filasNecesitadas = this.numberToWin - consecutiveCount;
+    return row < this.numberRows - filasNecesitadas;
+}
+
+public boolean sePuedeVerificarSiguientePosicion(int row, int col, int i, int consecutiveCount) {
+    int posicionesRestantesParaGanar = this.numberToWin - consecutiveCount;
+    return i < posicionesRestantesParaGanar && 
+           estaDentroDeLosLimitesDelTablero(row + i, col + i);
+}
+
+public boolean estaDentroDeLosLimitesDelTablero(int row, int col) {
+    return row < this.numberRows && col < this.numberColumns;
+}
+
+public boolean laCeldaTieneElColorActual(int col, int row) {
+    return this.columns[col][row].getColor() == this.colorActual;
+}
+
+public boolean seAlcanzoNumeroParaGanar(int consecutiveCount) {
+    return consecutiveCount == this.numberToWin;
+}
+
+public boolean checkDiagonalDown() {
     if(col - this.numberToWin + 1 < 1 || row + this.numberToWin -1 > this.numberRows) {
         return false;
     }
