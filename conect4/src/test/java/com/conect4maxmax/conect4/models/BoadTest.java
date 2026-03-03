@@ -265,6 +265,221 @@ public class BoadTest {
     }
 
 
+    @Test
+    public void testCheckDiagonalUp_BottomRightCorner(){
+        boardBuilder.setActualColumn(6).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(5).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(4).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+
+        assertThat(board.checkDiagonalUp(), is(true));
+        
+    }
+
+    @Test
+    public void testCheckDiagonalUp2(){
+        boardBuilder.setActualColumn(6).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(5).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(4).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+
+        assertThat(board.checkDiagonalUp(), is(false));
+    }
+
+    @Test
+    public void testCheckDiagonalUp_UpperRightCorner(){
+             boardBuilder.setActualColumn(6).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(5).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(4).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkDiagonalUp(), is(true));
+        
+    }
+
+    @Test
+    public void testCheckDiagonalUp_BottomLeftCorner(){
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(2).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(1).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(0).build();
+        board.dropColor(Color.YELLOW);
+
+        assertThat(board.checkDiagonalUp(), is(true));
+    }
+
+    @Test
+    public void testCheckDiagonalUp_UpperLeftCorner(){
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(2).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(1).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(0).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkDiagonalUp(), is(true));
+    }
+
+
+
+    @Test
+    public void testCheckDiagonalDown_BottomLeftCorner(){
+        boardBuilder.setActualColumn(0).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(1).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(2).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+
+        assertThat(board.checkDiagonalDown(), is(true));
+    }
+
+    @Test
+    public void testCheckDiagonalDown_BottomRightCorner(){
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(4).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(5).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        boardBuilder.setActualColumn(6).build();
+        board.dropColor(Color.YELLOW);
+
+        assertThat(board.checkDiagonalDown(), is(true));
+    }
+
+    @Test
+    public void testCheckDiagonalDown_UpperLeftCorner(){
+        boardBuilder.setActualColumn(0).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(1).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(2).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkDiagonalDown(), is(true));
+    }
+
+    @Test
+    public void testCheckDiagonalDown_UpperRightCorner(){
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(4).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(5).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(6).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkDiagonalDown(), is(true));
+    }
 
 
     @Test
@@ -280,25 +495,25 @@ public class BoadTest {
           assertThat(board.haySuficientesFilasParaVerificar(1 ,2), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(1 ,3), is(true));
 
-          assertThat(board.haySuficientesFilasParaVerificar(2 ,0), is(false));
+          assertThat(board.haySuficientesFilasParaVerificar(2 ,0), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(2 ,1), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(2 ,2), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(2 ,3), is(true));
 
           assertThat(board.haySuficientesFilasParaVerificar(3 ,0), is(false));
-          assertThat(board.haySuficientesFilasParaVerificar(3 ,1), is(false));
+          assertThat(board.haySuficientesFilasParaVerificar(3 ,1), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(3 ,2), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(3 ,3), is(true));
 
           assertThat(board.haySuficientesFilasParaVerificar(4 ,0), is(false));
           assertThat(board.haySuficientesFilasParaVerificar(4 ,1), is(false));
-          assertThat(board.haySuficientesFilasParaVerificar(4 ,2), is(false));
+          assertThat(board.haySuficientesFilasParaVerificar(4 ,2), is(true));
           assertThat(board.haySuficientesFilasParaVerificar(4 ,3), is(true));
 
           assertThat(board.haySuficientesFilasParaVerificar(5 ,0), is(false));
           assertThat(board.haySuficientesFilasParaVerificar(5 ,1), is(false));
           assertThat(board.haySuficientesFilasParaVerificar(5 ,2), is(false));
-          assertThat(board.haySuficientesFilasParaVerificar(5 ,3), is(false));
+          assertThat(board.haySuficientesFilasParaVerificar(5 ,3), is(true));
 
     }
     
@@ -307,26 +522,9 @@ public class BoadTest {
         assertThat(board.dameLaColumnaMaximaYSuficienteParaVerificar(), is(3));
     }
     
-    @Test
-    public void testEstaDentroDeLosLimitesDelTablero(){
-        assertThat(board.estaDentroDeLosLimitesDelTablero(0, 0), is(true));
-        assertThat(board.estaDentroDeLosLimitesDelTablero(5, 0), is(true));
-        assertThat(board.estaDentroDeLosLimitesDelTablero(6, 0), is(false));
-
-        assertThat(board.estaDentroDeLosLimitesDelTablero(0, 0), is(true));
-        assertThat(board.estaDentroDeLosLimitesDelTablero(0, 6), is(true));
-        assertThat(board.estaDentroDeLosLimitesDelTablero(0, 7), is(false));
-    }
 
     @Test
-    public void testSePuedeVerificarSiguientePosicion(){
-          assertThat(board.sePuedeVerificarSiguientePosicion(0, 0, 0,0), is(true));
-          assertThat(board.sePuedeVerificarSiguientePosicion(4, 5, 1,0), is(true));
-          assertThat(board.sePuedeVerificarSiguientePosicion(5, 6, 1,0), is(false));
-
+    public void testCheckAllDirections(){
+        
     }
-
-
-
-
 }

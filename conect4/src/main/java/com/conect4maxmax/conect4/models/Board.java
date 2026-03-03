@@ -145,17 +145,10 @@ public boolean isFullBoard() {
 }
 
 public boolean isConectToWin() {
-    for(int col = 0; col <= this.numberColumns-1; col++) {
-        for(int row = 0; row <= this.numberRows-1; row++) {
-            Color color = this.columns[col][row].getColor();
-            if(color == this.colorActual && this.checkAllDirections(col, row))
-                return true;
-        }
-    }
-    return false;
+return this.checkAllDirections();
 }
 
-public boolean checkAllDirections(int col, int row) {
+public boolean checkAllDirections() {
     return this.checkHorizontal() || 
     this.checkVertical() || 
     this.checkDiagonalUp() || 
@@ -202,15 +195,17 @@ public boolean checkDiagonalUp() {
     int consecutiveCount = 0;
     
     for (int row = 0; haySuficientesFilasParaVerificar(row, consecutiveCount); row++) {
-        for (int col = this.dameLaColumnaMaximaYSuficienteParaVerificar(); haySuficientesFilasParaVerificar(row, consecutiveCount); col--) {
-            
-            for (int i = 0; sePuedeVerificarSiguientePosicion(row, col, i, consecutiveCount); i++) {
-                if (laCeldaTieneElColorActual(col + i, row + i)) {
+
+        for (int col = this.dameLaColumnaMaximaYSuficienteParaVerificar(); col >= 0; col--) {
+
+            for (int i = 0; i < this.numberToWin; i++) {
+
+                if (this.columns[col + i][row + i].getColor() == this.colorActual){
                     consecutiveCount++;
-                    if (seAlcanzoNumeroParaGanar(consecutiveCount)) {
+                    if(consecutiveCount == this.numberToWin) {
                         return true;
                     }
-                } else {
+                }else{
                     consecutiveCount = 0;
                 }
             }
@@ -223,41 +218,34 @@ public int dameLaColumnaMaximaYSuficienteParaVerificar() {
     return this.numberColumns - this.numberToWin;
 }
 
-// Métodos descriptivos para condiciones
 public boolean haySuficientesFilasParaVerificar(int row, int consecutiveCount) {
     int filasNecesitadas = this.numberToWin - consecutiveCount;
-    return row < this.numberRows - filasNecesitadas;
+    return row <= this.numberRows - filasNecesitadas;
 }
-
-public boolean sePuedeVerificarSiguientePosicion(int row, int col, int i, int consecutiveCount) {
-    int posicionesRestantesParaGanar = this.numberToWin - consecutiveCount;
-    return i < posicionesRestantesParaGanar && 
-           estaDentroDeLosLimitesDelTablero(row + i, col + i);
-}
-
-public boolean estaDentroDeLosLimitesDelTablero(int row, int col) {
-    return row < this.numberRows && col < this.numberColumns;
-}
-
-public boolean laCeldaTieneElColorActual(int col, int row) {
-    return this.columns[col][row].getColor() == this.colorActual;
-}
-
-public boolean seAlcanzoNumeroParaGanar(int consecutiveCount) {
-    return consecutiveCount == this.numberToWin;
-}
-
+ 
 public boolean checkDiagonalDown() {
-    if(col - this.numberToWin + 1 < 1 || row + this.numberToWin -1 > this.numberRows) {
-        return false;
-    }
-    for(int i = 0; i < this.numberToWin; i++) {
-        if(this.columns[col - i][row + i].getColor() != this.colorActual) {
-            return false;
+        int consecutiveCount = 0;
+    
+    for (int row = 0; haySuficientesFilasParaVerificar(row, consecutiveCount); row++) {
+
+        for (int col = this.numberToWin - 1; col <= this.numberColumns - 1; col++) {
+
+            for (int i = 0; i < this.numberToWin; i++) {
+
+                if (this.columns[col - i][row + i].getColor() == this.colorActual){
+                    consecutiveCount++;
+                    if(consecutiveCount == this.numberToWin) {
+                        return true;
+                    }
+                }else{
+                    consecutiveCount = 0;
+                }
+            }
         }
     }
-    return true;
+    return false;
 }
+
 
 }
 
