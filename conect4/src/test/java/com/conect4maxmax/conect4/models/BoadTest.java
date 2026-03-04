@@ -524,7 +524,66 @@ public class BoadTest {
     
 
     @Test
-    public void testCheckAllDirections(){
+    public void testMinValuesBoardCheckAllDirections(){
+
+        boardBuilder.setNumberColumns(3).setNumberRows(3).setNumberToWin(3).build().create();
+
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(1).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(2).build();
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkAllDirections(), is(true));
         
     }
+
+    @Test
+    public void testMixValuesBoardCheckAllDirections(){
+
+        boardBuilder.setNumberColumns(30).setNumberRows(30).setNumberToWin(7).build().create();
+
+        boardBuilder.setActualColumn(29).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(28).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(27).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(26).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(25).build();
+        board.dropColor(Color.RED);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(24).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        boardBuilder.setActualColumn(23).build();
+        board.dropColor(Color.RED);
+
+        assertThat(board.checkAllDirections(), is(true));
+        
+    }
+
 }
