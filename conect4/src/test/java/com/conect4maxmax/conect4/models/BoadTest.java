@@ -102,10 +102,13 @@ public class BoadTest {
    }
 
    @Test
-   public void testSetNumberToWinZeroException(){
-        assertThrows(IllegalArgumentException.class, () -> {
-            boardBuilder.setNumberToWin(0).build();
-        });
+   public void testSetNumberToWinMayorColumnAndRowException(){
+
+       boardBuilder.setNumberColumns(6).setNumberRows(7).build().create();
+
+       assertThrows(IllegalArgumentException.class, () -> {
+           boardBuilder.setNumberToWin(8).build();
+       });
    }
    
    @Test
@@ -524,7 +527,7 @@ public class BoadTest {
     
 
     @Test
-    public void testMinValuesBoardCheckAllDirections(){
+    public void testCombinationCase1(){
 
         boardBuilder.setNumberColumns(3).setNumberRows(3).setNumberToWin(3).build().create();
 
@@ -542,45 +545,27 @@ public class BoadTest {
     }
 
     @Test
-    public void testMixValuesBoardCheckAllDirections(){
+    public void testCombinationCase2(){
 
-        boardBuilder.setNumberColumns(30).setNumberRows(30).setNumberToWin(7).build().create();
+        boardBuilder.setNumberColumns(3).setNumberRows(30).setNumberToWin(30).build().create();
 
-        boardBuilder.setActualColumn(29).build();
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(28).build();
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(27).build();
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(26).build();
-        board.dropColor(Color.RED);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(25).build();
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(24).build();
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        boardBuilder.setActualColumn(23).build();
-        board.dropColor(Color.RED);
+        assertThat(board.checkAllDirections(), is(true));
+        
+    }
+
+    @Test
+    public void testCombinationCase3(){
+
+        boardBuilder.setNumberColumns(30).setNumberRows(3).setNumberToWin(30).build().create();
+
+        assertThat(board.checkAllDirections(), is(true));
+        
+    }
+
+    @Test
+    public void testCombinationCase4(){
+
+        boardBuilder.setNumberColumns(30).setNumberRows(30).setNumberToWin(30).build().create();
 
         assertThat(board.checkAllDirections(), is(true));
         

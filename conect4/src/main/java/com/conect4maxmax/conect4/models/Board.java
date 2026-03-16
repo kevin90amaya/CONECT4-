@@ -17,7 +17,7 @@ public class Board {
     public Board() {
         this.actualColumn = 0;
         this.positionInRowLastColor = 0;
-        this.colorActual = Color.EMPTY;
+        this.colorActual = null;
         this.numberColumns = 7;
         this.numberRows = 6;
         this.numberToWin = 4;
@@ -39,7 +39,7 @@ public void reset() {
     this.colorsQuantityOnCells = 0;
     this.actualColumn = 0;
     this.positionInRowLastColor = 0;
-    this.colorActual = Color.EMPTY;
+    this.colorActual = null;
 }
 
 public Cell[][] getBoard() {
@@ -74,9 +74,12 @@ public void setNumberRows(int numberRows) {
 public void setNumberToWin(int numberToWin) {
     int minToWin = 3;
     int maxToWin = 30;
-
     if(numberToWin < minToWin || numberToWin > maxToWin) {
         throw new IllegalArgumentException("Number of to win must be between " + minToWin + " and " + maxToWin);
+    }
+
+    if(numberToWin > this.numberColumns && numberToWin > this.numberRows) {
+        throw new IllegalArgumentException("Number of to win must be less than or equal to the number of columns and rows");
     }
     
     this.numberToWin = numberToWin;
