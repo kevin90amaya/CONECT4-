@@ -549,6 +549,10 @@ public class BoadTest {
 
         boardBuilder.setNumberColumns(3).setNumberRows(30).setNumberToWin(30).build().create();
 
+        boardBuilder.setActualColumn(2).build();
+        for(int i = 0 ; i < 30 ; i ++){
+            board.dropColor(Color.RED);
+        }
         assertThat(board.checkAllDirections(), is(true));
         
     }
@@ -558,6 +562,10 @@ public class BoadTest {
 
         boardBuilder.setNumberColumns(30).setNumberRows(3).setNumberToWin(30).build().create();
 
+        for(int i = 0; i < 30; i ++){
+            boardBuilder.setActualColumn(i).build();
+            board.dropColor(Color.YELLOW);
+        }
         assertThat(board.checkAllDirections(), is(true));
         
     }
@@ -566,6 +574,16 @@ public class BoadTest {
     public void testCombinationCase4(){
 
         boardBuilder.setNumberColumns(30).setNumberRows(30).setNumberToWin(30).build().create();
+
+        board.dropColor(Color.RED);
+        for(int column = 1; column < 30; column++){
+            boardBuilder.setActualColumn(column).build();
+
+            for(int i = 0 ; i < column ; i ++){
+                board.dropColor(Color.YELLOW);
+            }
+            board.dropColor(Color.RED);
+        }
 
         assertThat(board.checkAllDirections(), is(true));
         
