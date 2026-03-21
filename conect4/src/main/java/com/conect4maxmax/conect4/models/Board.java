@@ -46,7 +46,9 @@ public Cell[][] getBoard() {
     return this.columns;  
 }
 
-
+public int getNumberColumns(){
+    return this.numberColumns;
+}
 
 
 public void setNumberColumns(int numberColumns) {

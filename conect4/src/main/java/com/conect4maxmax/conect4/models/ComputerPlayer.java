@@ -1,7 +1,13 @@
 package com.conect4maxmax.conect4.models;
 
-public class ComputerPlayer {
+import java.util.concurrent.ThreadLocalRandom;
 
+public class ComputerPlayer extends Players{
+
+
+public int getColumn() {
+    return ThreadLocalRandom.current().nextInt(0, this.board.getNumberColumns());
+}
 
     
 }

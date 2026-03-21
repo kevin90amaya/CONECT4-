@@ -3,11 +3,16 @@ package com.conect4maxmax.conect4.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class Players {
+
+    @Autowired
+    Board board;
+
     private GameMode mode;
     private int turn;
     private int number_players;
