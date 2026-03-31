@@ -1,5 +1,5 @@
 import Message from "../../Messages/Message.js";
-import BoardView from "../../board/views/BoardView.js";
+import GameState from "../../models/GameState.js";
 
 class GameView {
 
@@ -26,7 +26,7 @@ class GameView {
     }
 
     getNumberToWin() {
-        return BoardView.getNumberToWin();
+        return GameState.getNumberToWin();
     }
 }
 

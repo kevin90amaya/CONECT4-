@@ -69,7 +69,7 @@ class ControllerMenu {
             this.loadMenu();
             break;
         case "start-game":
-            new ControllerGame().initialize();
+           await new ControllerGame().initialize();
             break;
         }
     }

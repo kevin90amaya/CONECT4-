@@ -26,6 +26,9 @@ package "mvc_front" {
             class ModelPlayers {}
         }
         package "messages" {}
+        package "model" {
+            class GameState <<static>> {}
+        }
     }
 }
 
@@ -34,9 +37,13 @@ package "spring_boot_backend" {
         class RestControllerGame {}
         class RestControllerBoard {}
         class RestControllerPlayers {}
+        class RestSettingsMenuController {}
     }
     package "services" {
-        
+        class SettingsMenuService {}
+        class GameService {}
+        class BoardService {}
+        class PlayersService {}
     }
     package "models" {
         
@@ -64,10 +71,10 @@ ControllerPlayers --> ModelPlayers
 ControllerGame <.. RestControllerGame : json 
 ControllerGame ..> RestControllerGame : get, post, put, delete
 
-
-
-
 controllers --> services
 services --> models
+
+ViewGame ..> GameState
+ControllerBoard ..> GameState
 
 @enduml

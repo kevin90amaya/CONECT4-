@@ -1,5 +1,5 @@
 import Idiomas from "./Idiomas.js";
-import BoardView from "../board/views/BoardView.js";
+
 
 class Ingles extends Idiomas {
      getMainMenuMessages() {

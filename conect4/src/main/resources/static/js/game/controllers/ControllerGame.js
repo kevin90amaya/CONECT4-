@@ -10,9 +10,9 @@ class ControllerGame {
         this.controllerPlayers = new ControllerPlayers();
     }
     
-    initialize() {
-        this.controllerBoard.initialize();
-        this.controllerPlayers.initialize();
+   async initialize() {
+        await this.controllerBoard.initialize();
+      //  this.controllerPlayers.initialize();
         this.gameView.initialize();
     }
     

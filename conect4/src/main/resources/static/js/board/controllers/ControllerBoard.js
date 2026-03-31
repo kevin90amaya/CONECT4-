@@ -1,4 +1,6 @@
 import BoardView from "../views/BoardView.js";
+import { ENDPOINTS } from "../../api/endpoints.js";
+import GameState from "../../models/GameState.js";
 
 class ControllerBoard {
     
@@ -10,17 +12,21 @@ class ControllerBoard {
         this.board = null;
     }
 
-    getboard() {
-        return ;
+    async getboard() {
+        const response = await fetch(ENDPOINTS.BOARD);
+        const data = await response.json();
+        return data;
     }
     
-    setBoard(board) {
-        this.boardView.setBoard(board);
+    setBoard() {
+        this.boardView.setBoard(this.board);
     }
     
-    initialize() {
-        this.boardView.initialize();
-        
+    async initialize() {
+        this.board = await this.getboard();
+        GameState.setBoard(this.board);
+        this.setBoard();
+       // this.boardView.initialize();
     }
 }
 export default ControllerBoard;

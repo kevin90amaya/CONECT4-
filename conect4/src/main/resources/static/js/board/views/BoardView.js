@@ -12,6 +12,7 @@ class BoardView {
     }
 
     getNumberToWin() {
-        return this.#board.getNumberToWin();
+        return this.#board.numberToWin;
     }
 }
+export default BoardView;

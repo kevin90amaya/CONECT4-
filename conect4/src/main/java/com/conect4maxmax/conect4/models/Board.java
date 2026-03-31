@@ -20,6 +20,7 @@ public class Board {
         this.numberRows = 6;
         this.numberToWin = 4;
         this.colorsQuantityOnCells = 0;
+        this.create();
     }
 
 
