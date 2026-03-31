@@ -1,0 +1,54 @@
+@startuml conecta4rest
+
+component cliente_web {
+
+  package resources {
+    class index <DOM> {}
+    class Controller  {}
+    class View  {}
+    class models {}
+    class Mensssages {}
+  }
+
+
+}
+
+component servidor_spring {
+
+  package controllers {
+    class ControllerSettingsMenu{}
+    class ControllerGame{}
+  }
+  package servis {
+    class ServisSettingsMenuPlayesrs{}
+    class ServisSettingsMenuBoard{}
+    class ServisGame{}
+  }
+  package model {
+  class Players {}
+  class HumanPlayer {}
+  class ComputerPlayer {}
+  class Board {}
+  }
+}
+
+
+
+Controller *--> View
+Controller *--> models 
+View *--> models
+View ..> Mensssages
+View ..> index : ACTUALIZA 
+index --> Controller : EVENTOS
+Controller --> controllers :GET, POST, PUT, DELETE
+controllers ..> servis
+servis ..> model
+
+HumanPlayer ..> Board
+ComputerPlayer ..> Board
+Players *--> HumanPlayer
+Players *--> ComputerPlayer
+
+
+
+@enduml

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 public class Board {
     
     int actualColumn;
-    int positionInRowLastColor;
     Color colorActual;
     int numberColumns;
     int numberRows;
@@ -16,7 +15,6 @@ public class Board {
     
     public Board() {
         this.actualColumn = 0;
-        this.positionInRowLastColor = 0;
         this.colorActual = null;
         this.numberColumns = 7;
         this.numberRows = 6;
@@ -38,7 +36,6 @@ public void reset() {
     this.create();
     this.colorsQuantityOnCells = 0;
     this.actualColumn = 0;
-    this.positionInRowLastColor = 0;
     this.colorActual = null;
 }
 
@@ -50,6 +47,13 @@ public int getNumberColumns(){
     return this.numberColumns;
 }
 
+public Color geColor(int column, int row){
+    return this.columns[column][row].getColor();
+}
+
+public int getNumberToWin(){
+    return this.numberToWin;
+}
 
 public void setNumberColumns(int numberColumns) {
     int minColumns = 3;
@@ -98,9 +102,7 @@ public void asigColumn(int proposedColumn) {
     this.actualColumn = proposedColumn;
 }
 
-public void asigPositionInRowLastColor(int RowlastColor) {
-    this.positionInRowLastColor = RowlastColor;
-}
+
 
 public void asigColorActual(Color colorActual) {
     this.colorActual = colorActual;
@@ -128,7 +130,6 @@ public boolean isCompleteColumn(int proposedColumn) {
 private int findEmptyRow() {
      for(int row = 0 ; row <= this.numberRows -1 ; row++) {
         if(this.columns[this.actualColumn][row].getColor() == Color.EMPTY) {
-            this.positionInRowLastColor = row;
             return row;
         }
     }

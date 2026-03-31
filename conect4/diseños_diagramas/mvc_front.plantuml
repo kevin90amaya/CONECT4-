@@ -1,0 +1,73 @@
+@startuml mvc_front
+
+package "mvc_front" {
+    class index {}
+    class scripts {}
+    package "js" {
+        class AppController {}
+        package "menus" {
+            class ControllerMenu {}
+            class ViewMenu {}
+            class ModelMenu {}
+        }
+        package "game" {
+            class ControllerGame {}
+            class ViewGame {}
+            class ModelGame {}
+        }
+        package "board" {
+            class ControllerBoard {}
+            class ViewBoard {}
+            class ModelBoard {}
+        }
+        package "players" {
+            class ControllerPlayers {}
+            class ViewPlayers {}
+            class ModelPlayers {}
+        }
+        package "messages" {}
+    }
+}
+
+package "spring_boot_backend" {
+    package "controllers" {
+        class RestControllerGame {}
+        class RestControllerBoard {}
+        class RestControllerPlayers {}
+    }
+    package "services" {
+        
+    }
+    package "models" {
+        
+    }
+}
+
+
+index --> scripts
+scripts --> AppController
+
+AppController *--> ControllerMenu
+ControllerMenu *--> ControllerGame
+ControllerGame *--> ControllerBoard
+ControllerGame *--> ControllerPlayers
+
+ControllerGame --> ViewGame
+ControllerGame --> ModelGame
+ControllerMenu --> ViewMenu
+ControllerMenu --> ModelMenu
+ControllerBoard --> ViewBoard
+ControllerBoard --> ModelBoard
+ControllerPlayers --> ViewPlayers
+ControllerPlayers --> ModelPlayers
+
+ControllerGame <.. RestControllerGame : json 
+ControllerGame ..> RestControllerGame : get, post, put, delete
+
+
+
+
+controllers --> services
+services --> models
+
+@enduml

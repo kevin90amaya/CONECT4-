@@ -1,4 +1,4 @@
-import ListMenus from "../../../../../../../main/resources/static/js/memus/models/generics/ListMenus";
+import ListMenus from "../../../../../../../main/resources/static/js/memus/models/generics/ListMenus.js";
 import MainMenu from "../../../../../../../main/resources/static/js/memus/models/MainMenu.js";
 import SettingsMenu from "../../../../../../../main/resources/static/js/memus/models/SettingsMenu.js";
 import BoardMenu from "../../../../../../../main/resources/static/js/memus/models/BoardMenu.js";

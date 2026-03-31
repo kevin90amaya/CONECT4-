@@ -12,7 +12,7 @@ class PlayOption extends Option {
     }
  
     execute() {
-        // Lógica para jugar
+        return "start-game";
     }
 }
 

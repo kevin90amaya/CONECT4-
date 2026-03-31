@@ -47,6 +47,8 @@ class Message {
                 return this.getPlayersMenuMessages();
             case "Common":
                 return this.getCommonMessages();
+            case "GameView":
+                return this.getGameViewMessages();
         }
     }
     
@@ -82,6 +84,9 @@ class Message {
         return this.idioma.getCommonMessages();
     }
     
+    getGameViewMessages() {
+        return this.idioma.getGameViewMessages();
+    }
 }
 
 export default Message;

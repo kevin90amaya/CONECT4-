@@ -2,6 +2,7 @@ import MainMenu from "../models/MainMenu.js";
 import ViewMenu from "../views/ViewMenu.js";
 import Menu from "../models/generics/Menu.js";
 import Message from "../../Messages/Message.js";
+import ControllerGame from "../../game/controllers/ControllerGame.js";
 
 
 
@@ -67,7 +68,10 @@ class ControllerMenu {
             Message.getInstance().setIdiomaEspañol();
             this.loadMenu();
             break;
-            }
+        case "start-game":
+            new ControllerGame().initialize();
+            break;
+        }
     }
 
     setMenu(menu) {

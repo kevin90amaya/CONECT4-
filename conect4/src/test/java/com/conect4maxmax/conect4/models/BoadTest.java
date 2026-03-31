@@ -147,7 +147,7 @@ public class BoadTest {
    @Test
    public void testDropColor(){
         boardBuilder.setActualColumn(2).build();
-        assertThat(board.colorActual, is(equalTo(Color.EMPTY)));
+        assertThat(board.colorActual, is(equalTo(null)));
         assertThat(board.colorsQuantityOnCells, is(equalTo(0)));
 
 
@@ -387,7 +387,6 @@ public class BoadTest {
     }
 
 
-
     @Test
     public void testCheckDiagonalDown_BottomLeftCorner(){
         boardBuilder.setActualColumn(0).build();
@@ -587,6 +586,13 @@ public class BoadTest {
 
         assertThat(board.checkAllDirections(), is(true));
         
+    }
+
+    @Test
+    public void testGetColor(){
+        boardBuilder.setNumberColumns(3).setNumberRows(3).setNumberToWin(3).build().create();
+        board.dropColor(Color.RED);
+        assertThat(board.geColor(0, 0), is(Color.RED));
     }
 
 }

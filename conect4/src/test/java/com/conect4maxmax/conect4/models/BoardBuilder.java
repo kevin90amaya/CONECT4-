@@ -16,11 +16,6 @@ public class BoardBuilder {
         return this;
     }
 
-    public BoardBuilder setPositionInRowLastColor(int positionInRowLastColor) {
-        board.asigPositionInRowLastColor(positionInRowLastColor);
-        return this;
-    }
-
     public BoardBuilder setColorActual(Color colorActual) {
         board.asigColorActual(colorActual);
         return this;

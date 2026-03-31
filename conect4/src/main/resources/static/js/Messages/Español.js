@@ -1,4 +1,6 @@
 import Idiomas from "./Idiomas.js";
+
+
 class Español extends Idiomas {
     getMainMenuMessages() {
         return {
@@ -107,6 +109,12 @@ class Español extends Idiomas {
         };
     }
 
+
+    getGameViewMessages() {
+        return {
+            title: "CONECTA {numberToWin}"// template con placeholder
+        };
+    }
 }
 
 export default Español;

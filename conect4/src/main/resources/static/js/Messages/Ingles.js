@@ -1,4 +1,6 @@
 import Idiomas from "./Idiomas.js";
+import BoardView from "../board/views/BoardView.js";
+
 class Ingles extends Idiomas {
      getMainMenuMessages() {
         return {
@@ -112,6 +114,12 @@ class Ingles extends Idiomas {
 
     dispatch(menuType, messagesMenu) {
         return messagesMenu.getMessagesForIngles(menuType);
+    }
+    
+    getGameViewMessages() {
+        return {
+            title: "CONECT {numberToWin}"  // template con placeholder
+        };
     }
 }
 

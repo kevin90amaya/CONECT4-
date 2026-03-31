@@ -191,4 +191,21 @@ public class PlayersTest {
         players.incrementTurn();
         assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(0)));
     }
+
+    @Test
+    public void testChangedMode(){
+        assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.HUMAN));
+        assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.COMPUTER));
+
+        players.setMode(GameMode.COMPUTER_VS_COMPUTER);
+        players.changedMode();
+        assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.COMPUTER));
+        assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.COMPUTER));
+
+        players.setMode(GameMode.HUMAN_VS_HUMAN);
+        players.changedMode();
+        assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.HUMAN));
+        assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.HUMAN));
+    }
 }
+
