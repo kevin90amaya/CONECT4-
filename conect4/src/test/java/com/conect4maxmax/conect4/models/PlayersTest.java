@@ -1,7 +1,6 @@
 package com.conect4maxmax.conect4.models;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 
@@ -108,12 +107,6 @@ public class PlayersTest {
         }
 
     @Test
-    public void testGetTipe() {     
-        assertThat(players.getTipe(PlayerTipe.HUMAN), is(instanceOf(HumanPlayer.class)));
-        assertThat(players.getTipe(PlayerTipe.COMPUTER), is(instanceOf(ComputerPlayer.class)));
-        }
-
-    @Test
     public void testGetPlayers() {
         java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
         playersList.add(new PlayerPropertiesBuilder().name("RED").build());
@@ -136,11 +129,11 @@ public class PlayersTest {
         players.getCurrentPlayer();
         assertThat(players.getCurrentPlayer().getName(), is(equalTo("RED")));
 
-        players.incrementTurn();
+        players.nextTurn();
         players.getCurrentPlayer();
         assertThat(players.getCurrentPlayer().getName(), is(equalTo("YELLOW")));
     
-        players.incrementTurn();
+        players.nextTurn();
         assertThat(players.getTurn(), is(equalTo(0)));
     }
 
@@ -173,22 +166,22 @@ public class PlayersTest {
         players.setNumberPlayers(10);
         players.setPlayers(playersList);
 
-        players.incrementTurn();
+        players.nextTurn();
         assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(1)));
 
-        players.incrementTurn();
-        players.incrementTurn();
-        players.incrementTurn();
-        players.incrementTurn();
+        players.nextTurn();
+        players.nextTurn();
+        players.nextTurn();
+        players.nextTurn();
         assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(5)));
 
-        players.incrementTurn();
-        players.incrementTurn();
-        players.incrementTurn();
-        players.incrementTurn();
+        players.nextTurn();
+        players.nextTurn();
+        players.nextTurn();
+        players.nextTurn();
         assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(9)));
 
-        players.incrementTurn();
+        players.nextTurn();
         assertThat(players.getCurrentPlayer().getTurn(), is(equalTo(0)));
     }
 

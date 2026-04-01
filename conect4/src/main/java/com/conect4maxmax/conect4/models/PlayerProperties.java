@@ -24,6 +24,17 @@ public class PlayerProperties {
     public PlayerTipe getTipe() {
         return tipe;
     }
+
+    public Object getTipePlayer() {
+        switch (this.tipe) {
+            case HUMAN:
+                return new HumanPlayer();
+            case COMPUTER:
+                return new ComputerPlayer();
+            default:
+                throw new IllegalArgumentException("El tipo no puede ser diferente a HUMAN o COMPUTER");
+        }
+    }
     
     public int getTurn() {
         return turn;

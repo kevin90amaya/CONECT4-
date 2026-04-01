@@ -11,6 +11,7 @@ public class boardService {
     private Board board;
     
     public Board getBoard() {
+        board.create();
         return board;
     }
 }

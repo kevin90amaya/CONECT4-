@@ -30,17 +30,6 @@ public class Players {
         this.players.clear();
         this.players.addAll(listPlayers);
     }
-    
-    public Object getTipe(PlayerTipe tipe) {
-        switch (tipe) {
-            case HUMAN:
-                return new HumanPlayer();
-            case COMPUTER:
-                return new ComputerPlayer();
-            default:
-                throw new IllegalArgumentException("El tipo no puede ser diferente a HUMAN o COMPUTER");
-        }
-    }
 
     public void setNumberPlayers(int number_players) {
         final int minNumberPlayers = 2;
@@ -64,7 +53,7 @@ public class Players {
         return turn;
     }
 
-    public void incrementTurn() {
+    public void nextTurn() {
        this.turn++;
        if (this.turn >= this.number_players) {
            this.turn = 0;
@@ -101,6 +90,7 @@ public class Players {
     
     public void setMode(GameMode mode){
         this.mode = mode;
+        this.changedMode();
     }
 
     public void resetTurn(){
