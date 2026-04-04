@@ -69,6 +69,7 @@ class ControllerMenu {
             this.loadMenu();
             break;
         case "start-game":
+            this.viewMenu.cleanMenu();
            await new ControllerGame().initialize();
             break;
         }

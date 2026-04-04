@@ -1,4 +1,5 @@
 package com.conect4maxmax.conect4.controller;
+import com.conect4maxmax.conect4.config.ApiEndpoints;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,18 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.conect4maxmax.conect4.models.GameMode;
 
 @RestController
-@RequestMapping("/api/players")
+@RequestMapping(ApiEndpoints.PLAYERS)
 public class playersController {
 
     @Autowired
     private PlayersService playersService;
     
-    @GetMapping("/modes")
+    @GetMapping(ApiEndpoints.GAME_MODES)
     public GameMode[] getGameModes() {
         return playersService.getGameModes();
     }
 
-    @PostMapping("/mode")
+    @PostMapping(ApiEndpoints.MODE)
     public void setGameMode(@RequestBody GameMode mode) {
         playersService.setGameMode(mode);
     }

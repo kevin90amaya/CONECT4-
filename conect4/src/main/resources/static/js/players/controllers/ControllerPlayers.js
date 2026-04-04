@@ -23,8 +23,22 @@ class ControllerPlayers {
 
     async initialize() {
         await this.getGameModes();
+        await this.playerView.initialize();
+        this.configEventSelectMode();
         await this.getPlayers();
-        this.playerView.initialize();
+    }
+
+    configEventSelectMode() {
+        document.addEventListener('selectMode', async (e) => {
+            const modoSeleccionado = e.detail.mode;
+            
+            await fetch(ENDPOINTS.MODE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(modoSeleccionado)
+            });
+            
+        });
     }
 
 

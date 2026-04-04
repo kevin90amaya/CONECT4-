@@ -121,6 +121,16 @@ class Ingles extends Idiomas {
             title: "CONECT {numberToWin}"  // template con placeholder
         };
     }
+    
+    getGameModesMessages() {
+        return {
+            selectMode: "Select mode:",
+            save: "Save",
+            mode1: "CPU vs CPU",
+            mode2: "Player Vs CPU",
+            mode3: "Player Vs Player"
+        };
+    }
 }
 
 export default Ingles;

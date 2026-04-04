@@ -49,6 +49,8 @@ class Message {
                 return this.getCommonMessages();
             case "GameView":
                 return this.getGameViewMessages();
+            case "GAME_MODES":
+                return this.getGameModesMessages();
         }
     }
     
@@ -86,6 +88,10 @@ class Message {
     
     getGameViewMessages() {
         return this.idioma.getGameViewMessages();
+    }
+    
+    getGameModesMessages() {
+        return this.idioma.getGameModesMessages();
     }
 }
 

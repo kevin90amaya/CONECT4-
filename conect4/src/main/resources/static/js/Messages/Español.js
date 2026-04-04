@@ -115,6 +115,16 @@ class Español extends Idiomas {
             title: "CONECTA {numberToWin}"// template con placeholder
         };
     }
+    
+    getGameModesMessages() {
+        return {
+            selectMode: "Elige modo:",
+            save: "Guardar",
+            mode1: "CPU vs CPU",
+            mode2: "Jugador Vs CPU",
+            mode3: "Jugador Vs Jugador"
+        };
+    }
 }
 
 export default Español;
