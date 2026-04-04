@@ -119,11 +119,30 @@ class Español extends Idiomas {
     getGameModesMessages() {
         return {
             selectMode: "Elige modo:",
+            selectedMode: "Modo seleccionado:",
             save: "Guardar",
             mode1: "CPU vs CPU",
             mode2: "Jugador Vs CPU",
             mode3: "Jugador Vs Jugador"
         };
+    }
+    
+    getGameStatusMessages() {
+        return {
+            turn: "TURNO: ",
+            enterColumn: "colocar una ficha en una columna: "
+        };
+    }
+
+    getGameModeName(mode) {
+        switch (mode) {
+            case "COMPUTER_VS_COMPUTER":
+                return "CPU vs CPU";
+            case "HUMAN_VS_COMPUTER":
+                return "Jugador Vs CPU";
+            case "HUMAN_VS_HUMAN":
+                return "Jugador Vs Jugador";
+        }
     }
 }
 

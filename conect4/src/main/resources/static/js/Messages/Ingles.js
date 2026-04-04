@@ -125,12 +125,33 @@ class Ingles extends Idiomas {
     getGameModesMessages() {
         return {
             selectMode: "Select mode:",
+            selectedMode: "Selected mode:",
             save: "Save",
             mode1: "CPU vs CPU",
             mode2: "Player Vs CPU",
             mode3: "Player Vs Player"
         };
     }
+    
+    getGameStatusMessages() {
+        return {
+            turn: "TURN: ",
+            enterColumn: "drop a token in a column: "
+        };
+    }
+
+
+    getGameModeName(mode) {
+    switch (mode) {
+        case "COMPUTER_VS_COMPUTER":
+            return "CPU vs CPU";
+        case "HUMAN_VS_COMPUTER":
+            return "Player Vs CPU";
+        case "HUMAN_VS_HUMAN":
+            return "Player Vs Player";
+    }
+   }
+
 }
 
 export default Ingles;

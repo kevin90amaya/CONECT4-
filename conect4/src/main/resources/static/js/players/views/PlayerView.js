@@ -2,10 +2,15 @@ import Message from "../../Messages/Message.js";
 
 class PlayerView {
     gameMode;
-    players;
+    listPlayers;
+    currentPlayer;
 
-    setPlayer(players){
-        this.players = players;
+    setListPlayer(listPlayers){
+        this.listPlayers = listPlayers;
+    }
+
+    setCurrentPlayer(currentPlayer){
+        this.currentPlayer = currentPlayer;
     }
 
     setGameMode(modes){
@@ -14,6 +19,7 @@ class PlayerView {
 
     async initialize(){
         this.showSelectMode();
+//        this.showTurn();
     }
 
     showSelectMode(){
@@ -38,6 +44,22 @@ class PlayerView {
             detail: { mode: modo } 
         }));
     });
+
+    }
+
+    showSelectedMode(modo){
+        const modeElement = document.querySelector('.mode');
+        modeElement.innerHTML = `
+            <h4>${Message.getInstance().getMessages("GAME_MODES").selectedMode} ${Message.getInstance().getGameModeName(modo)}</h4>
+        `;
+    }
+
+    showTurn(){
+        const statusElement = document.querySelector('.status');
+        statusElement.innerHTML = `
+            <h4>${Message.getInstance().getMessages("GAME_STATUS").turn} ${this.currentPlayer.getName()}</h4>
+            <p>${Message.getInstance().getMessages("GAME_STATUS").enterColumn}</p>
+        `;
 
     }
 

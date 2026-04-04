@@ -51,6 +51,8 @@ class Message {
                 return this.getGameViewMessages();
             case "GAME_MODES":
                 return this.getGameModesMessages();
+            case "GAME_STATUS":
+                return this.getGameStatusMessages();
         }
     }
     
@@ -92,6 +94,14 @@ class Message {
     
     getGameModesMessages() {
         return this.idioma.getGameModesMessages();
+    }
+    
+    getGameStatusMessages() {
+        return this.idioma.getGameStatusMessages();
+    }
+    
+    getGameModeName(mode) {
+        return this.idioma.getGameModeName(mode);
     }
 }
 

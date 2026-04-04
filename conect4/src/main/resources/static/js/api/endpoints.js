@@ -7,5 +7,7 @@ export const ENDPOINTS = {
     BOARD: `${BASE}/api/board`,
     PLAYERS: `${BASE}/api/players`,
     GAME_MODES: `${BASE}/api/players/game-modes`,
-    MODE: `${BASE}/api/players/mode`
+    MODE: `${BASE}/api/players/mode`,
+    LIST_PLAYERS: `${BASE}/api/players/list-players`,
+    CURRENT_PLAYER: `${BASE}/api/players/current-player`
 };

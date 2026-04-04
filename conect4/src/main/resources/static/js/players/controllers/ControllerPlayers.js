@@ -15,17 +15,24 @@ class ControllerPlayers {
         this.playerView.setGameMode(data);
     }
 
-    async getPlayers() {
-        const players = await fetch(ENDPOINTS.PLAYERS);
+    async getListPlayers() {
+        const players = await fetch(ENDPOINTS.LIST_PLAYERS);
         const data = await players.json();
-        this.playerView.setPlayer(data);
+        this.playerView.setListPlayer(data);
+    }
+
+    async getCurrentPlayer() {
+        const player = await fetch(ENDPOINTS.CURRENT_PLAYER);
+        const data = await player.json();
+        this.playerView.setCurrentPlayer(data);
     }
 
     async initialize() {
         await this.getGameModes();
         await this.playerView.initialize();
         this.configEventSelectMode();
-        await this.getPlayers();
+        await this.getListPlayers();
+        await this.getCurrentPlayer();
     }
 
     configEventSelectMode() {
@@ -37,7 +44,9 @@ class ControllerPlayers {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(modoSeleccionado)
             });
-            
+
+            this.playerView.showSelectedMode(modoSeleccionado);
+    
         });
     }
 
