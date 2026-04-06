@@ -19,7 +19,6 @@ class PlayerView {
 
     async initialize(){
         this.showSelectMode();
-//        this.showTurn();
     }
 
     showSelectMode(){
@@ -57,7 +56,7 @@ class PlayerView {
     showTurn(){
         const statusElement = document.querySelector('.status');
         statusElement.innerHTML = `
-            <h4>${Message.getInstance().getMessages("GAME_STATUS").turn} ${this.currentPlayer.getName()}</h4>
+            <h4>${Message.getInstance().getMessages("GAME_STATUS").turn} ${this.currentPlayer.name}</h4>
             <p>${Message.getInstance().getMessages("GAME_STATUS").enterColumn}</p>
         `;
 

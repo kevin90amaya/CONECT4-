@@ -36,20 +36,26 @@ class ControllerPlayers {
     }
 
     configEventSelectMode() {
-        document.addEventListener('selectMode', async (e) => {
-            const modoSeleccionado = e.detail.mode;
-            
-            await fetch(ENDPOINTS.MODE, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(modoSeleccionado)
-            });
+        document.addEventListener('selectMode', this.handleSelectMode.bind(this));
+    }
 
-            this.playerView.showSelectedMode(modoSeleccionado);
-    
+    async handleSelectMode(e) {
+        const mode = e.detail.mode;
+        await this.postGameMode(mode);
+        this.updateViewForModeSelect(mode);
+    }
+
+    async postGameMode(mode) {
+        await fetch(ENDPOINTS.MODE, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mode)
         });
     }
 
-
+    updateViewForModeSelect(mode) {
+        this.playerView.showSelectedMode(mode);
+        this.playerView.showTurn();
+    }
 }
 export default ControllerPlayers;
