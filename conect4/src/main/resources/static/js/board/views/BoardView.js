@@ -1,5 +1,6 @@
 
 import ColorView from './ColorView.js';
+import Message from '../../Messages/Message.js';
 
 class BoardView {
 
@@ -19,7 +20,7 @@ class BoardView {
 
     showBoard() {
        const boardElement = document.querySelector('.board');
-       this.clearBoard();
+       this.cleanBoard();
 
        const columnsContainer = document.createElement('div');
        columnsContainer.className = 'columns-container';
@@ -46,9 +47,22 @@ class BoardView {
       
     }
 
-    clearBoard() {
+    showTitle() {
+        const gameElement = document.querySelector('.game-container');
+
+        const template = Message.getInstance().getMessages("GameView").title;
+        const title = template.replace("{numberToWin}", this.getNumberToWin());
+        gameElement.querySelector('.game-title h1').textContent = title;
+    }
+
+    cleanBoard() {
        const boardElement = document.querySelector('.board');
        boardElement.innerHTML = '';
+    }
+    
+    initialize() {
+        this.showTitle();
+        this.showBoard();
     }
 }
 export default BoardView;

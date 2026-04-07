@@ -1,6 +1,6 @@
 import BoardView from "../views/BoardView.js";
 import { ENDPOINTS } from "../../api/endpoints.js";
-import GameState from "../../models/GameState.js";
+
 
 class ControllerBoard {
     
@@ -24,9 +24,8 @@ class ControllerBoard {
     
     async initialize() {
         this.board = await this.getboard();
-        GameState.setBoard(this.board);
         this.setBoard();
-        this.boardView.showBoard();
+        this.boardView.initialize();
     }
 }
 export default ControllerBoard;

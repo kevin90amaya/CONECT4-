@@ -12,7 +12,6 @@ class ControllerGame {
     
    async initialize() {
         await this.controllerBoard.initialize();
-        this.gameView.initialize();
         await this.controllerPlayers.initialize();
     }
     
