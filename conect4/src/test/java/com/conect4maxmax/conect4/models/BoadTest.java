@@ -27,36 +27,36 @@ public class BoadTest {
 
     @Test
     public void testCreateDefault() {
-        assertThat(board.getBoard().length, is(equalTo(7)));
-        assertThat(board.getBoard()[0].length, is(equalTo(6)));
-        assertThat(board.getBoard()[0][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[0][5].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[6][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[6][5].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns().length, is(equalTo(7)));
+        assertThat(board.getColumns()[0].length, is(equalTo(6)));
+        assertThat(board.getColumns()[0][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[0][5].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[6][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[6][5].getColor(), is(equalTo(Color.EMPTY)));
    }
 
    @Test
    public void testEditMinValuesBoard(){
         boardBuilder.setNumberColumns(3).setNumberRows(3).build().create();
 
-        assertThat(board.getBoard().length, is(equalTo(3)));
-        assertThat(board.getBoard()[0].length, is(equalTo(3)));
-        assertThat(board.getBoard()[0][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[0][2].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[2][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[2][2].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns().length, is(equalTo(3)));
+        assertThat(board.getColumns()[0].length, is(equalTo(3)));
+        assertThat(board.getColumns()[0][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[0][2].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[2][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[2][2].getColor(), is(equalTo(Color.EMPTY)));
    }
 
    @Test
    public void testEditMaxValuesBoard(){
         boardBuilder.setNumberColumns(30).setNumberRows(30).build().create();
 
-        assertThat(board.getBoard().length, is(equalTo(30)));
-        assertThat(board.getBoard()[0].length, is(equalTo(30)));
-        assertThat(board.getBoard()[0][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[0][29].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[29][0].getColor(), is(equalTo(Color.EMPTY)));
-        assertThat(board.getBoard()[29][29].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns().length, is(equalTo(30)));
+        assertThat(board.getColumns()[0].length, is(equalTo(30)));
+        assertThat(board.getColumns()[0][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[0][29].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[29][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[29][29].getColor(), is(equalTo(Color.EMPTY)));
    }
 
    @Test
@@ -114,19 +114,19 @@ public class BoadTest {
    @Test
    public void testFindEmptyRow(){
         boardBuilder.setActualColumn(6).build();
-        assertThat(board.getBoard()[6][0].getColor(), is(equalTo(Color.EMPTY)));
+        assertThat(board.getColumns()[6][0].getColor(), is(equalTo(Color.EMPTY)));
 
         board.dropColor(Color.YELLOW);
-        assertThat(board.getBoard()[6][0].getColor(), is(equalTo(Color.YELLOW)));
+        assertThat(board.getColumns()[6][0].getColor(), is(equalTo(Color.YELLOW)));
 
         board.dropColor(Color.RED);
-        assertThat(board.getBoard()[6][1].getColor(), is(equalTo(Color.RED)));
+        assertThat(board.getColumns()[6][1].getColor(), is(equalTo(Color.RED)));
 
         board.dropColor(Color.YELLOW);
         board.dropColor(Color.RED);
         board.dropColor(Color.YELLOW);
         board.dropColor(Color.RED);
-        assertThat(board.getBoard()[6][5].getColor(), is(equalTo(Color.RED)));
+        assertThat(board.getColumns()[6][5].getColor(), is(equalTo(Color.RED)));
    }
 
    @Test
@@ -152,7 +152,7 @@ public class BoadTest {
 
 
         board.dropColor(Color.YELLOW);
-        assertThat(board.getBoard()[2][0].getColor(), is(equalTo(Color.YELLOW)));
+        assertThat(board.getColumns()[2][0].getColor(), is(equalTo(Color.YELLOW)));
         assertThat(board.colorActual, is(equalTo(Color.YELLOW)));
         assertThat(board.colorsQuantityOnCells, is(equalTo(1)));
 
@@ -161,7 +161,7 @@ public class BoadTest {
         board.dropColor(Color.RED);
         board.dropColor(Color.YELLOW);
         board.dropColor(Color.RED);
-        assertThat(board.getBoard()[2][5].getColor(), is(equalTo(Color.RED)));
+        assertThat(board.getColumns()[2][5].getColor(), is(equalTo(Color.RED)));
         assertThat(board.colorActual, is(equalTo(Color.RED)));
         assertThat(board.colorsQuantityOnCells, is(equalTo(6)));
    }

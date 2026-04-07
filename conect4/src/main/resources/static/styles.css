@@ -1,0 +1,57 @@
+/* Contenedor del juego */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Tablero azul de fondo */
+.board-container {
+    background-color: #0066cc;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+/* Contenedor de columnas */
+.columns-container {
+    display: flex;
+    gap: 5px;
+}
+
+/* Columna */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Celda (hueco para ficha) */
+.cell {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid hsl(213, 93%, 21%);
+    background-color: white;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Modo y estado */
+.mode, .status {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.status h4 {
+    margin: 5px 0;
+    color: #333;
+}
+
+/* Título del juego */
+.game-title h1 {
+    color: #0066cc;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}

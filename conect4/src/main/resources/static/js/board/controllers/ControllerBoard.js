@@ -26,7 +26,7 @@ class ControllerBoard {
         this.board = await this.getboard();
         GameState.setBoard(this.board);
         this.setBoard();
-       // this.boardView.initialize();
+        this.boardView.showBoard();
     }
 }
 export default ControllerBoard;

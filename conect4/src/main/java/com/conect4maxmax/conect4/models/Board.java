@@ -39,7 +39,7 @@ public void reset() {
     this.colorActual = null;
 }
 
-public Cell[][] getBoard() {
+public Cell[][] getColumns() {
     return this.columns;  
 }
 
@@ -64,6 +64,10 @@ public void setNumberColumns(int numberColumns) {
     }
 
     this.numberColumns = numberColumns;
+}
+
+public int getNumberRows(){
+    return this.numberRows;
 }
 
 public void setNumberRows(int numberRows) {
