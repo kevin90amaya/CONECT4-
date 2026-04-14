@@ -7,7 +7,7 @@ public class ApiEndpoints {
     public static final String MODE = "/mode";
     public static final String LIST_PLAYERS = "/list-players";
     public static final String CURRENT_PLAYER = "/current-player";
-    public static final String TURN = "/turn";
-    public static final String NEXT_TURN = "/next-turn";
-    public static final String RESET_TURN = "/reset-turn";
+   // public static final String TURN = "/turn";
+   // public static final String NEXT_TURN = "/next-turn";
+   // public static final String RESET_TURN = "/reset-turn";
 }

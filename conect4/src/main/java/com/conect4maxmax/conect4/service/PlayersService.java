@@ -29,15 +29,4 @@ public class PlayersService {
         return players.getCurrentPlayer();
     }
     
-    public int getTurn() {
-        return players.getTurn();
-    }
-    
-    public void nextTurn() {
-        players.nextTurn();
-    }
-    
-    public void resetTurn() {
-        players.resetTurn();
-    }
 }

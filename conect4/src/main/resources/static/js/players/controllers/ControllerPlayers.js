@@ -15,6 +15,14 @@ class ControllerPlayers {
         this.playerView.setGameMode(data);
     }
 
+    async postGameMode(mode) {
+        await fetch(ENDPOINTS.MODE, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mode)
+        });
+    }
+
     async getListPlayers() {
         const players = await fetch(ENDPOINTS.LIST_PLAYERS);
         const data = await players.json();
@@ -29,7 +37,7 @@ class ControllerPlayers {
 
     async initialize() {
         await this.getGameModes();
-        await this.playerView.initialize();
+        this.playerView.showSelectMode();
         this.configEventSelectMode();
         await this.getListPlayers();
         await this.getCurrentPlayer();
@@ -44,15 +52,7 @@ class ControllerPlayers {
         await this.postGameMode(mode);
         this.updateViewForModeSelect(mode);
     }
-
-    async postGameMode(mode) {
-        await fetch(ENDPOINTS.MODE, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(mode)
-        });
-    }
-
+    
     updateViewForModeSelect(mode) {
         this.playerView.showSelectedMode(mode);
         this.playerView.showTurn();

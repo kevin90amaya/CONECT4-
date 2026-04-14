@@ -39,18 +39,5 @@ public class playersController {
         return playersService.getCurrentPlayer();
     }
     
-    @GetMapping(ApiEndpoints.TURN)
-    public int getTurn() {
-        return playersService.getTurn();
-    }
-    
-    @PostMapping(ApiEndpoints.NEXT_TURN)
-    public void nextTurn() {
-        playersService.nextTurn();
-    }
-    
-    @PostMapping(ApiEndpoints.RESET_TURN)
-    public void resetTurn() {
-        playersService.resetTurn();
-    }
+
 }

@@ -17,10 +17,6 @@ class PlayerView {
         this.gameMode = modes;
     }
 
-    async initialize(){
-        this.showSelectMode();
-    }
-
     showSelectMode(){
     const modeElement = document.querySelector('.mode');
     

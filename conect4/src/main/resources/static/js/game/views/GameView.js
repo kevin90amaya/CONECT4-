@@ -1,16 +1,41 @@
-import Message from "../../Messages/Message.js";
 
+import YesNoDialog from "../../utils/YesNoDialog.js";
 
 class GameView {
 
-    #game;
+    boardView;
+    playerView;
+
 
     constructor() {
-        this.#game = null;
+      
     }
 
-    setGame(game) {
-        this.#game = game;
+    setBoardView(boardView) {
+        this.boardView = boardView;
+    }
+
+    setPlayerView(playerView) {
+        this.playerView = playerView;
+    }
+
+    async playGames() {
+        const continueDialog = new YesNoDialog();
+        do {
+            
+            this.boardView.showTitle();
+            this.boardView.showBoard();
+            await this.playerView.showSelectMode();
+
+            do{
+                await this.playerView.iterate();
+                this.boardView.showBoard();
+            } while (this.boardView.isFinished());
+
+            this.playerView.showResult();
+           await continueDialog.read("¿Desea jugar otra partida?");
+
+        } while (continueDialog.isAffirmative());
     }
     
 }

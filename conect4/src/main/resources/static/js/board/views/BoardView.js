@@ -60,9 +60,5 @@ class BoardView {
        boardElement.innerHTML = '';
     }
     
-    initialize() {
-        this.showTitle();
-        this.showBoard();
-    }
 }
 export default BoardView;

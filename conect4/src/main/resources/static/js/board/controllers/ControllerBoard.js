@@ -25,7 +25,6 @@ class ControllerBoard {
     async initialize() {
         this.board = await this.getboard();
         this.setBoard();
-        this.boardView.initialize();
     }
 }
 export default ControllerBoard;

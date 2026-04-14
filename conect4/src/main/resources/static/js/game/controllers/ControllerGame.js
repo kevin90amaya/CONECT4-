@@ -5,14 +5,17 @@ import ControllerPlayers from "../../players/controllers/ControllerPlayers.js";
 class ControllerGame {
 
     constructor() {
-        this.gameView = new GameView();
         this.controllerBoard = new ControllerBoard();
         this.controllerPlayers = new ControllerPlayers();
+        this.gameView = new GameView();
     }
     
    async initialize() {
         await this.controllerBoard.initialize();
         await this.controllerPlayers.initialize();
+        this.gameView.setBoardView(this.controllerBoard.boardView);
+        this.gameView.setPlayerView(this.controllerPlayers.playerView);
+        await this.gameView.playGames();
     }
     
     
