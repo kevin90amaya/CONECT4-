@@ -1,0 +1,106 @@
+@startuml
+title Initializacion view game + Selection of mode
+
+actor "Usuario" as user
+participant "menu" as menu
+participant "controllerMenu" as controllerMenu
+participant "ControllerGame" as controllerGame #lightblue
+
+participant "GameView" as gameView #lightcoral
+participant "BoardView" as boardView #lightcoral
+participant "PlayersView" as playersView #lightcoral
+
+participant "gameController" as gameController #lightblue
+participant "gameService" as gameService #lightgreen
+
+
+participant "BoardService" as boardService #lightgreen
+participant "PlayersService" as playersService #lightgreen
+
+== Initializacion view game ==
+
+user -> menu : play()
+activate menu
+menu -> controllerMenu : event
+deactivate menu
+activate controllerMenu
+controllerMenu -> controllerGame : initialize()
+deactivate controllerMenu
+activate controllerGame
+controllerGame -> gameController : boardInitialize() getHTTP
+activate gameController
+controllerGame -> gameController : playersInitialize() getHTTP
+gameController -> gameService : boardInitialize()
+activate gameService
+gameController -> gameService : playersInitialize()
+gameService -> playersService : getGameModes()
+activate playersService
+playersService -> gameService : return gameModes
+deactivate playersService
+gameService -> gameController : return gameModes
+gameController -> controllerGame : return gameModes json
+
+gameService -> boardService : getBoard()
+activate boardService
+boardService -> gameService : return board
+deactivate boardService
+gameService -> gameController : return board
+deactivate gameService
+gameController -> controllerGame : return board json
+deactivate gameController
+
+controllerGame -> gameView : setBoard()
+activate gameView
+gameView -> boardView : setBoard()
+activate boardView
+gameView -> boardView : showTitle()
+gameView -> boardView : showBoard()
+deactivate boardView
+deactivate gameView
+
+controllerGame -> gameView : setGameModes()
+activate gameView
+gameView -> playersView : setGameMode()
+activate playersView
+gameView -> playersView : showSelectMode()
+deactivate gameView
+playersView -> controllerGame : customEvent selectMode
+deactivate playersView
+
+== Selection of mode ==
+
+controllerGame -> controllerGame : handleSelectMode(e)
+controllerGame -> gameController : postGameMode(e.detail.mode) postHTTP
+activate gameController
+gameController -> gameService : setGameMode(mode)
+deactivate gameController
+activate gameService
+gameService -> playersService : setGameMode(mode)
+deactivate gameService
+
+
+
+controllerGame -> controllerGame : updateViewForModeSelect(mode)
+controllerGame -> gameView : showSelectedMode(mode)
+deactivate controllerGame
+activate gameView
+
+gameView -> playersView : showSelectedMode(mode)
+deactivate gameView
+
+
+
+deactivate gameService
+deactivate playersView
+deactivate gameView
+
+
+
+
+
+
+
+
+
+
+@enduml
