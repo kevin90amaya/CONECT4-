@@ -1,0 +1,137 @@
+@startuml implementacion_actual
+title Implementación Actual - Flujo desde ControllerGame.initialize()
+
+participant "ControllerGame\n(JS)" as controllerGame #lightblue
+participant "ControllerBoard\n(JS)" as controllerBoard #lightblue
+participant "ControllerPlayers\n(JS)" as controllerPlayers #lightblue
+participant "GameView\n(JS)" as gameView #lightcoral
+participant "BoardView\n(JS)" as boardView #lightcoral
+participant "PlayerView\n(JS)" as playerView #lightcoral
+participant "BoardController\n(Java)" as boardController #lightgreen
+participant "PlayersController\n(Java)" as playersController #lightgreen
+participant "boardService\n(Java)" as boardService #lightgreen
+participant "PlayersService\n(Java)" as playersService #lightgreen
+
+== Inicialización desde ControllerGame ==
+
+controllerGame -> controllerGame : initialize()
+activate controllerGame
+
+== Inicialización Board ==
+
+controllerGame -> controllerBoard : initialize()
+activate controllerBoard
+
+controllerBoard -> controllerBoard : getboard()
+controllerBoard -> boardController : GET /api/board
+activate boardController
+boardController -> boardService : getBoard()
+activate boardService
+boardService --> boardController : return Board
+deactivate boardService
+boardController --> controllerBoard : return Board (JSON)
+deactivate boardController
+
+controllerBoard -> boardView : setBoard(board)
+activate boardView
+boardView --> controllerBoard
+deactivate boardView
+
+controllerBoard --> controllerGame
+deactivate controllerBoard
+
+== Inicialización Players ==
+
+controllerGame -> controllerPlayers : initialize()
+activate controllerPlayers
+
+controllerPlayers -> controllerPlayers : getGameModes()
+controllerPlayers -> playersController : GET /api/players/game-modes
+activate playersController
+playersController -> playersService : getGameModes()
+activate playersService
+playersService --> playersController : return GameMode[]
+deactivate playersService
+playersController --> controllerPlayers : return GameMode[] (JSON)
+deactivate playersController
+
+controllerPlayers -> playerView : setGameMode(modes)
+activate playerView
+playerView --> controllerPlayers
+deactivate playerView
+
+controllerPlayers -> playerView : showSelectMode()
+activate playerView
+
+playerView --> controllerPlayers
+deactivate playerView
+
+controllerPlayers -> controllerPlayers : getListPlayers()
+controllerPlayers -> playersController : GET /api/players/list-players
+activate playersController
+playersController -> playersService : getPlayers()
+activate playersService
+playersService --> playersController : return List<PlayerProperties>
+deactivate playersService
+playersController --> controllerPlayers : return List<PlayerProperties> (JSON)
+deactivate playersController
+controllerPlayers -> playerView : setListPlayer(data)
+
+controllerPlayers -> controllerPlayers : getCurrentPlayer()
+controllerPlayers -> playersController : GET /api/players/current-player
+activate playersController
+playersController -> playersService : getCurrentPlayer()
+activate playersService
+playersService --> playersController : return PlayerProperties
+deactivate playersService
+playersController --> controllerPlayers : return PlayerProperties (JSON)
+deactivate playersController
+controllerPlayers -> playerView : setCurrentPlayer(data)
+
+controllerPlayers --> controllerGame
+deactivate controllerPlayers
+
+== Configuración Vistas en GameView ==
+
+controllerGame -> gameView : setBoardView(boardView)
+activate gameView
+gameView --> controllerGame
+deactivate gameView
+
+controllerGame -> gameView : setPlayerView(playerView)
+activate gameView
+gameView --> controllerGame
+deactivate gameView
+
+== Inicio del Juego - playGames() ==
+
+controllerGame -> gameView : playGames()
+activate gameView
+
+gameView -> boardView : showTitle()
+activate boardView
+
+boardView --> gameView
+deactivate boardView
+
+gameView -> boardView : showBoard()
+activate boardView
+
+boardView --> gameView
+deactivate boardView
+
+gameView -> playerView : showSelectMode()
+activate playerView
+
+playerView --> gameView
+deactivate playerView
+
+
+
+gameView --> controllerGame
+deactivate gameView
+
+controllerGame --> controllerGame
+deactivate controllerGame
+
+@enduml

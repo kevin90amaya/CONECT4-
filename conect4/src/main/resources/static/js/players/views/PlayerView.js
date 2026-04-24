@@ -1,9 +1,18 @@
 import Message from "../../Messages/Message.js";
+import UserPlayerView from "./UserPlayerView.js";
+import MachinePlayerView from "./MachinePlayerView.js";
 
 class PlayerView {
     gameMode;
     listPlayers;
     currentPlayer;
+    userplayerview;
+    machineplayerview;
+
+    constructor(){
+        this.userplayerview = new UserPlayerView();
+        this.machineplayerview = new MachinePlayerView();
+    }
 
     setListPlayer(listPlayers){
         this.listPlayers = listPlayers;
@@ -58,5 +67,16 @@ class PlayerView {
 
     }
 
+
+    async interact() {
+        if (this.currentPlayer.type === "HUMAN") {
+         return await this.userplayerview.playTurn();  
+        } else {
+        return await this.machineplayerview.playTurn();    
+        }
+  }
+
 }
+
+
 export default PlayerView;

@@ -12,7 +12,15 @@ public class ComputerPlayer {
 private Board board;
 
 public int getColumn() {
-    return ThreadLocalRandom.current().nextInt(0, this.board.getNumberColumns());
+    if (this.board.isFullBoard()) {
+        throw new IllegalStateException("Board is full");
+    }
+
+    int column = ThreadLocalRandom.current().nextInt(0, this.board.getNumberColumns());
+    while (this.board.isCompleteColumn(column)) {
+        column = ThreadLocalRandom.current().nextInt(0, this.board.getNumberColumns());
+    }
+    return column;
 }
 
 public Board getBoard() {

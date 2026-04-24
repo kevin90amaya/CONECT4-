@@ -9,5 +9,6 @@ export const ENDPOINTS = {
     GAME_MODES: `${BASE}/api/players/game-modes`,
     MODE: `${BASE}/api/players/mode`,
     LIST_PLAYERS: `${BASE}/api/players/list-players`,
-    CURRENT_PLAYER: `${BASE}/api/players/current-player`
+    CURRENT_PLAYER: `${BASE}/api/players/current-player`,
+    RESOLVE_TURN: `${BASE}/api/game/resolve-turn`
 };

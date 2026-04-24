@@ -1,9 +1,9 @@
 @startuml
 title Initializacion view game + Selection of mode
 
-actor "Usuario" as user
+
 participant "menu" as menu
-participant "controllerMenu" as controllerMenu
+
 participant "ControllerGame" as controllerGame #lightblue
 
 participant "GameView" as gameView #lightcoral
@@ -19,20 +19,15 @@ participant "PlayersService" as playersService #lightgreen
 
 == Initializacion view game ==
 
-user -> menu : play()
-activate menu
-menu -> controllerMenu : event
-deactivate menu
-activate controllerMenu
-controllerMenu -> controllerGame : initialize()
-deactivate controllerMenu
+menu -> controllerGame : play()
 activate controllerGame
-controllerGame -> gameController : boardInitialize() getHTTP
+
+controllerGame -> gameController : getBoard() getHTTP
 activate gameController
-controllerGame -> gameController : playersInitialize() getHTTP
-gameController -> gameService : boardInitialize()
+controllerGame -> gameController : getGameModes() getHTTP
+gameController -> gameService : getBoard()
 activate gameService
-gameController -> gameService : playersInitialize()
+gameController -> gameService : getGameModes()
 gameService -> playersService : getGameModes()
 activate playersService
 playersService -> gameService : return gameModes

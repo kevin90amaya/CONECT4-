@@ -13,22 +13,20 @@ package "mvc_front" {
         package "game" {
             class ControllerGame {}
             class ViewGame {}
-            class ModelGame {}
+
         }
         package "board" {
             class ControllerBoard {}
             class ViewBoard {}
-            class ModelBoard {}
+
         }
         package "players" {
             class ControllerPlayers {}
             class ViewPlayers {}
-            class ModelPlayers {}
+
         }
         package "messages" {}
-        package "model" {
-            class GameState <<static>> {}
-        }
+
     }
 }
 
@@ -59,22 +57,34 @@ ControllerMenu *--> ControllerGame
 ControllerGame *--> ControllerBoard
 ControllerGame *--> ControllerPlayers
 
-ControllerGame --> ViewGame
-ControllerGame --> ModelGame
-ControllerMenu --> ViewMenu
-ControllerMenu --> ModelMenu
-ControllerBoard --> ViewBoard
-ControllerBoard --> ModelBoard
-ControllerPlayers --> ViewPlayers
-ControllerPlayers --> ModelPlayers
+ControllerGame *--> ViewGame
+ViewGame --> ViewBoard
+ViewGame --> ViewPlayers
+ControllerMenu *--> ViewMenu
 
-ControllerGame <.. RestControllerGame : json 
-ControllerGame ..> RestControllerGame : get, post, put, delete
+ControllerBoard *--> ViewBoard
+
+ControllerPlayers *--> ViewPlayers
+
+ControllerGame ..> RestControllerGame 
+ControllerBoard ..> RestControllerBoard
+ControllerPlayers ..> RestControllerPlayers
+ControllerMenu ..> RestSettingsMenuController
+
+RestSettingsMenuController --> SettingsMenuService
+RestControllerGame --> GameService
+RestControllerBoard --> BoardService
+RestControllerPlayers --> PlayersService
+
+GameService --> BoardService
+GameService --> PlayersService
+
+SettingsMenuService --> BoardService
+SettingsMenuService --> PlayersService
 
 controllers --> services
 services --> models
 
-ViewGame ..> GameState
-ControllerBoard ..> GameState
+
 
 @enduml

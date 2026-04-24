@@ -28,7 +28,7 @@ class GameView {
             await this.playerView.showSelectMode();
 
             do{
-                await this.playerView.iterate();
+                await this.playerView.interact();
                 this.boardView.showBoard();
             } while (this.boardView.isFinished());
 

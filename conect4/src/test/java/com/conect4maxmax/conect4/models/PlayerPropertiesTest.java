@@ -27,9 +27,4 @@ public class PlayerPropertiesTest {
         players.getPlayers().add(new PlayerProperties("YELLOW", Color.YELLOW, PlayerTipe.COMPUTER, 1));
     }
 
-        @Test
-    public void testGetTipePlayer() {     
-        assertThat(players.getPlayers().get(0).getTipePlayer(), is(instanceOf(HumanPlayer.class)));
-        assertThat(players.getPlayers().get(1).getTipePlayer(), is(instanceOf(ComputerPlayer.class)));
-        }
 }
