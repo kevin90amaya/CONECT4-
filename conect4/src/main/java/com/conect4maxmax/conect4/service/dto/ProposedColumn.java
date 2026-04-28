@@ -2,9 +2,12 @@ package com.conect4maxmax.conect4.service.dto;
 
 public class ProposedColumn {
 
-    public Object getValue() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getValue'");
-    }
+    private Integer value;
+
+    public ProposedColumn() {}
+
+    public Integer getValue() { return value; }
+    
+    public void setValue(Integer value) { this.value = value; }
     
 }

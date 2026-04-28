@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.conect4maxmax.conect4.controller.dto.ResolveTurnRequest;
-import com.conect4maxmax.conect4.controller.dto.ResolveTurnResponse;
-import com.conect4maxmax.conect4.controller.mapper.gameMapper;
 import com.conect4maxmax.conect4.service.dto.GameResult;
 import com.conect4maxmax.conect4.service.dto.ProposedColumn;
 import com.conect4maxmax.conect4.service.GameService;
@@ -22,10 +19,9 @@ public class GameController {
     private GameService gameService;
 
     @PostMapping("/resolve-turn")
-    public ResolveTurnResponse resolveTurn(@RequestBody ResolveTurnRequest request) {
-        ProposedColumn proposedColumn = gameMapper.requestToColumn(request);
-        GameResult result = gameService.play(proposedColumn);
-        return gameMapper.resultToResponse(result);
+    public GameResult resolveTurn(@RequestBody ProposedColumn proposedColumn) {
+       return  gameService.play(proposedColumn);    
+       
     }
 
     

@@ -2,9 +2,12 @@ package com.conect4maxmax.conect4.service.dto;
 
 public class GameResult {
 
-    public void setStatus(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
-    }
+    private String status;
+
+    public GameResult(){}
+
+    public String getStatus() { return status; }
+    
+    public void setStatus(String status) { this.status = status; }
     
 }
