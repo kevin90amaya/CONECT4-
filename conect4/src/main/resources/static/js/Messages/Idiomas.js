@@ -43,6 +43,9 @@ class Idiomas {
     getGameModeName(mode) {
         throw new Error("Este método debe ser implementado por la subclase.");
     }
+    getContinueDialogMessages() {
+        throw new Error("Este método debe ser implementado por la subclase.");
+    }
 }
 
 export default Idiomas;

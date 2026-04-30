@@ -8,6 +8,10 @@ class ControllerPlayers {
     constructor() {
         this.playerView = new PlayerView();
     }
+    
+    getPlayerView() {
+        return this.playerView;
+    }
 
     async getGameModes() {
         const modes = await fetch(ENDPOINTS.GAME_MODES);

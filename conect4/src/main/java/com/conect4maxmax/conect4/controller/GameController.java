@@ -24,5 +24,9 @@ public class GameController {
        
     }
 
+    @PostMapping("/reset")
+    public void reset() {
+        gameService.reset();
+    }
     
 }

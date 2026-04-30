@@ -53,6 +53,8 @@ class Message {
                 return this.getGameModesMessages();
             case "GAME_STATUS":
                 return this.getGameStatusMessages();
+            case "CONTINUE_DIALOG":
+                return this.getContinueDialogMessages();
         }
     }
     
@@ -102,6 +104,10 @@ class Message {
     
     getGameModeName(mode) {
         return this.idioma.getGameModeName(mode);
+    }
+    
+    getContinueDialogMessages() {
+        return this.idioma.getContinueDialogMessages();
     }
 }
 

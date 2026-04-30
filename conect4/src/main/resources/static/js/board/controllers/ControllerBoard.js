@@ -12,6 +12,10 @@ class ControllerBoard {
         this.board = null;
     }
 
+    getboardView() {
+        return this.boardView;
+    }
+
     async getboard() {
         const response = await fetch(ENDPOINTS.BOARD);
         const data = await response.json();
@@ -26,5 +30,6 @@ class ControllerBoard {
         this.board = await this.getboard();
         this.setBoard();
     }
+    
 }
 export default ControllerBoard;

@@ -130,7 +130,16 @@ class Español extends Idiomas {
     getGameStatusMessages() {
         return {
             turn: "TURNO: ",
-            enterColumn: "colocar una ficha en una columna: "
+            enterColumn: "colocar una ficha en una columna: ",
+            win: "GANASTE!!! ",
+            draw: "EMPATE!!!",
+            columnIsComplete: "Columna inválida!!! Esta completa"
+        };
+    }
+    
+    getContinueDialogMessages() {
+        return {
+            ask_question: "¿Desea jugar otra partida?"
         };
     }
 

@@ -136,7 +136,16 @@ class Ingles extends Idiomas {
     getGameStatusMessages() {
         return {
             turn: "TURN: ",
-            enterColumn: "drop a token in a column: "
+            enterColumn: "drop a token in a column: ",
+            win: "YOU WIN!!! ",
+            draw: "TIED!!!",
+            columnIsComplete: "Invalid column!!! It's complete"
+        };
+    }
+    
+    getContinueDialogMessages() {
+        return {
+            ask_question: "Do you want to play another round?"
         };
     }
 

@@ -29,30 +29,6 @@ public class GameService {
         players.resetTurn();
     }
 
-    public void isComplete() {
-  
-    }
-
-    public void isWinner() {
-
-    }
-
-    public void isFinished() {
-
-    }
-
-    public PlayerProperties getActivePlayer() {
-        return this.players.getCurrentPlayer();
-    }
-
-    public void getActiveColor() {
-
-    }
-
-    public void nextTurn() {
-    
-    }
-
     public GameResult play(ProposedColumn proposedColumn) {
 
         PlayerProperties activePayer = this.players.getCurrentPlayer();

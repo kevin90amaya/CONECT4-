@@ -19,4 +19,5 @@ public class BoardController {
     public Board getBoard() {
         return boardService.getBoard();
     }
+
 }

@@ -10,5 +10,6 @@ export const ENDPOINTS = {
     MODE: `${BASE}/api/players/mode`,
     LIST_PLAYERS: `${BASE}/api/players/list-players`,
     CURRENT_PLAYER: `${BASE}/api/players/current-player`,
-    RESOLVE_TURN: `${BASE}/api/game/resolve-turn`
+    RESOLVE_TURN: `${BASE}/api/game/resolve-turn`,
+    RESET: `${BASE}/api/game/reset`
 };
