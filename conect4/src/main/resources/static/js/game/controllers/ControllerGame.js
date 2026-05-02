@@ -28,14 +28,17 @@ class ControllerGame {
     async playGames() {
         const continueDialog = new YesNoDialog();
         do {
-           await this.initializedMatch();
+            this.refreshBoard();
+           this.boardView.showTitle();
+           this.playerView.showSelectMode();
             do{
                 const result = await this.playTurn();
                 await this.refreshBoard();
             } while (!this.isEndGame(result));
 
-           await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
             await this.resetGame();
+
+           await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
         } while (continueDialog.isAffirmative());
     }
 
@@ -77,12 +80,6 @@ class ControllerGame {
     async refreshBoard(){
         await this.controllerBoard.initialize();
         this.boardView.showBoard();
-    }
-
-    async initializedMatch(){
-        this.boardView.showTitle();
-        this.boardView.showBoard();
-        await this.playerView.showSelectMode();
     }
     
     async resetGame() {

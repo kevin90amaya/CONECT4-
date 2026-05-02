@@ -12,21 +12,31 @@ import com.conect4maxmax.conect4.service.dto.ProposedColumn;
 
 @Service
 public class GameService {
-    private final ComputerPlayer computerPlayer;
+    @Autowired
+    private ComputerPlayer computerPlayer;
     @Autowired
     private Players players;
     @Autowired
     private Board board;
 
 
-    GameService() {
-        this.computerPlayer = new ComputerPlayer();
-    }
 
  
     public void reset() {
         board.reset();
         players.resetTurn();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public ComputerPlayer getComputerPlayer() {
+        return computerPlayer;
     }
 
     public GameResult play(ProposedColumn proposedColumn) {

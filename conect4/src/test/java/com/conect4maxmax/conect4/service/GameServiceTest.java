@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.conect4maxmax.conect4.models.Board;
 import com.conect4maxmax.conect4.models.BoardBuilder;
 import com.conect4maxmax.conect4.models.Color;
+import com.conect4maxmax.conect4.models.PlayerProperties;
+import com.conect4maxmax.conect4.models.PlayerTipe;
+import com.conect4maxmax.conect4.models.Players;
 import com.conect4maxmax.conect4.service.dto.GameResult;
 import com.conect4maxmax.conect4.service.dto.ProposedColumn;
 
@@ -30,30 +33,43 @@ public class GameServiceTest {
     @Autowired
     Board board;
 
+    @Autowired
+    Players players;
+
     @BeforeEach
     public void setUp(){
-        boardBuilder.build().reset();
-    }
+    boardBuilder.setNumberColumns(7)
+                .setNumberRows(6)
+                .setNumberToWin(4)
+                .build()
+                .reset();
+    players.resetTurn();
+}
 
     @AfterEach
     public void tearDown(){}
 
+
     @Test
     public void testPlayColumnIsComplete() {
-        
-        board.asigColumn(0);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
-        board.dropColor(Color.RED);
-        board.dropColor(Color.YELLOW);
+    PlayerProperties currentPlayer = players.getCurrentPlayer();
+    assertThat(currentPlayer.getTipe(), is(PlayerTipe.HUMAN));
 
-        ProposedColumn proposedColumn = new ProposedColumn();
-        proposedColumn.setValue(0);
-        GameResult result = gameService.play(proposedColumn);
-        assertThat(result.getStatus(), is("COLUMN_IS_COMPLETE"));
-    }
+    // Llenar columna 0
+    board.asigColumn(0);
+    board.dropColor(Color.RED);
+    board.dropColor(Color.YELLOW);
+    board.dropColor(Color.RED);
+    board.dropColor(Color.YELLOW);
+    board.dropColor(Color.RED);
+    board.dropColor(Color.RED);
+
+    ProposedColumn proposedColumn = new ProposedColumn();
+    proposedColumn.setValue(0);
+    GameResult result = gameService.play(proposedColumn);
+    assertThat(currentPlayer.getTipe(), is(PlayerTipe.HUMAN));
+    assertThat(result.getStatus(), is("COLUMN_IS_COMPLETE"));
+}
 
     @Test
     public void testPlayWin(){
@@ -152,9 +168,27 @@ public class GameServiceTest {
         
         ProposedColumn proposedColumn = new ProposedColumn();
         proposedColumn.setValue(2);
-    
         GameResult result = gameService.play(proposedColumn);
-    
         assertThat(result.getStatus(), is("NEXT_TURN"));
+    }
+
+    @Test
+    public void testPlayerTipeNextTurn(){
+        PlayerProperties currentPlayer = players.getCurrentPlayer();
+        assertThat(currentPlayer.getTipe(), is(PlayerTipe.HUMAN));
+        
+        ProposedColumn proposedColumn = new ProposedColumn();
+        proposedColumn.setValue(2);
+        gameService.play(proposedColumn);
+
+     
+        currentPlayer = players.getCurrentPlayer();
+        assertThat(currentPlayer.getTipe(), is(PlayerTipe.COMPUTER));
+        gameService.play(new ProposedColumn());
+
+        currentPlayer = players.getCurrentPlayer();
+        assertThat(currentPlayer.getTipe(), is(PlayerTipe.HUMAN));
+        
+        
     }
 }
