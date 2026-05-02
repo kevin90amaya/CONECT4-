@@ -30,7 +30,7 @@ class BoardView {
            column.className = 'column';
 
            column.addEventListener('click', () => {
-            document.dispatchEvent(new CustomEvent('board-column-selected', { detail: {proposedColumn: C} }));
+            document.dispatchEvent(new CustomEvent('board-column-selected', { detail: {value: C} }));
            });
 
            for (let R = 0; R < this.#board.numberRows; R++) {

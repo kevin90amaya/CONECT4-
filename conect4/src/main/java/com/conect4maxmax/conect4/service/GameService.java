@@ -41,6 +41,10 @@ public class GameService {
 
     public GameResult play(ProposedColumn proposedColumn) {
 
+        if (proposedColumn == null) {
+            throw new IllegalArgumentException("proposedColumn cannot be null");
+        }
+
         PlayerProperties activePayer = this.players.getCurrentPlayer();
         int column;
         GameResult result = new GameResult();
