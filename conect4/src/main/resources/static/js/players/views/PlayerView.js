@@ -66,14 +66,6 @@ class PlayerView {
         `;
 
     }
-
-    async interact() {
-        if (this.currentPlayer.type === "HUMAN") {
-         return await this.userplayerview.playTurn();  
-        } else {
-        return await this.machineplayerview.playTurn();    
-        }
-  }
   
   showWin(){
     const statusElement = document.querySelector('.status');

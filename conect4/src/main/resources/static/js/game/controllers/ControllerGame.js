@@ -44,15 +44,15 @@ class ControllerGame {
     }
     
 
-async resolveSelectionMode() {
-    await this.controllerPlayers.selectAndProcessMode();
-}
-
-    async playTurn(){
-        const result = await this.playerView.interact();
-        await this.resolveResult(result);
-        return result;
+    async resolveSelectionMode() {
+        await this.controllerPlayers.selectAndProcessMode();
     }
+
+    async playTurn() {
+    const result = await this.controllerPlayers.playTurnForCurrentPlayer();
+    await this.resolveResult(result);
+    return result;
+}
 
     isEndGame(result) {
         return result.status === "WIN" || result.status === "DRAW";

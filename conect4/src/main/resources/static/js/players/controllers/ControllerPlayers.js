@@ -39,10 +39,18 @@ class ControllerPlayers {
         this.playerView.setCurrentPlayer(data);
     }
 
+    async playTurnForCurrentPlayer() {
+    await this.getCurrentPlayer();
+
+    if (this.playerView.currentPlayer.type === "HUMAN") {
+        return await this.playerView.userplayerview.playTurn();
+    } else {
+        return await this.playerView.machineplayerview.playTurn();
+    }
+}
+
     async initialize() {
         await this.getGameModes();
-        await this.getListPlayers();
-        await this.getCurrentPlayer();
     }
 
     async selectAndProcessMode() {
@@ -63,6 +71,7 @@ class ControllerPlayers {
 
     async processModeSelection(mode) {
         await this.postGameMode(mode);
+        await this.getCurrentPlayer();
         this.updateViewForModeSelect(mode);
     }
 
