@@ -41,22 +41,31 @@ class ControllerPlayers {
 
     async initialize() {
         await this.getGameModes();
-        this.playerView.showSelectMode();
-        this.configEventSelectMode();
         await this.getListPlayers();
         await this.getCurrentPlayer();
     }
 
-    configEventSelectMode() {
-        document.addEventListener('selectMode', this.handleSelectMode.bind(this));
-    }
+    async selectAndProcessMode() {
+    this.playerView.showSelectMode();
+    const mode = await this.waitForModeSelection();
+    await this.processModeSelection(mode);
+}
 
-    async handleSelectMode(e) {
-        const mode = e.detail.mode;
+    async waitForModeSelection() {
+    return new Promise((resolve) => {
+        const handler = (e) => {
+            document.removeEventListener('selectMode', handler);
+            resolve(e.detail.mode);
+        };
+        document.addEventListener('selectMode', handler);
+    });
+}
+
+    async processModeSelection(mode) {
         await this.postGameMode(mode);
         this.updateViewForModeSelect(mode);
     }
-    
+
     updateViewForModeSelect(mode) {
         this.playerView.showSelectedMode(mode);
         this.playerView.showTurn();

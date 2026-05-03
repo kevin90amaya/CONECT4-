@@ -28,19 +28,25 @@ class ControllerGame {
     async playGames() {
         const continueDialog = new YesNoDialog();
         do {
-            this.refreshBoard();
-           this.boardView.showTitle();
-           this.playerView.showSelectMode();
+            this.boardView.showTitle();
+           await this.resolveSelectionMode();
+            this.boardView.showBoard();
             do{
                 const result = await this.playTurn();
                 await this.refreshBoard();
             } while (!this.isEndGame(result));
-
+            
             await this.resetGame();
+            await this.controllerBoard.initialize();
 
            await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
         } while (continueDialog.isAffirmative());
     }
+    
+
+async resolveSelectionMode() {
+    await this.controllerPlayers.selectAndProcessMode();
+}
 
     async playTurn(){
         const result = await this.playerView.interact();
