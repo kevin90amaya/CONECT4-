@@ -33,7 +33,7 @@ class BoardView {
             document.dispatchEvent(new CustomEvent('board-column-selected', { detail: {value: C} }));
            });
 
-           for (let R = 0; R < this.#board.numberRows; R++) {
+           for (let R = this.#board.numberRows - 1; R >= 0; R--) {
                const cell = document.createElement('div');
                cell.className = 'cell';
 

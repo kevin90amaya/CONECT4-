@@ -12,7 +12,7 @@ export class YesNoDialog {
     #form;
 
     constructor() {
-        this.#statusParagraph = document.querySelector('.game-status p');
+        this.#statusParagraph = null;
         this.#form = document.createElement('form');
         this.#form.className = 'yes-no-form';
         
@@ -41,8 +41,9 @@ export class YesNoDialog {
     read(message) {
         // Reiniciar la respuesta antes de cada lectura
         this.#answer = null;
+        this.#statusParagraph = document.querySelector(".status p");
         this.#statusParagraph.textContent = message + YesNoDialog.#SUFFIX;
-        document.querySelector('.game-status').appendChild(this.#form);
+        this.#statusParagraph.appendChild(this.#form);
 
         // Esperar a que el usuario responda de forma asíncrona
         return new Promise((resolve) => {
@@ -53,7 +54,7 @@ export class YesNoDialog {
                         this.#statusParagraph.textContent = YesNoDialog.#MESSAGE;
                         // limpiar y volver a mostrar el formulario
                         this.#answer = null;
-                        document.querySelector('.game-status').appendChild(this.#form);
+                        this.#statusParagraph.appendChild(this.#form);
                         setTimeout(checkAnswer, 100);
                     } else {
                         resolve();

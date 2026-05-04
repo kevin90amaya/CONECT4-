@@ -71,6 +71,7 @@ class PlayerView {
     const statusElement = document.querySelector('.status');
     statusElement.innerHTML = `
         <h4>${Message.getInstance().getMessages("GAME_STATUS").win} ${this.currentPlayer.name}</h4>
+        <p></p>
     `;
   }
   
@@ -78,6 +79,7 @@ class PlayerView {
     const statusElement = document.querySelector('.status');
     statusElement.innerHTML = `
         <h4>${Message.getInstance().getMessages("GAME_STATUS").draw}</h4>
+        <p></p>
     `;
   }
   
