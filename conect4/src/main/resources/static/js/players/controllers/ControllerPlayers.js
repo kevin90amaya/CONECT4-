@@ -42,7 +42,7 @@ class ControllerPlayers {
     async playTurnForCurrentPlayer() {
     await this.getCurrentPlayer();
 
-    if (this.playerView.currentPlayer.type === "HUMAN") {
+    if (this.playerView.currentPlayer.tipe === "HUMAN") {
         return await this.playerView.userplayerview.playTurn();
     } else {
         return await this.playerView.machineplayerview.playTurn();

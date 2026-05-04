@@ -4,11 +4,12 @@ class UserPlayerView {
 
 async playTurn() {
     const col = await this.getColumnFromClick();       
-    return await fetch(ENDPOINTS.RESOLVE_TURN, {
+    const response = await fetch(ENDPOINTS.RESOLVE_TURN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ value: col })
     });
+    return await response.json();
 }
 
 getColumnFromClick() {

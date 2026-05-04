@@ -2,6 +2,7 @@ package com.conect4maxmax.conect4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,16 @@ public class BoardController {
     @GetMapping
     public Board getBoard() {
         return boardService.getBoard();
+    }
+
+    @PostMapping("/create")
+    public void create() {
+        boardService.createBoard();
+    }
+
+    @PostMapping("/reset")
+    public void reset() {
+        boardService.resetBoard();
     }
 
 }

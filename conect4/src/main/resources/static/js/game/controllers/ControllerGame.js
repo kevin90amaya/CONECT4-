@@ -31,8 +31,9 @@ class ControllerGame {
             this.boardView.showTitle();
            await this.resolveSelectionMode();
             this.boardView.showBoard();
+            let result;
             do{
-                const result = await this.playTurn();
+                result = await this.playTurn();
                 await this.refreshBoard();
             } while (!this.isEndGame(result));
             
@@ -84,7 +85,8 @@ class ControllerGame {
     }
 
     async refreshBoard(){
-        await this.controllerBoard.initialize();
+        await this.controllerBoard.getboard();
+        this.controllerBoard.setBoard();
         this.boardView.showBoard();
     }
     

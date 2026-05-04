@@ -9,10 +9,17 @@ import com.conect4maxmax.conect4.models.Board;
 public class boardService {
     @Autowired
     private Board board;
+
+    public void createBoard() {
+        board.create();
+    }
     
     public Board getBoard() {
-        board.create();
         return board;
+    }
+
+    public void resetBoard() {
+        board.reset();
     }
 
 

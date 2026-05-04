@@ -19,16 +19,25 @@ class ControllerBoard {
     async getboard() {
         const response = await fetch(ENDPOINTS.BOARD);
         const data = await response.json();
-        return data;
+        this.board = data;
     }
     
     setBoard() {
         this.boardView.setBoard(this.board);
     }
+
+    async createBoard() {
+        await fetch(ENDPOINTS.BOARD_CREATE, {method: 'POST'});
+    }
     
     async initialize() {
-        this.board = await this.getboard();
+        await this.createBoard();
+        await this.getboard();
         this.setBoard();
+    }
+
+    async reset() {
+        await fetch(ENDPOINTS.BOARD_RESET, {method: 'POST'});
     }
     
 }
