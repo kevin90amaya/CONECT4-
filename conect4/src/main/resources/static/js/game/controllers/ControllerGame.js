@@ -28,10 +28,16 @@ class ControllerGame {
         await this.controllerBoard.getboard();
         return this.controllerBoard.board;
     }
+
+    async updateBoard() {
+        await this.controllerBoard.getboard();
+        this.controllerBoard.setBoard();
+    }
     
     async playGames() {
         const continueDialog = new YesNoDialog();
         do {
+            await this.updateBoard();
             this.boardView.showTitle();
            await this.resolveSelectionMode();
             this.boardView.showBoard();
