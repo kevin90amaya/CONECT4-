@@ -35,9 +35,9 @@ class ViewMenu {
     const titleElement = titleContainer.querySelector('h1');
     this.#menu.updateTitle();
     titleElement.textContent = this.#menu.getTitle();
-}
+    }
     
-showTitleOptions() {
+    showTitleOptions() {
     // Crear el contenedor de la lista
     const optionsContainer = document.createElement('ul');
     optionsContainer.id = 'options';
@@ -67,7 +67,7 @@ showTitleOptions() {
 
     // Agregar el <ul> al menú
     this.#menuElement.appendChild(optionsContainer);
-}
+    }
 
     
     setMenu(menu) {
@@ -76,6 +76,47 @@ showTitleOptions() {
 
     getMenuElement() {
         return this.#menuElement;
+    }
+
+    showEditRows(board){
+        
+    }
+
+    showEditColumns(board){
+        
+    }
+
+
+    showEditConectToWin(board) {
+        this.cleanMenu();
+        
+        const min = 3;
+        const max = Math.max(board.numberColumns, board.numberRows);
+     
+        this.#menuElement.innerHTML = `
+            <div class="edit-container">
+                <label>Conecta para ganar: <span id="rangeValue">${board.numberToWin}</span></label>
+                <input type="range" id="conectToWinRange" 
+                       min="${min}" 
+                       max="${max}" 
+                       value="${board.numberToWin}">
+                <button id="saveConectToWin">Guardar</button>
+            </div>
+        `;
+
+        const range = document.getElementById('conectToWinRange');
+        const display = document.getElementById('rangeValue');
+        const saveButton = document.getElementById('saveConectToWin');
+
+        range.addEventListener('input', () => {
+            display.textContent = range.value;
+        });
+
+        saveButton.addEventListener('click', () => {
+            document.dispatchEvent(new CustomEvent('save-conect-to-win', { 
+                detail: { value: parseInt(range.value) } 
+            }));
+        });
     }
     
 }

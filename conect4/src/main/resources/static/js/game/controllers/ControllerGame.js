@@ -22,7 +22,11 @@ class ControllerGame {
    async initialize() {
         await this.controllerBoard.initialize();
         await this.controllerPlayers.initialize();
-        this.playGames();
+    }
+
+    async getboard() {
+        await this.controllerBoard.getboard();
+        return this.controllerBoard.board;
     }
     
     async playGames() {

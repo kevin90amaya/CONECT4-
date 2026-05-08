@@ -19,9 +19,6 @@ public class GameService {
     @Autowired
     private Board board;
 
-
-
- 
     public void reset() {
         board.reset();
         players.resetTurn();

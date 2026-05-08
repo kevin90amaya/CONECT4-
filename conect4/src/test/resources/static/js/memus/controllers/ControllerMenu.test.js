@@ -36,6 +36,22 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
         test('BoardMenu', () => {
 
         })
+
     });
+
+    describe('handleCommand', () => {
+
+        test('change-lenguage-english',() =>{
+
+        });
+        
+        test('change-lenguage-spanish',() =>{
+
+        });
+
+        test('start-game',() =>{
+            
+        });
+    })
 
 });

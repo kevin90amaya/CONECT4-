@@ -12,7 +12,7 @@ class EditConectToWinOption extends Option{
     }
     
     execute() {
-        
+        return "edit-conect-to-win";
     }
 }
 export default EditConectToWinOption;
