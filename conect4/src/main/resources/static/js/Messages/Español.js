@@ -78,7 +78,9 @@ class Español extends Idiomas {
             navigation: "Navegar",
             menuOfMenus: "Menú de Menús",
             back: "Volver",
-            exit: "Salir"
+            exit: "Salir",
+            save: "Guardar",
+            cancel: "Cancelar"
         };
     }
 

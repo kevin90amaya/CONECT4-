@@ -1,4 +1,4 @@
-
+import Message from "../../Messages/Message.js";
 
 class ViewMenu {
 
@@ -86,39 +86,45 @@ class ViewMenu {
         
     }
 
-
     showEditConectToWin(board) {
-        this.cleanMenu();
+
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
         
-        const min = 3;
         const max = Math.max(board.numberColumns, board.numberRows);
      
-        this.#menuElement.innerHTML = `
-            <div class="edit-container">
-                <label>Conecta para ganar: <span id="rangeValue">${board.numberToWin}</span></label>
-                <input type="range" id="conectToWinRange" 
-                       min="${min}" 
-                       max="${max}" 
-                       value="${board.numberToWin}">
-                <button id="saveConectToWin">Guardar</button>
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <h3>${Message.getInstance().getMessages("BoardMenu").conectToWin}</h3>
+                <div class="edit-container">
+                    <label>${Message.getInstance().getMessages("BoardMenu").editConectToWin} <span id="rangeValue">${board.numberToWin}</span></label>
+                    <input type="range" id="conectToWinRange" min="3" max="${max}" value="${board.numberToWin}">
+                </div>
+                <div class="modal-buttons">
+                    <button id="saveConectToWin">${Message.getInstance().getMessages("Common").save}</button>
+                    <button id="cancelEdit">${Message.getInstance().getMessages("Common").cancel}</button>
+                </div>
             </div>
         `;
 
-        const range = document.getElementById('conectToWinRange');
-        const display = document.getElementById('rangeValue');
-        const saveButton = document.getElementById('saveConectToWin');
+        document.body.appendChild(modalOverlay);
 
-        range.addEventListener('input', () => {
-            display.textContent = range.value;
-        });
+        const range = modalOverlay.querySelector('#conectToWinRange');
+        const display = modalOverlay.querySelector('#rangeValue');
 
-        saveButton.addEventListener('click', () => {
-            document.dispatchEvent(new CustomEvent('save-conect-to-win', { 
-                detail: { value: parseInt(range.value) } 
-            }));
-        });
+        range.addEventListener('input', () => display.textContent = range.value);
+
+        modalOverlay.querySelector('#saveConectToWin').onclick = () => {
+            const val = parseInt(range.value);
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-conect-to-win', { detail: { value: val } }));
+        };
+
+        modalOverlay.querySelector('#cancelEdit').onclick = () => {
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-conect-to-win', { detail: { value: board.numberToWin } }));
+        };
     }
-    
-}
 
+}
 export default ViewMenu;

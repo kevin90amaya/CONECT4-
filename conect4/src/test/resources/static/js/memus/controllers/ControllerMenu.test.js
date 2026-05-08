@@ -52,6 +52,12 @@ describe('ControllerMenu - Flujo completo con clases reales', () => {
         test('start-game',() =>{
             
         });
+
+        test('edit-conect-to-win',() =>{
+
+        });
+
+
     })
 
 });

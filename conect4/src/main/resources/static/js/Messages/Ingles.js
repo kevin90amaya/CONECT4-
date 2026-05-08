@@ -80,7 +80,9 @@ class Ingles extends Idiomas {
             navigation: "Navigation",
             menuOfMenus: "Menu of Menus",
             back: "Back",
-            exit: "Exit"
+            exit: "Exit",
+            save: "Save",
+            cancel: "Cancel"
         };
     }
 
