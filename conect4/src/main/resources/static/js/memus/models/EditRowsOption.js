@@ -12,7 +12,7 @@ class EditRowOption extends Option {
     }
     
     execute() {
-        
+        return "edit-rows";
     }
 }
 export default EditRowOption;

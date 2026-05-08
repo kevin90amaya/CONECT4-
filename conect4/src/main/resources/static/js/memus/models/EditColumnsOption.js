@@ -11,7 +11,7 @@ class EditColumnsOption extends Option{
     }
     
     execute() {
-        
+        return "edit-columns";
     }
 }
 export default EditColumnsOption;

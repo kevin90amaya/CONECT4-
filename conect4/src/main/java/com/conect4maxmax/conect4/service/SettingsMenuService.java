@@ -16,6 +16,17 @@ public class SettingsMenuService {
 
     public void setConectToWin(ProposedValue conectToWin) {
         board.setNumberToWin(conectToWin.getValue());
+        board.create();
+    }
+
+    public void setRows(ProposedValue rows) {
+        board.setNumberRows(rows.getValue());
+        board.create();
+    }
+
+    public void setColumns(ProposedValue columns) {
+        board.setNumberColumns(columns.getValue());
+        board.create();
     }
     
 }

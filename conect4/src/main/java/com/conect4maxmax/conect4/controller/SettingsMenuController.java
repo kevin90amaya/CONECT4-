@@ -21,6 +21,16 @@ public class SettingsMenuController {
     public void setConectToWin(@RequestBody ProposedValue conectToWin) {
         settingsMenuService.setConectToWin(conectToWin);
     }
+
+    @PostMapping("/rows")
+    public void setRows(@RequestBody ProposedValue rows) {
+        settingsMenuService.setRows(rows);
+    }
+    
+    @PostMapping("/columns")
+    public void setColumns(@RequestBody ProposedValue columns) {
+        settingsMenuService.setColumns(columns);
+    }
     
     
     

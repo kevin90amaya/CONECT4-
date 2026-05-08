@@ -134,6 +134,19 @@ class ControllerMenu {
     }
     
     async handleEditRows() {
+        return new Promise((resolve) => {
+            const onSave = async (event) => {
+                await fetch(`${ENDPOINTS.ROWS}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value: event.detail.value })
+                });
+     
+                document.removeEventListener('save-rows', onSave);
+                resolve();
+            };
+            document.addEventListener('save-rows', onSave);
+        });
     }
 
     async editColumns() {
@@ -144,6 +157,19 @@ class ControllerMenu {
     }
     
     async handleEditColumns() {
+        return new Promise((resolve) => {
+            const onSave = async (event) => {
+                await fetch(`${ENDPOINTS.COLUMNS}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value: event.detail.value })
+                });
+     
+                document.removeEventListener('save-columns', onSave);
+                resolve();
+            };
+            document.addEventListener('save-columns', onSave);
+        });
     }
 
 }

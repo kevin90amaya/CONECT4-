@@ -12,6 +12,8 @@ export const ENDPOINTS = {
     BOARD_RESET: `${BASE}/api/board/reset`,
 
     CONECT_TO_WIN: `${BASE}/api/setting-menu/conect-to-win`,
+    ROWS: `${BASE}/api/setting-menu/rows`,
+    COLUMNS: `${BASE}/api/setting-menu/columns`,
     
     PLAYERS: `${BASE}/api/players`,
     GAME_MODES: `${BASE}/api/players/game-modes`,

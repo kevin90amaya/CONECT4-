@@ -79,11 +79,88 @@ class ViewMenu {
     }
 
     showEditRows(board){
+
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+
+        const max = 30;
+        const min = 3;
+
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <h3>${Message.getInstance().getMessages("BoardMenu").rows}</h3>
+                <div class="edit-container">
+                    <label>${Message.getInstance().getMessages("BoardMenu").editRows} <span id="rangeValue">${board.numberRows}</span></label>
+                    <input type="range" id="rows" min="${min}" max="${max}" value="${board.numberRows}">
+                </div>
+                <div class="modal-buttons">
+                    <button id="saveRows">${Message.getInstance().getMessages("Common").save}</button>
+                    <button id="cancelEdit">${Message.getInstance().getMessages("Common").cancel}</button>
+                </div>
+
+            </div>
+        `;
         
+        document.body.appendChild(modalOverlay);
+        
+        const range = modalOverlay.querySelector('#rows');
+        const rangeValue = modalOverlay.querySelector('#rangeValue');
+        
+        range.addEventListener('input', () => rangeValue.textContent = range.value);
+
+        modalOverlay.querySelector('#saveRows').onclick = () => {
+            const val = parseInt(range.value);
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-rows', { detail: { value: val } }));
+        };
+
+        modalOverlay.querySelector('#cancelEdit').onclick = () => {
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-rows', { detail: { value: board.numberRows } }));
+        };
+
     }
 
     showEditColumns(board){
         
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        
+        const max = 30;
+        const min = 3;
+
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <h3>${Message.getInstance().getMessages("BoardMenu").columns}</h3>
+                <div class="edit-container">
+                    <label>${Message.getInstance().getMessages("BoardMenu").editColumns} <span id="rangeValue">${board.numberColumns}</span></label>
+                    <input type="range" id="columns" min="${min}" max="${max}" value="${board.numberColumns}">
+                </div>
+                <div class="modal-buttons">
+                    <button id="saveColumns">${Message.getInstance().getMessages("Common").save}</button>
+                    <button id="cancelEdit">${Message.getInstance().getMessages("Common").cancel}</button>
+                </div>
+
+            </div>
+        `;
+        
+        document.body.appendChild(modalOverlay);
+        
+        const range = modalOverlay.querySelector('#columns');
+        const rangeValue = modalOverlay.querySelector('#rangeValue');
+        
+        range.addEventListener('input', () => rangeValue.textContent = range.value);
+
+        modalOverlay.querySelector('#saveColumns').onclick = () => {
+            const val = parseInt(range.value);
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-columns', { detail: { value: val } }));
+        };
+
+        modalOverlay.querySelector('#cancelEdit').onclick = () => {
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-columns', { detail: { value: board.numberColumns } }));
+        };
     }
 
     showEditConectToWin(board) {
