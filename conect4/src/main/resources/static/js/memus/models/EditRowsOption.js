@@ -8,7 +8,7 @@ class EditRowOption extends Option {
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("BoardMenu").editRows;
+        this.title = Message.getInstance().getMessages("BoardMenu").rows;
     }
     
     execute() {

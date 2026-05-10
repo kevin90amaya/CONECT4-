@@ -34,6 +34,7 @@ class ControllerMenu {
         this.#menu.addLast();
         this.viewMenu.showMenu();
     }
+
     setupMenuEventHandlers() {
         document.addEventListener('menuOptionSelected', async (event) => {
             const { option } = event.detail;
@@ -43,7 +44,7 @@ class ControllerMenu {
 
 
     
-     async handleMenuOption(option) {
+    async handleMenuOption(option) {
         try {
             const result = await option.execute();
             
@@ -67,16 +68,13 @@ class ControllerMenu {
     async handleCommand(command) {
             switch(command) {
         case "change-lenguage-english":
-            Message.getInstance().setIdiomaIngles();
-            this.loadMenu();
+            this.changeEnglish();
             break;
         case "change-lenguage-spanish":
-            Message.getInstance().setIdiomaEspañol();
-            this.loadMenu();
+            this.changeSpanish();
             break;
         case "start-game":
-            this.viewMenu.cleanMenu();
-           await this.gameController.playGames();
+            await this.startGame();
             break;
         case "edit-conect-to-win":
             await this.editConectToWin();
@@ -88,6 +86,21 @@ class ControllerMenu {
             await this.editColumns();
             break;
         }
+    }
+    
+    changeEnglish() {
+        Message.getInstance().setIdiomaIngles();
+        this.loadMenu();
+    }
+    
+    changeSpanish() {
+        Message.getInstance().setIdiomaEspañol();
+        this.loadMenu();
+    }
+    
+    async startGame() {
+        this.viewMenu.cleanMenu();
+        await this.gameController.playGames();
     }
 
     setMenu(menu) {

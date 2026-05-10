@@ -169,13 +169,14 @@ class ViewMenu {
         modalOverlay.className = 'modal-overlay';
         
         const max = Math.max(board.numberColumns, board.numberRows);
+        const min = 3;
      
         modalOverlay.innerHTML = `
             <div class="modal-content">
                 <h3>${Message.getInstance().getMessages("BoardMenu").conectToWin}</h3>
                 <div class="edit-container">
                     <label>${Message.getInstance().getMessages("BoardMenu").editConectToWin} <span id="rangeValue">${board.numberToWin}</span></label>
-                    <input type="range" id="conectToWinRange" min="3" max="${max}" value="${board.numberToWin}">
+                    <input type="range" id="conectToWinRange" min="${min}" max="${max}" value="${board.numberToWin}">
                 </div>
                 <div class="modal-buttons">
                     <button id="saveConectToWin">${Message.getInstance().getMessages("Common").save}</button>

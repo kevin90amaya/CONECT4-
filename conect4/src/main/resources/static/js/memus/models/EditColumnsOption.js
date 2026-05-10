@@ -7,7 +7,7 @@ class EditColumnsOption extends Option{
     }
     
     updateTitle() {
-        this.title = Message.getInstance().getMessages("BoardMenu").editColumns;
+        this.title = Message.getInstance().getMessages("BoardMenu").columns;
     }
     
     execute() {
