@@ -12,6 +12,7 @@ class ControllerMenu {
 
     #menu;
     viewMenu;
+    #comands;
 
     constructor() {
      this.#menu = new MainMenu();
@@ -19,6 +20,16 @@ class ControllerMenu {
      this.viewMenu.setMenu(this.#menu);
      this.gameController = new ControllerGame();
      this.gameController.initialize();
+     this.#comands = {
+            "change-lenguage-english": () => this.changeEnglish(),
+            "change-lenguage-spanish": () => this.changeSpanish(),
+            "start-game": () => this.startGame(),
+            "edit-conect-to-win": () => this.editConectToWin(),
+            "edit-rows": () => this.editRows(),
+            "edit-columns": () => this.editColumns(),
+            "edit-players": () => this.editPlayers()
+        };
+     
     }
 
      initialize() {
@@ -51,7 +62,7 @@ class ControllerMenu {
             if (result instanceof Menu) {
                 await this.handleNavigation(result);
             } else if (typeof result === 'string') {
-                await this.handleCommand(result);
+                await this.#comands[result]();
             } 
             
         } catch (error) {
@@ -63,29 +74,6 @@ class ControllerMenu {
         this.setMenu(menu);
         this.viewMenu.setMenu(menu);
         this.loadMenu();
-    }
-
-    async handleCommand(command) {
-            switch(command) {
-        case "change-lenguage-english":
-            this.changeEnglish();
-            break;
-        case "change-lenguage-spanish":
-            this.changeSpanish();
-            break;
-        case "start-game":
-            await this.startGame();
-            break;
-        case "edit-conect-to-win":
-            await this.editConectToWin();
-            break;
-        case "edit-rows":
-            await this.editRows();
-            break;
-        case "edit-columns":
-            await this.editColumns();
-            break;
-        }
     }
     
     changeEnglish() {
@@ -182,6 +170,52 @@ class ControllerMenu {
                 resolve();
             };
             document.addEventListener('save-columns', onSave);
+        });
+    }
+
+    async getListPlayers() {
+        return await this.gameController.getListPlayers();
+    }
+    
+    async getNumberOfPlayers() {
+        return await this.gameController.getNumberOfPlayers();
+    }
+    
+    async editPlayers() {
+        const numberPlayers = await this.getNumberOfPlayers();
+        const listPlayers = await this.getListPlayers();
+        this.viewMenu.showEditPlayers(listPlayers, numberPlayers);
+        await this.handleEditPlayers();
+        this.loadMenu();
+    }
+    
+    async handleEditPlayers() {
+        return new Promise((resolve) => {
+            const onSave = async (event) => {
+                const { numberOfPlayers, playersList } = event.detail.value;
+
+                try {
+                    const resNumber = await fetch(`${ENDPOINTS.SET_NUMBER_OF_PLAYERS}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ value: numberOfPlayers })
+                    });
+                    if (!resNumber.ok) throw new Error("Fallo al actualizar el número de jugadores en el servidor.");
+
+                    const resList = await fetch(`${ENDPOINTS.SET_LIST_PLAYERS}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(playersList)
+                    });
+                    if (!resList.ok) throw new Error("Fallo al actualizar la lista de jugadores en el servidor.");
+                } catch (error) {
+                    console.error("Error de sincronización con el servidor:", error);
+                } finally {
+                    document.removeEventListener('save-players', onSave);
+                    resolve();
+                }
+            };
+            document.addEventListener('save-players', onSave);
         });
     }
 

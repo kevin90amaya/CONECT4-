@@ -1,6 +1,5 @@
 import BackMenu from "./generics/BackMenu.js";
 import Message from "../../Messages/Message.js";
-import EditNumberPlayersOption from "./EditNumberPlayersOption.js";
 import EditPlayersOption from "./EditPlayersOption.js";
 class PlayersMenu extends BackMenu {
     constructor() {
@@ -13,7 +12,6 @@ class PlayersMenu extends BackMenu {
 
     addOptions() {
         super.addOptions();
-        this.add(new EditNumberPlayersOption());
         this.add(new EditPlayersOption());
     }
 }

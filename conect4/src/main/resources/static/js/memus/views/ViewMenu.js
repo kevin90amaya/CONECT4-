@@ -203,6 +203,154 @@ class ViewMenu {
             document.dispatchEvent(new CustomEvent('save-conect-to-win', { detail: { value: board.numberToWin } }));
         };
     }
+    
+    showEditPlayers(listPlayers, numberPlayers) {
+        // Precondiciones
+        if (!listPlayers || numberPlayers === null || numberPlayers === undefined) {
+            throw new Error("Precondición fallida: los argumentos no pueden ser null o undefined");
+        }
+        if (!Array.isArray(listPlayers) || !Number.isInteger(numberPlayers)) {
+            throw new Error("Precondición fallida: listPlayers debe ser un array y numberPlayers un entero");
+        }
+        if (listPlayers.length !== numberPlayers) {
+            throw new Error("Precondición fallida: la longitud del array debe ser igual a numberPlayers");
+        }
+        const hasAllFields = listPlayers.every(p => p.name !== undefined && p.tipe !== undefined && p.color !== undefined);
+        if (!hasAllFields) {
+            throw new Error("Precondición fallida: todos los campos del array (name, tipe, color) deben tener todos los valores");
+        }
 
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        
+        const availableColors = ["RED", "YELLOW", "BLUE", "GREEN", "PURPLE", "ORANGE", "PINK", "BROWN", "BLACK", "WHITE"];
+
+        const getPlayerHTML = (name, type, color, index) => {
+            const colorOptions = availableColors.map(c => 
+                `<option value="${c}" ${c === color ? 'selected' : ''}>${c}</option>`
+            ).join('');
+
+            return `
+                <div class="player-item" data-index="${index}">
+                    <input type="text" class="player-name" value="${name}" placeholder="Nombre">
+                    <select class="player-color">
+                        <option value="" disabled ${!color ? 'selected' : ''}>Color</option>
+                        ${colorOptions}
+                    </select>
+                    <select class="player-type">
+                        <option value="HUMAN" ${type === 'HUMAN' ? 'selected' : ''}>Humano</option>
+                        <option value="COMPUTER" ${type === 'COMPUTER' ? 'selected' : ''}>IA</option>
+                    </select>
+                    <button class="remove-player" data-index="${index}">Eliminar</button>
+                </div>
+            `;
+        };
+
+        const playersHTML = listPlayers.map((player, index) => 
+            getPlayerHTML(player.name, player.tipe, player.color, index)
+        ).join('');
+
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <h3>Editar Jugadores</h3>
+                <div class="players-container">
+                    <div class="players-list">
+                        ${playersHTML}
+                    </div>
+                    <button id="addPlayer" class="add-player-btn">Añadir Jugador</button>
+                </div>
+                <div class="modal-buttons">
+                    <button id="savePlayers">Guardar</button>
+                    <button id="cancelEdit">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modalOverlay);
+
+        const playersList = modalOverlay.querySelector('.players-list');
+
+        // Event listeners
+        modalOverlay.querySelector('#addPlayer').onclick = () => {
+            if (playersList.children.length >= 10) {
+                alert("Invariante fallida: La cantidad de jugadores no puede ser mayor que 10.");
+                return;
+            }
+            const newIndex = playersList.children.length;
+            playersList.insertAdjacentHTML('beforeend', getPlayerHTML('', 'HUMAN', '', newIndex));
+        };
+
+        playersList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-player')) {
+                if (playersList.children.length <= 2) {
+                    alert("Invariante fallida: La cantidad de jugadores nunca puede ser menor que 2.");
+                    return;
+                }
+                e.target.closest('.player-item').remove();
+            }
+        });
+
+        const closeAndDispatch = (players, count) => {
+            modalOverlay.remove();
+            document.dispatchEvent(new CustomEvent('save-players', { 
+                detail: { value: { numberOfPlayers: count, playersList: players } } 
+            }));
+        };
+
+        modalOverlay.querySelector('#savePlayers').onclick = () => {
+            const playerElements = Array.from(modalOverlay.querySelectorAll('.player-item'));
+            
+            if (playerElements.length < 2) {
+                alert("Invariante fallida: Deben existir al menos 2 jugadores.");
+                return;
+            }
+            if (playerElements.length > 10) {
+                alert("Invariante fallida: La cantidad de jugadores no puede ser mayor que 10.");
+                return;
+            }
+
+            const updatedPlayers = [];
+            const namesSet = new Set();
+            const colorsSet = new Set();
+
+            for (let i = 0; i < playerElements.length; i++) {
+                const item = playerElements[i];
+                const name = item.querySelector('.player-name').value.trim();
+                const type = item.querySelector('.player-type').value;
+                const color = item.querySelector('.player-color').value;
+
+                if (!name || !type || !color) {
+                    alert("Requisito fallido: Ningún jugador se puede guardar sin nombre, tipo o color.");
+                    return;
+                }
+
+                const normalizedName = name.toLowerCase();
+                if (namesSet.has(normalizedName)) {
+                    alert(`Requisito fallido: El nombre "${name}" ya está en uso.`);
+                    return;
+                }
+                if (colorsSet.has(color)) {
+                    alert(`Requisito fallido: El color "${color}" ya está en uso.`);
+                    return;
+                }
+
+                namesSet.add(normalizedName);
+                colorsSet.add(color);
+
+                updatedPlayers.push({
+                    name: name,
+                    tipe: type,
+                    color: color,
+                    turn: i // El turno se establece automáticamente basado en la posición
+                });
+            }
+
+            closeAndDispatch(updatedPlayers, updatedPlayers.length);
+        };
+
+        modalOverlay.querySelector('#cancelEdit').onclick = () => {
+            closeAndDispatch(listPlayers, numberPlayers);
+        };
+    }
 }
 export default ViewMenu;

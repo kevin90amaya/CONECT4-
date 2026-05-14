@@ -29,8 +29,14 @@ class ControllerPlayers {
 
     async getListPlayers() {
         const players = await fetch(ENDPOINTS.LIST_PLAYERS);
-        const data = await players.json();
-        this.playerView.setListPlayer(data);
+        const listPlayers = await players.json();
+        return listPlayers;
+    }
+    
+    async getNumberOfPlayers() {
+        const data = await fetch(ENDPOINTS.NUMBER_OF_PLAYERS);
+        const numberOfPlayers = await data.json();
+        return numberOfPlayers;
     }
 
     async getCurrentPlayer() {

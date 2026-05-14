@@ -1,11 +1,14 @@
 package com.conect4maxmax.conect4.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.conect4maxmax.conect4.models.PlayerProperties;
 import com.conect4maxmax.conect4.service.SettingsMenuService;
 import com.conect4maxmax.conect4.service.dto.ProposedValue;
 
@@ -32,6 +35,14 @@ public class SettingsMenuController {
         settingsMenuService.setColumns(columns);
     }
     
-    
+    @PostMapping("/number-of-players")
+    public void setNumberOfPlayers(@RequestBody ProposedValue numberOfPlayers) {
+        settingsMenuService.setNumberOfPlayers(numberOfPlayers);
+    }
+
+    @PostMapping("/list-players")
+    public void setListPlayers(@RequestBody List<PlayerProperties> listPlayers) {
+        settingsMenuService.setListPlayers(listPlayers);
+    }
     
 }

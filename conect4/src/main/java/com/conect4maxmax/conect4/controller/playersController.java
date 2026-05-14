@@ -33,10 +33,16 @@ public class playersController {
     public List<PlayerProperties> getListPlayers() {
         return playersService.getPlayers();
     }
+    
 
     @GetMapping(ApiEndpoints.CURRENT_PLAYER)
     public PlayerProperties getCurrentPlayer() {
         return playersService.getCurrentPlayer();
+    }
+    
+    @GetMapping(ApiEndpoints.NUMBER_OF_PLAYERS)
+    public int getNumberOfPlayers() {
+        return playersService.getNumberOfPlayers();
     }
     
 

@@ -24,6 +24,11 @@ class ControllerGame {
         await this.controllerPlayers.initialize();
     }
 
+    async getListPlayers() {
+         const listPlayers = await this.controllerPlayers.getListPlayers();
+         return listPlayers;
+    }
+
     async getboard() {
         await this.controllerBoard.getboard();
         return this.controllerBoard.board;
@@ -54,7 +59,10 @@ class ControllerGame {
         } while (continueDialog.isAffirmative());
     }
     
-
+    async getNumberOfPlayers() {
+        return await this.controllerPlayers.getNumberOfPlayers();
+    }
+    
     async resolveSelectionMode() {
         await this.controllerPlayers.selectAndProcessMode();
     }

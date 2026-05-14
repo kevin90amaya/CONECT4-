@@ -28,5 +28,9 @@ public class PlayersService {
     public PlayerProperties getCurrentPlayer() {
         return players.getCurrentPlayer();
     }
+
+    public int getNumberOfPlayers() {
+        return players.getNumberPlayers();
+    }
     
 }

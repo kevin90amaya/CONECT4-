@@ -14,10 +14,6 @@ class PlayerView {
         this.machineplayerview = new MachinePlayerView();
     }
 
-    setListPlayer(listPlayers){
-        this.listPlayers = listPlayers;
-    }
-
     setCurrentPlayer(currentPlayer){
         this.currentPlayer = currentPlayer;
     }

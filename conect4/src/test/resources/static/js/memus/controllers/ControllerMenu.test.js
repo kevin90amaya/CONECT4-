@@ -96,58 +96,154 @@ describe('ControllerMenu', () => {
         });
     });
 
-    describe('handleCommand', () => {
+    describe('handleMenuOption', () => {
 
-        test('change-lenguage-english',() =>{
+        test('handle menu', async () => {
+            const spy = jest.spyOn(controllerMenu, 'handleNavigation').mockImplementation(() => {});
+            const mockOption = { execute: () => new BoardMenu() };
 
-            const spy = jest.spyOn(controllerMenu, 'changeEnglish')
-
-            controllerMenu.handleCommand('change-lenguage-english');
+            await controllerMenu.handleMenuOption(mockOption);
 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
+        });
+
+        test('change-lenguage-english',async () =>{
+
+            const spy = jest.spyOn(controllerMenu, 'changeEnglish').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'change-lenguage-english' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
+            expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
         
-        test('change-lenguage-spanish',() =>{
-            const spy = jest.spyOn(controllerMenu, 'changeSpanish')
-
-            controllerMenu.handleCommand('change-lenguage-spanish');
-
+        test('change-lenguage-spanish',async () =>{
+            const spy = jest.spyOn(controllerMenu, 'changeSpanish').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'change-lenguage-spanish' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
 
-        test('start-game',() =>{
-            const spy = jest.spyOn(controllerMenu, 'startGame')
-
-            controllerMenu.handleCommand('start-game');
-
+        test('start-game',async () =>{
+            const spy = jest.spyOn(controllerMenu, 'startGame').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'start-game' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
 
-        test('edit-conect-to-win',() =>{
-            const spy = jest.spyOn(controllerMenu, 'editConectToWin')
-
-            controllerMenu.handleCommand('edit-conect-to-win');
-
+        test('edit-conect-to-win',async () =>{
+            const spy = jest.spyOn(controllerMenu, 'editConectToWin').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'edit-conect-to-win' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
         
-        test('edit-rows',() =>{
-            const spy = jest.spyOn(controllerMenu, 'editRows')
-
-            controllerMenu.handleCommand('edit-rows');
-
+        test('edit-rows',async() =>{
+            const spy = jest.spyOn(controllerMenu, 'editRows').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'edit-rows' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
 
-        test('edit-columns',() =>{
-            const spy = jest.spyOn(controllerMenu, 'editColumns')
-
-            controllerMenu.handleCommand('edit-columns');
-
+        test('edit-columns',async() =>{
+            const spy = jest.spyOn(controllerMenu, 'editColumns').mockImplementation(() => {});
+    
+             const mockOption = { execute: () => 'edit-columns' };
+    
+            await controllerMenu.handleMenuOption(mockOption);
+ 
             expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
 
 
-    })
+    });
+
+    describe('handleEditConectToWin', () => {
+        test('should send POST request and resolve when save event is dispatched', async () => {
+        const newValue = 5;
+            
+        const handlePromise = controllerMenu.handleEditConectToWin();
+ 
+        document.dispatchEvent(new CustomEvent('save-conect-to-win', { 
+            detail: { value: newValue } 
+        }));
+ 
+        await handlePromise;
+ 
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining('/api/setting-menu/conect-to-win'),
+            expect.objectContaining({
+                method: 'POST',
+                body: JSON.stringify({ value: newValue })
+            })
+        );
+
+    });
+
+    });
+
+    describe('handleEditRows', () => {
+        test('should send POST request and resolve when save event is dispatched', async () => {
+            const newValue = 6;
+            
+            const handlePromise = controllerMenu.handleEditRows();
+ 
+            document.dispatchEvent(new CustomEvent('save-rows', { 
+                detail: { value: newValue } 
+            }));
+ 
+            await handlePromise;
+ 
+            expect(global.fetch).toHaveBeenCalledWith(
+                expect.stringContaining('/api/setting-menu/rows'),
+                expect.objectContaining({
+                    method: 'POST',
+                    body: JSON.stringify({ value: newValue })
+                })
+            );
+        });
+    });
+
+    describe('handleEditColumns', () => {
+        test('should send POST request and resolve when save event is dispatched', async () => {
+            const newValue = 7;
+            
+            const handlePromise = controllerMenu.handleEditColumns();
+ 
+            document.dispatchEvent(new CustomEvent('save-columns', { 
+                detail: { value: newValue } 
+            }));
+ 
+            await handlePromise;
+ 
+            expect(global.fetch).toHaveBeenCalledWith(
+                expect.stringContaining('/api/setting-menu/columns'),
+                expect.objectContaining({
+                    method: 'POST',
+                    body: JSON.stringify({ value: newValue })
+                })
+            );
+        });
+    });
 
 });

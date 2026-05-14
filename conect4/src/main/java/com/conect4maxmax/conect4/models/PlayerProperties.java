@@ -1,12 +1,12 @@
 package com.conect4maxmax.conect4.models;
 
-
-
 public class PlayerProperties {
     public String name;
     public Color color;
     public PlayerTipe tipe;
     public int turn;
+
+    public PlayerProperties(){}
     
     public PlayerProperties(String name, Color color, PlayerTipe tipe, int turn) {
         this.name = name;

@@ -11,7 +11,7 @@ class EditPlayerOption extends Option{
     }
     
     execute() {
-        
+        return "edit-players";
     }
 }
 export default EditPlayerOption;
