@@ -222,6 +222,254 @@ describe('ViewMenu', () => {
         });
     });
 
+    describe('showEditConectToWin()', () => {
+        let board;
+
+        beforeEach(() => {
+            // Simulamos el objeto board devuelto por el backend
+            board = {
+                numberRows: 6,
+                numberColumns: 7,
+                numberToWin: 4
+            };
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) modal.remove();
+        });
+
+        test('debe renderizar el modal con los valores correctos iniciales del tablero', () => {
+            viewMenu.showEditConectToWin(board);
+            
+            const modal = document.querySelector('.modal-overlay');
+            expect(modal).toBeTruthy();
+            
+            const range = modal.querySelector('#conectToWinRange');
+            expect(range).toBeTruthy();
+            expect(range.value).toBe('4');
+            
+            const display = modal.querySelector('#rangeValue');
+            expect(display.textContent).toBe('4');
+        });
+
+        test('el maximo del range debe ser el maximo entre las filas y columnas del tablero', () => {
+            viewMenu.showEditConectToWin(board);
+            
+            const range = document.querySelector('#conectToWinRange');
+            expect(range.max).toBe('7'); // Math.max(6, 7) = 7
+            expect(range.min).toBe('3');
+        });
+
+        test('debe actualizar el valor mostrado al mover el range', () => {
+            viewMenu.showEditConectToWin(board);
+            
+            const range = document.querySelector('#conectToWinRange');
+            const display = document.querySelector('#rangeValue');
+            
+            // Simulamos cambiar el valor del slider
+            range.value = '5';
+            range.dispatchEvent(new Event('input'));
+            
+            expect(display.textContent).toBe('5');
+        });
+
+        test('debe despachar save-conect-to-win con el nuevo valor al guardar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditConectToWin(board);
+            
+            const range = document.querySelector('#conectToWinRange');
+            range.value = '6'; // El usuario cambia a conectar 6
+            
+            const saveBtn = document.getElementById('saveConectToWin');
+            saveBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-conect-to-win');
+            expect(eventArg.detail.value).toBe(6);
+            expect(document.querySelector('.modal-overlay')).toBeNull(); // Se debió cerrar
+        });
+
+        test('debe despachar save-conect-to-win con el valor original al cancelar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditConectToWin(board);
+            
+            const range = document.querySelector('#conectToWinRange');
+            range.value = '6'; // Simulamos mover el range pero luego se arrepiente y cancela
+            
+            const cancelBtn = document.getElementById('cancelEdit');
+            cancelBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-conect-to-win');
+            expect(eventArg.detail.value).toBe(4); // Debe enviar el valor original intacto
+            expect(document.querySelector('.modal-overlay')).toBeNull();
+        });
+    });
+
+    describe('showEditRows()', () => {
+        let board;
+
+        beforeEach(() => {
+            board = {
+                numberRows: 6,
+                numberColumns: 7,
+                numberToWin: 4
+            };
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) modal.remove();
+        });
+
+        test('debe renderizar el modal con los valores correctos iniciales del tablero', () => {
+            viewMenu.showEditRows(board);
+            
+            const modal = document.querySelector('.modal-overlay');
+            expect(modal).toBeTruthy();
+            
+            const range = modal.querySelector('#rows');
+            expect(range).toBeTruthy();
+            expect(range.value).toBe('6');
+            expect(range.min).toBe('3');
+            expect(range.max).toBe('30');
+            
+            const display = modal.querySelector('#rangeValue');
+            expect(display.textContent).toBe('6');
+        });
+
+        test('debe actualizar el valor mostrado al mover el range', () => {
+            viewMenu.showEditRows(board);
+            
+            const range = document.querySelector('#rows');
+            const display = document.querySelector('#rangeValue');
+            
+            range.value = '10';
+            range.dispatchEvent(new Event('input'));
+            
+            expect(display.textContent).toBe('10');
+        });
+
+        test('debe despachar save-rows con el nuevo valor al guardar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditRows(board);
+            
+            const range = document.querySelector('#rows');
+            range.value = '15'; 
+            
+            const saveBtn = document.getElementById('saveRows');
+            saveBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-rows');
+            expect(eventArg.detail.value).toBe(15);
+            expect(document.querySelector('.modal-overlay')).toBeNull(); 
+        });
+
+        test('debe despachar save-rows con el valor original al cancelar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditRows(board);
+            
+            const range = document.querySelector('#rows');
+            range.value = '15'; 
+            
+            const cancelBtn = document.getElementById('cancelEdit');
+            cancelBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-rows');
+            expect(eventArg.detail.value).toBe(6); 
+            expect(document.querySelector('.modal-overlay')).toBeNull();
+        });
+    });
+
+    describe('showEditColumns()', () => {
+        let board;
+
+        beforeEach(() => {
+            board = {
+                numberRows: 6,
+                numberColumns: 7,
+                numberToWin: 4
+            };
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) modal.remove();
+        });
+
+        test('debe renderizar el modal con los valores correctos iniciales del tablero', () => {
+            viewMenu.showEditColumns(board);
+            
+            const modal = document.querySelector('.modal-overlay');
+            expect(modal).toBeTruthy();
+            
+            const range = modal.querySelector('#columns');
+            expect(range).toBeTruthy();
+            expect(range.value).toBe('7');
+            expect(range.min).toBe('3');
+            expect(range.max).toBe('30');
+            
+            const display = modal.querySelector('#rangeValue');
+            expect(display.textContent).toBe('7');
+        });
+
+        test('debe actualizar el valor mostrado al mover el range', () => {
+            viewMenu.showEditColumns(board);
+            
+            const range = document.querySelector('#columns');
+            const display = document.querySelector('#rangeValue');
+            
+            range.value = '10';
+            range.dispatchEvent(new Event('input'));
+            
+            expect(display.textContent).toBe('10');
+        });
+
+        test('debe despachar save-columns con el nuevo valor al guardar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditColumns(board);
+            
+            const range = document.querySelector('#columns');
+            range.value = '12'; 
+            
+            const saveBtn = document.getElementById('saveColumns');
+            saveBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-columns');
+            expect(eventArg.detail.value).toBe(12);
+            expect(document.querySelector('.modal-overlay')).toBeNull(); 
+        });
+
+        test('debe despachar save-columns con el valor original al cancelar y cerrar el modal', () => {
+            const dispatchEventSpy = jest.spyOn(document, 'dispatchEvent');
+            viewMenu.showEditColumns(board);
+            
+            const range = document.querySelector('#columns');
+            range.value = '12'; 
+            
+            const cancelBtn = document.getElementById('cancelEdit');
+            cancelBtn.click();
+            
+            expect(dispatchEventSpy).toHaveBeenCalled();
+            const eventArg = dispatchEventSpy.mock.calls[0][0];
+            expect(eventArg.type).toBe('save-columns');
+            expect(eventArg.detail.value).toBe(7); 
+            expect(document.querySelector('.modal-overlay')).toBeNull();
+        });
+    });
+
     describe('ViewMenu - Verificación de DOM mockeado', () => {
         test('el DOM está mockeado correctamente', () => {
         // Verificar entorno jsdom
