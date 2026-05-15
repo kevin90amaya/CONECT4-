@@ -1,7 +1,7 @@
 import BackMenu from "./generics/BackMenu.js";
 import Message from "../../Messages/Message.js";
 import LenguageOption from "./LenguageOption.js";
-import NumberOfPlayersOption from "./NumberOfPlayersOption.js";
+import EditPlayersOption from "./EditPlayersOption.js";
 import EditBoardOption from "./EditBoardOption.js";
 
 class SettingsMenu extends BackMenu {
@@ -17,7 +17,7 @@ class SettingsMenu extends BackMenu {
     addOptions() {
         super.addOptions();
         this.add(new LenguageOption());
-        this.add(new NumberOfPlayersOption());
+        this.add(new EditPlayersOption());
         this.add(new EditBoardOption());
     }
 }
