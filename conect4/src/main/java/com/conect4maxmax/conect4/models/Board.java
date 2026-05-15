@@ -202,12 +202,11 @@ public boolean checkVertical() {
 }
 
 public boolean checkDiagonalUp() {
-    int consecutiveCount = 0;
-    
-    for (int row = 0; haySuficientesFilasParaVerificar(row, consecutiveCount); row++) {
+    for (int row = 0; haySuficientesFilasParaVerificar(row, 0); row++) {
 
         for (int col = this.dameLaColumnaMaximaYSuficienteParaVerificar(); col >= 0; col--) {
 
+            int consecutiveCount = 0;
             for (int i = 0; i < this.numberToWin; i++) {
 
                 if (this.columns[col + i][row + i].getColor() == this.colorActual){
@@ -216,7 +215,7 @@ public boolean checkDiagonalUp() {
                         return true;
                     }
                 }else{
-                    consecutiveCount = 0;
+                    break;
                 }
             }
         }
@@ -234,12 +233,11 @@ public boolean haySuficientesFilasParaVerificar(int row, int consecutiveCount) {
 }
  
 public boolean checkDiagonalDown() {
-        int consecutiveCount = 0;
-    
-    for (int row = 0; haySuficientesFilasParaVerificar(row, consecutiveCount); row++) {
+    for (int row = 0; haySuficientesFilasParaVerificar(row, 0); row++) {
 
         for (int col = this.numberToWin - 1; col <= this.numberColumns - 1; col++) {
 
+            int consecutiveCount = 0;
             for (int i = 0; i < this.numberToWin; i++) {
 
                 if (this.columns[col - i][row + i].getColor() == this.colorActual){
@@ -248,7 +246,7 @@ public boolean checkDiagonalDown() {
                         return true;
                     }
                 }else{
-                    consecutiveCount = 0;
+                    break;
                 }
             }
         }
@@ -258,4 +256,3 @@ public boolean checkDiagonalDown() {
 
 
 }
-

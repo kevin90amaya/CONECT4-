@@ -58,6 +58,24 @@ class ControllerGame {
            await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
         } while (continueDialog.isAffirmative());
     }
+
+    cleanGame() {
+        const gameContainer = document.querySelector('.game-container');
+        gameContainer.innerHTML = `
+        <div class="game-title">
+            <h1></h1>
+        </div>
+        <div class="game-frame">
+            <div class="mode"></div>
+            <div class="board-container">
+                <div class="board"></div>
+            </div>
+            <div class="status">
+                <h4></h4>
+                <p></p>
+            </div>
+        </div>`;
+    }
     
     async getNumberOfPlayers() {
         return await this.controllerPlayers.getNumberOfPlayers();

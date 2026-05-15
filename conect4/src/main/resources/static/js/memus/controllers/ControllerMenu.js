@@ -89,6 +89,8 @@ class ControllerMenu {
     async startGame() {
         this.viewMenu.cleanMenu();
         await this.gameController.playGames();
+        this.gameController.cleanGame();
+        this.loadMenu();
     }
 
     setMenu(menu) {

@@ -595,4 +595,22 @@ public class BoadTest {
         assertThat(board.geColor(0, 0), is(Color.RED));
     }
 
+
+    @Test
+    public void testCheckDiagonalsOutOfBoundsBug(){
+        boardBuilder.setActualColumn(3).build();
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.YELLOW);
+        board.dropColor(Color.RED);
+        
+        assertThat(board.checkDiagonalDown(), is(false));
+        assertThat(board.checkDiagonalUp(), is(false));
+    }
+
+
+
+
 }
