@@ -55,6 +55,8 @@ class Message {
                 return this.getGameStatusMessages();
             case "CONTINUE_DIALOG":
                 return this.getContinueDialogMessages();
+            case "EDIT_PLAYERS":
+                return this.getEditPlayersMessages();
         }
     }
     
@@ -108,6 +110,10 @@ class Message {
     
     getContinueDialogMessages() {
         return this.idioma.getContinueDialogMessages();
+    }
+    
+    getEditPlayersMessages() {
+        return this.idioma.getEditPlayersMessages();
     }
 }
 

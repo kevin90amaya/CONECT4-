@@ -46,14 +46,13 @@ describe('ViewMenu', () => {
         expect(optionsContainer.tagName).toBe('UL');
     
         const listItems = optionsContainer.querySelectorAll('li');
-        expect(listItems.length).toBe(5);
+        expect(listItems.length).toBe(4);
 
         const buttons = optionsContainer.querySelectorAll('button.option');
         const titles = Array.from(buttons).map(button => button.textContent);
     
-        expect(titles).toContain('Idioma');         
-        expect(titles).toContain('Modo de Juego');    
-        expect(titles).toContain('Numero de Jugadores'); 
+        expect(titles).toContain('Idioma');           
+        expect(titles).toContain('Editar Jugadores'); 
         expect(titles).toContain('Editar Tablero');    
     });
 

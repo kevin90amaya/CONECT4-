@@ -71,7 +71,7 @@ class ControllerGame {
     const result = await this.controllerPlayers.playTurnForCurrentPlayer();
     await this.resolveResult(result);
     return result;
-}
+    }
 
     isEndGame(result) {
         return result.status === "WIN" || result.status === "DRAW";

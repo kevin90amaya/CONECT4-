@@ -80,7 +80,8 @@ class Español extends Idiomas {
             back: "Volver",
             exit: "Salir",
             save: "Guardar",
-            cancel: "Cancelar"
+            cancel: "Cancelar",
+            remove: "Eliminar"
         };
     }
 
@@ -156,6 +157,16 @@ class Español extends Idiomas {
             case "CUSTOMIZER_PLAYERS":
                 return "Personalizado";
         }
+    }
+    
+    getEditPlayersMessages() {
+        return {
+            title: "Editar Jugadores",
+            addPlayer: "Agregar Jugador",
+            color: "Color",
+            human: "Humano",
+            computer: "Computadora"
+        };
     }
 }
 

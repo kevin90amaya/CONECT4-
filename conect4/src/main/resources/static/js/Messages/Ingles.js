@@ -82,7 +82,8 @@ class Ingles extends Idiomas {
             back: "Back",
             exit: "Exit",
             save: "Save",
-            cancel: "Cancel"
+            cancel: "Cancel",
+            remove: "Remove"
         };
     }
 
@@ -163,6 +164,16 @@ class Ingles extends Idiomas {
         case "CUSTOMIZER_PLAYERS":
             return "Customized";
     }
+   }
+   
+   getEditPlayersMessages() {
+    return {
+        title: "Edit Players",
+        addPlayer: "Add Player",
+        color: "Color",
+        human: "Human",
+        computer: "Computer"
+    };
    }
 
 }

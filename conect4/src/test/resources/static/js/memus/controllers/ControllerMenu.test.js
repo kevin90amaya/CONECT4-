@@ -55,8 +55,8 @@ describe('ControllerMenu', () => {
 
             expect(document.getElementById('titlemenu').innerHTML).toContain('Configuracion');
             expect(document.getElementById('options').innerHTML).toContain('Idioma');
-            expect(document.getElementById('options').innerHTML).toContain('Modo de Juego');
-            expect(document.getElementById('options').innerHTML).toContain('Numero de Jugadores');
+            expect(document.getElementById('options').innerHTML).toContain('Editar Jugadores');
+            expect(document.getElementById('options').innerHTML).toContain('Editar Tablero');
             expect(document.getElementById('options').innerHTML).toContain('Volver');
         });
     });
