@@ -104,19 +104,23 @@ class ControllerGame {
     }
 
     async resolveNextTurn(){
+        document.dispatchEvent(new CustomEvent('game-drop'));
         await this.controllerPlayers.getCurrentPlayer();
         this.playerView.showTurn();
     }
     
     async resolveWin(){
+        document.dispatchEvent(new CustomEvent('game-win'));
         this.playerView.showWin();
     }
     
     async resolveDraw(){
+        document.dispatchEvent(new CustomEvent('game-draw'));
         this.playerView.showDraw();
     }
     
     async resolveColumnIsComplete(){
+        document.dispatchEvent(new CustomEvent('game-error'));
         this.playerView.showColumnIsComplete();
     }
 

@@ -1,84 +1,303 @@
-/* Contenedor del juego */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ========================================================
+   ESTILOS ORIGINALES COMENTADOS (Mantenidos por seguridad)
+   ======================================================== 
+
+   // Contenedor del juego 
+   .game-container {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       padding: 20px;
+       font-family: Arial, sans-serif;
+   }
+
+   // Tablero azul de fondo 
+   .board-container {
+       background-color: #00cc1f;
+       padding: 10px;
+       border-radius: 10px;
+       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+   }
+
+   // Contenedor de columnas 
+   .columns-container {
+       display: flex;
+       gap: 5px;
+   }
+
+   // Columna 
+   .column {
+       display: flex;
+       flex-direction: column;
+       gap: 5px;
+   }
+
+   // Celda (hueco para ficha) 
+   .cell {
+       width: 60px;
+       height: 60px;
+       border-radius: 50%;
+       border: 2px solid hsl(167, 90%, 26%);
+       background-color: white;
+       box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+   }
+
+   // Modo y estado 
+   .mode, .status {
+       margin: 15px 0;
+       text-align: center;
+   }
+
+   .status h4 {
+       margin: 5px 0;
+       color: #333;
+   }
+
+   // Título del juego 
+   .game-title h1 {
+       color: #ed7f09;
+       text-transform: uppercase;
+       letter-spacing: 2px;
+   }
+
+   // Bloquea el fondo con una capa oscura 
+   .modal-overlay {
+       position: fixed;
+       top: 0; left: 0; width: 100%; height: 100%;
+       background: rgba(0, 0, 0, 0.7);
+       display: flex; justify-content: center; align-items: center;
+       z-index: 1000;
+   }
+
+   // El cuadro blanco de la modal 
+   .modal-content {
+       background: white; padding: 2rem; border-radius: 8px;
+       box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: center; min-width: 300px;
+   }
+   .edit-container { margin: 1.5rem 0; }
+   .modal-buttons { display: flex; justify-content: space-around; gap: 1rem; }
+
+======================================================== */
+
+
+/* ========================================================
+   NUEVOS ESTILOS RETRO / ARCADE PIXELADOS
+   ======================================================== */
+
+:root {
+    --bg-color: #111111;
+    --screen-bg: #000000;
+    --term-green: #00cc55;
+    --term-yellow: #eeee77;
+    --wall: #0000aa;
+    --wall-face: #0088ff;
+    --cell-empty: #1a1a1a;
+    --ui-font: "Press Start 2P", cursive;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--term-green);
+    font-family: var(--ui-font);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
 .game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 850px;
 }
 
-/* Tablero azul de fondo */
+.game-title h1 {
+    color: var(--term-yellow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 0 #000;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Consola/Tablero estilo TV antigua */
 .board-container {
-    background-color: #00cc1f;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    background-color: var(--wall);
+    padding: 20px;
+    border: 6px solid #555555;
+    border-radius: 8px;
+    box-shadow: inset 4px 4px 0 var(--wall-face), inset -4px -4px 0 #000044, 0 10px 40px rgba(0,0,0,0.9);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Contenedor de columnas */
+/* Efecto Scanline CRT de la pantalla */
+.board-container::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+    background-size: 100% 4px;
+    z-index: 15;
+    pointer-events: none;
+}
+
 .columns-container {
     display: flex;
-    gap: 5px;
+    gap: 6px;
+    position: relative;
+    z-index: 2; /* Por encima de los scanlines */
 }
 
-/* Columna */
 .column {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
-/* Celda (hueco para ficha) */
 .cell {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 2px solid hsl(167, 90%, 26%);
-    background-color: white;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    background-color: var(--cell-empty);
+    border: 4px solid #000;
+    box-shadow: inset 4px 4px 0 rgba(0,0,0,0.8), 0 0 0 2px var(--wall-face);
 }
 
-/* Modo y estado */
+/* =========================
+   ANIMACIONES DEL TABLERO
+   ========================= */
+
+@keyframes dropToken {
+    0% {
+        transform: translateY(-400px);
+        opacity: 0.5;
+    }
+    65% {
+        transform: translateY(12px);
+        opacity: 1;
+    }
+    85% {
+        transform: translateY(-6px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.drop-anim {
+    animation: dropToken 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
 .mode, .status {
     margin: 15px 0;
     text-align: center;
+    color: var(--term-yellow);
+    text-shadow: 2px 2px 0 #000;
+    font-size: 12px;
+    line-height: 1.8;
 }
 
 .status h4 {
     margin: 5px 0;
-    color: #333;
+    color: #fff;
 }
 
-/* Título del juego */
-.game-title h1 {
-    color: #ed7f09;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
+/* =========================
+   MODALES Y BOTONES (RETRO)
+   ========================= */
 
-/* Bloquea el fondo con una capa oscura */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Oscurece el fondo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Asegura que esté por encima de todo */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Más oscuro para contraste retro */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
 }
 
-/* El cuadro blanco de la modal */
 .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: var(--screen-bg);
+    padding: 2.5rem;
+    border: 6px solid var(--term-green);
+    box-shadow: 8px 8px 0 #000; /* Sombra cuadrada estilo 8-bits */
     text-align: center;
-    min-width: 300px;
+    min-width: 350px;
+    color: var(--term-green);
 }
 
-.edit-container { margin: 1.5rem 0; }
-.modal-buttons { display: flex; justify-content: space-around; gap: 1rem; }
+.modal-content h3 {
+    margin-top: 0;
+    color: var(--term-yellow);
+    font-size: 14px;
+    line-height: 1.5;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.edit-container { margin: 1.5rem 0; font-size: 10px; }
+.modal-buttons { display: flex; justify-content: space-around; gap: 1rem; flex-wrap: wrap;}
+
+/* Estilo general para todos los botones del juego */
+button {
+    background: #333333;
+    border: 3px solid #fff;
+    color: #fff;
+    padding: 12px 18px;
+    font-family: var(--ui-font);
+    font-size: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 #000;
+    transition: transform 0.1s, box-shadow 0.1s;
+    margin: 5px;
+}
+
+button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 #000;
+}
+
+button:hover {
+    background: var(--term-green);
+    color: #000;
+    border-color: var(--term-green);
+}
+
+/* Inputs y Selects */
+input[type="text"], select {
+    background: #000;
+    border: 2px solid var(--term-green);
+    color: var(--term-yellow);
+    font-family: var(--ui-font);
+    padding: 8px;
+    margin: 5px 0;
+    font-size: 10px;
+    outline: none;
+    width: 100%;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 15px 0;
+    accent-color: var(--term-green);
+}
+
+.player-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed #555;
+}
