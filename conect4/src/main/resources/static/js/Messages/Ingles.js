@@ -160,6 +160,8 @@ class Ingles extends Idiomas {
             return "Player Vs CPU";
         case "HUMAN_VS_HUMAN":
             return "Player Vs Player";
+        case "CUSTOMIZER_PLAYERS":
+            return "Customized";
     }
    }
 

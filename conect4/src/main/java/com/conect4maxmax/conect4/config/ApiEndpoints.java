@@ -8,4 +8,5 @@ public class ApiEndpoints {
     public static final String LIST_PLAYERS = "/list-players";
     public static final String CURRENT_PLAYER = "/current-player";
     public static final String NUMBER_OF_PLAYERS = "/number-of-players";
+    public static final String CURRENT_MODE = "/current-mode";
 }

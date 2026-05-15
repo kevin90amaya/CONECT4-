@@ -2,9 +2,7 @@ package com.conect4maxmax.conect4.models;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-
-
-
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -74,6 +72,9 @@ public class PlayersTest {
 
     @Test    
     public void testSetPlayers() {
+
+        assertNotEquals(GameMode.CUSTOMIZER_PLAYERS, players.getCurrentMode());
+
         java.util.List<PlayerProperties> playersList = new java.util.ArrayList<>();
         playersList.add(new PlayerPropertiesBuilder().build());
         playersList.add(new PlayerPropertiesBuilder().build());
@@ -95,6 +96,8 @@ public class PlayersTest {
         players.setNumberPlayers(9);
         players.setPlayers(playersList);
         assertThat(players.getPlayers().size(), is(equalTo(9)));
+
+        assertThat(players.getCurrentMode(), is(GameMode.CUSTOMIZER_PLAYERS));
 
         }
     
@@ -200,5 +203,7 @@ public class PlayersTest {
         assertThat(players.getPlayers().get(0).getTipe(), is(PlayerTipe.HUMAN));
         assertThat(players.getPlayers().get(1).getTipe(), is(PlayerTipe.HUMAN));
     }
+
+
 }
 

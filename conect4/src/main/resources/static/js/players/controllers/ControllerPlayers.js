@@ -27,6 +27,11 @@ class ControllerPlayers {
         });
     }
 
+    async getCurrentMode(){
+        const response = await fetch(ENDPOINTS.CURRENT_MODE);
+        return await response.json();
+    }
+
     async getListPlayers() {
         const players = await fetch(ENDPOINTS.LIST_PLAYERS);
         const listPlayers = await players.json();
@@ -53,17 +58,23 @@ class ControllerPlayers {
     } else {
         return await this.playerView.machineplayerview.playTurn();
     }
-}
+    }
 
     async initialize() {
         await this.getGameModes();
     }
 
     async selectAndProcessMode() {
-    this.playerView.showSelectMode();
-    const mode = await this.waitForModeSelection();
-    await this.processModeSelection(mode);
-}
+        const currentMode = await this.getCurrentMode();
+        if( currentMode === "CUSTOMIZER_PLAYERS" ) {
+            await this.getCurrentPlayer();
+            this.updateViewForModeSelect(currentMode);
+        }else {   
+            this.playerView.showSelectMode();
+            const mode = await this.waitForModeSelection();
+            await this.processModeSelection(mode);
+        }
+    }
 
     async waitForModeSelection() {
     return new Promise((resolve) => {
@@ -73,7 +84,7 @@ class ControllerPlayers {
         };
         document.addEventListener('selectMode', handler);
     });
-}
+    }
 
     async processModeSelection(mode) {
         await this.postGameMode(mode);

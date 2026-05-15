@@ -29,6 +29,11 @@ public class Players {
         }
         this.players.clear();
         this.players.addAll(listPlayers);
+        this.mode = GameMode.CUSTOMIZER_PLAYERS;
+    }
+
+    public GameMode getCurrentMode() {
+        return mode;
     }
 
     public void setNumberPlayers(int number_players) {

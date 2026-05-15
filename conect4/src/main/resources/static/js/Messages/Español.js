@@ -153,6 +153,8 @@ class Español extends Idiomas {
                 return "Jugador Vs CPU";
             case "HUMAN_VS_HUMAN":
                 return "Jugador Vs Jugador";
+            case "CUSTOMIZER_PLAYERS":
+                return "Personalizado";
         }
     }
 }

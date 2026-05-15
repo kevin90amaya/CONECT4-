@@ -18,6 +18,7 @@ export const ENDPOINTS = {
     SET_LIST_PLAYERS: `${BASE}/api/setting-menu/list-players`,
     
     PLAYERS: `${BASE}/api/players`,
+    CURRENT_MODE: `${BASE}/api/players/current-mode`,
     GAME_MODES: `${BASE}/api/players/game-modes`,
     MODE: `${BASE}/api/players/mode`,
     LIST_PLAYERS: `${BASE}/api/players/list-players`,

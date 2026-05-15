@@ -45,5 +45,10 @@ public class playersController {
         return playersService.getNumberOfPlayers();
     }
     
+    @GetMapping(ApiEndpoints.CURRENT_MODE)
+    public GameMode getCurrentMode() {
+        return playersService.getCurrentMode();
+    }
+    
 
 }

@@ -32,5 +32,9 @@ public class PlayersService {
     public int getNumberOfPlayers() {
         return players.getNumberPlayers();
     }
+
+    public GameMode getCurrentMode() {
+       return players.getCurrentMode();
+    }
     
 }
