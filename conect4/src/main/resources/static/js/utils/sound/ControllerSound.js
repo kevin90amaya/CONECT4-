@@ -1,5 +1,4 @@
 import SoundEngine from './SoundEngine.js';
-import { zzfx, zzfxX } from './ZzFX.js';
 
 
 class SoundManager {
@@ -48,31 +47,14 @@ class SoundManager {
             muteBtn.innerHTML = SoundManager.isMuted ? '🔇 OFF' : '🔊 ON';
             
             if (!SoundManager.isMuted) {
-                SoundManager.audioUnlocked = true;
-                // Forzamos explícitamente la creación y desbloqueo del AudioContext 
-                // desde una interacción directa de botón (100% garantizado en todo navegador).
-                if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
-                    if(!zzfxX) zzfxX = new (window.AudioContext || window.webkitAudioContext)();
-                    if(zzfxX.state === 'suspended') zzfxX.resume();
-                }
+                SoundManager.engine.unlockAudio();
                 SoundManager.playSelect(); // Suena un "blip" para confirmar que ya hay audio
             }
         });
 
         // Desbloquear audio formalmente en la primera interacción real del usuario
         const unlockAudio = () => {
-            SoundManager.audioUnlocked = true;
-            if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
-                if(!zzfxX) zzfxX = new (window.AudioContext || window.webkitAudioContext)();
-                if(zzfxX.state === 'suspended') { const r = zzfxX.resume(); if (r) r.catch(() => {}); }
-                
-                // Truco para forzar el desbloqueo en navegadores estrictos (Edge/Safari)
-                const buffer = zzfxX.createBuffer(1, 1, 22050);
-                const source = zzfxX.createBufferSource();
-                source.buffer = buffer;
-                source.connect(zzfxX.destination);
-                if (source.start) source.start(0);
-            }
+            SoundManager.engine.unlockAudio();
             ['click', 'touchstart', 'keydown'].forEach(e => document.removeEventListener(e, unlockAudio, true));
         };
         ['click', 'touchstart', 'keydown'].forEach(e => document.addEventListener(e, unlockAudio, true));
