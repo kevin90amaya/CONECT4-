@@ -13,6 +13,11 @@ Controller -> View : renderMuteButton()
 
 Controller -> Controller : setupAudioUnlock()
 Controller -> DOM : addEventListener('click', 'touchstart', 'keydown')
+alt Primera interacción del usuario
+    DOM -> Controller : User interaction (click/touch/keydown)
+    Controller -> Engine : unlockAudio()
+end
+
 
 Controller -> Controller : setupGlobalInteractions()
 Controller -> DOM : addEventListener('click', 'mouseover')

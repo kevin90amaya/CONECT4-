@@ -1,11 +1,14 @@
-import controllerSound from "../../../../../../main/resources/static/js/utils/sound/ControllerSound.js";
+import ControllerSound from "../../../../../../main/resources/static/js/utils/sound/ControllerSound.js";
 
 describe('ControllerSound', () => {
+
+    let controllerSound;
 
     beforeEach(() => {
         document.body.innerHTML = '';
     
         jest.restoreAllMocks();
+        controllerSound = new ControllerSound();
     });
 
     describe('initialization', () => {
@@ -17,7 +20,6 @@ describe('ControllerSound', () => {
             expect(muteBtn).toBeTruthy();
             expect(muteBtn.tagName).toBe('BUTTON');
             expect(muteBtn.innerHTML).toBe('🔊 ON');
-            expect(muteBtn.style.position).toBe('fixed');
         });
 
         test('debe escuchar y reaccionar a los eventos específicos del tablero de juego', () => {

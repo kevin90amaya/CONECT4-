@@ -74,4 +74,4 @@ class ControllerSound {
     }
 }
 
-export default new ControllerSound();
+export default ControllerSound;

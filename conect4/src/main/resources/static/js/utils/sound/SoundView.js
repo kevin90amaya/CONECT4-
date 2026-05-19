@@ -13,12 +13,6 @@ class SoundView {
         this.muteButton = document.createElement('button');
         this.muteButton.id = 'mute-toggle';
         this.muteButton.innerHTML = '🔊 ON';
-        this.muteButton.style.position = 'fixed';
-        this.muteButton.style.top = '15px';
-        this.muteButton.style.right = '15px';
-        this.muteButton.style.zIndex = '9999';
-        this.muteButton.style.backgroundColor = '#111';
-        
         this.muteButton.addEventListener('click', (e) => this.handleMuteClick(e));
         document.body.appendChild(this.muteButton);
     }
