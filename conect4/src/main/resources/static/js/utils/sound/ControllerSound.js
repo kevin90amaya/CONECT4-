@@ -2,51 +2,51 @@ import SoundEngine from './SoundEngine.js';
 import SoundView from './SoundView.js';
 
 
-class SoundManager {
-    static engine = new SoundEngine();
-    static view = new SoundView();
+class ControllerSound {
+    #soundEngine;
+    #soundView;
 
-    // Blip corto y agudo para navegar en el menú o mover sliders
-    static playHover() { SoundManager.engine.playHover(); }
-    
-    // Tono más alto para seleccionar o confirmar
-    static playSelect() { SoundManager.engine.playSelect(); }
-    
-    // Sonido de caída de la ficha (frecuencia que baja rápidamente)
-    static playDrop() { SoundManager.engine.playDrop(); }
-    
-    // Error (frecuencia baja y rugosa) cuando tratas de poner ficha en columna llena
-    static playError() { SoundManager.engine.playError(); }
-    
-    // Victoria (Dos tonos ascendentes alegres como un "Ta-da!")
-    static playWin() { SoundManager.engine.playWin(); }
-    
-    // Empate (Tono triste descendente tipo Pac-man muriendo)
-    static playDraw() { SoundManager.engine.playDraw(); }
+    constructor() {
+        this.#soundEngine = new SoundEngine();
+        this.#soundView = new SoundView();
+    }
 
-    // Inicializar escuchas globales del DOM
-    static initDOMListeners() {
-        // Conectar Modelo y Vista
-        SoundManager.view.setModel(SoundManager.engine);
-        SoundManager.view.renderMuteButton();
+    playHover() { this.#soundEngine.playHover(); }
+    
+    playSelect() { this.#soundEngine.playSelect(); }
+    
+    playDrop() { this.#soundEngine.playDrop(); }
+    
+    playError() { this.#soundEngine.playError(); }
+    
+    playWin() { this.#soundEngine.playWin(); }
+    
+    playDraw() { this.#soundEngine.playDraw(); }
 
-        // Desbloquear audio formalmente en la primera interacción real del usuario
+    initialize() {
+        
+        this.#soundView.setModel(this.#soundEngine);
+        this.#soundView.renderMuteButton();
+
         const unlockAudio = () => {
-            SoundManager.engine.unlockAudio();
+            this.#soundEngine.unlockAudio();
             ['click', 'touchstart', 'keydown'].forEach(e => document.removeEventListener(e, unlockAudio, true));
         };
         ['click', 'touchstart', 'keydown'].forEach(e => document.addEventListener(e, unlockAudio, true));
 
+        this.#setupGlobalInteractions();
+        this.#setupGameEvents();
+    }
+
+    #setupGlobalInteractions() {
         let lastHovered = null;
 
-        // Escuchar todos los clics en la aplicación
         document.addEventListener('click', (e) => {
             if (e.target.matches('button, .option, select, input[type="text"]')) {
                 this.playSelect();
             }
         });
 
-        // Escuchar cuando el ratón pasa por encima de elementos interactivos
         document.addEventListener('mouseover', (e) => {
             if (e.target.matches('button, .option')) {
                 if (lastHovered !== e.target) {
@@ -56,19 +56,28 @@ class SoundManager {
             }
         });
 
-        // Escuchar cuando se mueven las barras de rango (sliders)
         document.addEventListener('input', (e) => {
             if (e.target.matches('input[type="range"]')) {
                 this.playHover();
             }
         });
+    }
 
-        // Escuchar eventos globales del juego
-        document.addEventListener('game-drop', () => this.playDrop());
-        document.addEventListener('game-win', () => this.playWin());
-        document.addEventListener('game-draw', () => this.playDraw());
-        document.addEventListener('game-error', () => this.playError());
+    #setupGameEvents() {
+        document.addEventListener('game-drop', (e) => this.#handleGameEvent(e));
+        document.addEventListener('game-win', (e) => this.#handleGameEvent(e));
+        document.addEventListener('game-draw', (e) => this.#handleGameEvent(e));
+        document.addEventListener('game-error', (e) => this.#handleGameEvent(e));
+    }
+
+    #handleGameEvent(event) {
+        switch (event.type) {
+            case 'game-drop': this.playDrop(); break;
+            case 'game-win': this.playWin(); break;
+            case 'game-draw': this.playDraw(); break;
+            case 'game-error': this.playError(); break;
+        }
     }
 }
 
-export default SoundManager;
+export default new ControllerSound();

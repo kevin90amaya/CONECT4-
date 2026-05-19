@@ -13,7 +13,7 @@ describe('ControllerSound', () => {
     describe('initialization', () => {
         
         test('debe crear el botón de mute y agregarlo al body', () => {
-            controllerSound.initDOMListeners();
+            controllerSound.initialize();
             
             const muteBtn = document.getElementById('mute-toggle');
             expect(muteBtn).toBeTruthy();
@@ -31,7 +31,7 @@ describe('ControllerSound', () => {
             const playErrorSpy = jest.spyOn(controllerSound, 'playError').mockImplementation(() => {});
 
             // Inicializamos los escuchadores
-            controllerSound.initDOMListeners();
+            controllerSound.initialize();
 
             // Disparamos los eventos tal y como lo hace ControllerGame
             document.dispatchEvent(new CustomEvent('game-drop'));
