@@ -4,9 +4,6 @@ import SoundEngine from './SoundEngine.js';
 class SoundManager {
     static engine = new SoundEngine();
 
-    static get audioUnlocked() { return SoundManager.engine.audioUnlocked; }
-    static set audioUnlocked(val) { SoundManager.engine.audioUnlocked = val; }
-
     static get isMuted() { return SoundManager.engine.isMuted; }
     static set isMuted(val) { SoundManager.engine.isMuted = val; }
 

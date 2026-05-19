@@ -7,7 +7,6 @@ describe('ControllerSound', () => {
         document.body.innerHTML = '';
         
         // Restaurar los estados iniciales de la clase estática
-        controllerSound.audioUnlocked = false;
         controllerSound.isMuted = false;
         
         // Restaurar todos los mocks
@@ -45,7 +44,6 @@ describe('ControllerSound', () => {
             muteBtn.click();
             expect(controllerSound.isMuted).toBe(false);
             expect(muteBtn.innerHTML).toBe('🔊 ON');
-            expect(controllerSound.audioUnlocked).toBe(true); // Se desbloquea automáticamente
             expect(playSelectSpy).toHaveBeenCalled(); // Se debe llamar al sonido de confirmación
         });
 
