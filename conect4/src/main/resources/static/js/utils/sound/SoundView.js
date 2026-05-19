@@ -6,19 +6,44 @@ class SoundView {
     }
 
     setModel(engine) {
-        // TODO: Implementar inyección del motor
+        this.soundEngine = engine;
     }
 
     renderMuteButton() {
-        // TODO: Crear y agregar botón al DOM
+        this.muteButton = document.createElement('button');
+        this.muteButton.id = 'mute-toggle';
+        this.muteButton.innerHTML = '🔊 ON';
+        this.muteButton.style.position = 'fixed';
+        this.muteButton.style.top = '15px';
+        this.muteButton.style.right = '15px';
+        this.muteButton.style.zIndex = '9999';
+        this.muteButton.style.backgroundColor = '#111'; // Fondo retro opcional
+        
+        this.muteButton.addEventListener('click', (e) => this.handleMuteClick(e));
+        document.body.appendChild(this.muteButton);
     }
 
     updateButtonState(isMuted) {
-        // TODO: Cambiar el texto/ícono del botón
+        if (isMuted === null || isMuted === undefined) {
+            throw new Error("Precondición fallida: isMuted no puede ser null o undefined");
+        }
+        if (!this.muteButton) {
+            throw new Error("Precondición fallida: El botón de mute no ha sido renderizado en el DOM");
+        }
+        this.muteButton.innerHTML = isMuted ? '🔇 OFF' : '🔊 ON';
     }
 
     handleMuteClick(e) {
-        // TODO: Delegar muteo al motor y actualizar vista
+        if (e) e.stopPropagation();
+        
+        this.soundEngine.toggleMute(); // Comando: cambia el estado
+        const isMuted = this.soundEngine.getIsMuted(); // Consulta: obtiene el nuevo estado
+        
+        this.updateButtonState(isMuted);
+        
+        if (isMuted === false) {
+            this.soundEngine.playSelect();
+        }
     }
 }
 export default SoundView;

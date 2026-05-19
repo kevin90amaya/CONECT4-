@@ -31,6 +31,12 @@ describe('SoundView (Vista)', () => {
         expect(btn.tagName).toBe('BUTTON');
     });
 
+    test('updateButtonState() debe lanzar error si el botón de mute no ha sido renderizado', () => {
+        // Intentamos actualizar el botón SIN haber llamado a renderMuteButton() primero
+        expect(() => view.updateButtonState(true))
+            .toThrow("Precondición fallida: El botón de mute no ha sido renderizado en el DOM");
+    });
+
     test('updateButtonState() debe cambiar el texto e ícono correctamente', () => {
         view.renderMuteButton();
         
