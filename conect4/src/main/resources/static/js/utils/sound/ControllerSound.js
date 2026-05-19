@@ -12,26 +12,22 @@ class SoundManager {
     static set isMuted(val) { SoundManager.engine.isMuted = val; }
 
     // Blip corto y agudo para navegar en el menú o mover sliders
-    static playHover() { if(SoundManager.audioUnlocked && !SoundManager.isMuted) zzfx(1, 0.05, 150, 0, 0, 0.05, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0); }
+    static playHover() { SoundManager.engine.playHover(); }
     
     // Tono más alto para seleccionar o confirmar
-    static playSelect() { if(!SoundManager.isMuted) zzfx(1, 0.05, 400, 0.01, 0.01, 0.1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0); }
+    static playSelect() { SoundManager.engine.playSelect(); }
     
     // Sonido de caída de la ficha (frecuencia que baja rápidamente)
-    static playDrop() { if(!SoundManager.isMuted) zzfx(1, 0.05, 300, 0.01, 0.05, 0.1, 0, 1, 0, 0, -200, 0, 0, 0, 0, 0, 0, 0.5, 0, 0); }
+    static playDrop() { SoundManager.engine.playDrop(); }
     
     // Error (frecuencia baja y rugosa) cuando tratas de poner ficha en columna llena
-    static playError() { if(!SoundManager.isMuted) zzfx(1, 0.1, 100, 0.05, 0.1, 0.2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.7, 0, 0); }
+    static playError() { SoundManager.engine.playError(); }
     
     // Victoria (Dos tonos ascendentes alegres como un "Ta-da!")
-    static playWin() { 
-        if(SoundManager.isMuted) return;
-        zzfx(1, 0.1, 400, 0.05, 0.2, 0.5, 0, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0.5, 0, 0); 
-        setTimeout(() => zzfx(1, 0.1, 600, 0.05, 0.2, 0.8, 0, 1, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0.6, 0, 0), 150); 
-    }
+    static playWin() { SoundManager.engine.playWin(); }
     
     // Empate (Tono triste descendente tipo Pac-man muriendo)
-    static playDraw() { if(!SoundManager.isMuted) zzfx(1, 0.1, 200, 0.1, 0.4, 0.5, 0, 1, 0, 0, -100, 0, 0, 0, 0, 0, 0, 0.5, 0, 0); }
+    static playDraw() { SoundManager.engine.playDraw(); }
 
     // Inicializar escuchas globales del DOM
     static initDOMListeners() {
