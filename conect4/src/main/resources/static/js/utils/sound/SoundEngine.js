@@ -9,7 +9,10 @@ class SoundEngine {
 
     toggleMute() {
         this.isMuted = !this.isMuted;
-        return this.isMuted;
+    }
+
+    getIsMuted(){
+        return this.isMuted
     }
 
     unlockAudio() {

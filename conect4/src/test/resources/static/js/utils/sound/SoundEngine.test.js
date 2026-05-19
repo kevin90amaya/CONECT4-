@@ -14,16 +14,14 @@ describe('SoundEngine (Modelo)', () => {
         expect(engine.masterVolume).toBe(1.0);
     });
 
-    test('toggleMute() debe alternar la propiedad isMuted y retornar el nuevo estado', () => {
+    test('toggleMute() debe alternar la propiedad isMuted', () => {
         // Primer llamado: debe mutear
-        let newState = engine.toggleMute();
+        engine.toggleMute();
         expect(engine.isMuted).toBe(true);
-        expect(newState).toBe(true);
 
         // Segundo llamado: debe desmutear
-        newState = engine.toggleMute();
+        engine.toggleMute();
         expect(engine.isMuted).toBe(false);
-        expect(newState).toBe(false);
     });
 
     test('unlockAudio() debe cambiar el estado audioUnlocked a true', () => {
