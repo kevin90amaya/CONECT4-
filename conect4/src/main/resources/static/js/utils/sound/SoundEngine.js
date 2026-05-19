@@ -19,6 +19,7 @@ class SoundEngine {
 
     unlockAudio() {
         this.audioUnlocked = true;
+        zzfx(0);
     }
 
     playHover() { 

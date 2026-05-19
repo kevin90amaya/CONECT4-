@@ -39,6 +39,13 @@ describe('SoundEngine (Modelo)', () => {
         expect(engine.audioUnlocked).toBe(true); // Debe haber cambiado
     });
 
+    test('unlockAudio() debe intentar despertar el contexto de audio llamando a zzfx', () => {
+        // Esta prueba asegura que el método tiene la responsabilidad de activar el AudioContext.
+        // La forma más simple y desacoplada de probarlo es verificar que invoca a la función zzfx.
+        engine.unlockAudio();
+        expect(zzfx).toHaveBeenCalled();
+    });
+
     describe('Métodos de reproducción (play...)', () => {
         
         test('playDrop() debe llamar a zzfx si NO está muteado', () => {
