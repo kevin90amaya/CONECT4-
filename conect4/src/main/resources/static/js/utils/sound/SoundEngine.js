@@ -1,3 +1,5 @@
+// ZzFX - Zuper Zmall Zound Zynth - Micro Edition
+// MIT License - Copyright 2019 Frank Force
 class SoundEngine {
     constructor() {
         this.isMuted = false;
@@ -6,11 +8,12 @@ class SoundEngine {
     }
 
     toggleMute() {
-        // TODO: Implementar lógica
+        this.isMuted = !this.isMuted;
+        return this.isMuted;
     }
 
     unlockAudio() {
-        // TODO: Implementar lógica
+        this.audioUnlocked = true;
     }
 
     playHover() {}
