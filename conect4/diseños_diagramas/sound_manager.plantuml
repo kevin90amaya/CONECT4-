@@ -1,0 +1,40 @@
+@startuml SoundManager
+
+class ControllerSound {
+    - soundEngine: SoundEngine
+    - soundView: SoundView
+    + initialize()
+    - setupGlobalInteractions()
+    - setupGameEvents()
+    - handleGameEvent(event: Event)
+}
+
+class SoundEngine {
+    - isMuted: boolean
+    - audioUnlocked: boolean
+    - masterVolume: float
+    - zzfx: function
+    + toggleMute(): boolean
+    + unlockAudio()
+    + playHover()
+    + playSelect()
+    + playDrop()
+    + playError()
+    + playWin()
+    + playDraw()
+}
+
+class SoundView {
+    - muteButton: HTMLElement
+    - soundEngine: SoundEngine
+    + setModel(engine: SoundEngine)
+    + renderMuteButton()
+    + updateButtonState(isMuted: boolean)
+    - handleMuteClick()
+}
+
+ControllerSound --> SoundEngine : usa
+ControllerSound --> SoundView : usa
+SoundView --> SoundEngine : usa
+
+@enduml

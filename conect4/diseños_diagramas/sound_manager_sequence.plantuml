@@ -1,0 +1,46 @@
+@startuml SoundManagerSequence
+
+actor "Usuario / DOM" as DOM
+participant "ControllerSound" as Controller
+participant "SoundView" as View
+participant "SoundEngine" as Engine
+
+== Inicialización (Arranque de la App) ==
+-> Controller : initialize()
+activate Controller
+Controller -> Engine : unlockAudio()
+Controller -> View : setModel(Engine)
+Controller -> View : renderMuteButton()
+
+Controller -> Controller : setupGlobalInteractions()
+Controller -> DOM : addEventListener('click', 'mouseover')
+
+Controller -> Controller : setupGameEvents()
+Controller -> DOM : addEventListener('game-drop', 'game-win', etc...)
+deactivate Controller
+
+== Alternar Mute (Botón 🔊/🔇) ==
+DOM -> View : Click en el botón Mute
+activate View
+View -> Engine : toggleMute()
+activate Engine
+Engine --> View : retorna nuevo estado (isMuted)
+deactivate Engine
+View -> View : updateButtonState(isMuted)
+View -> Engine : playSelect() (Si se desmuteó)
+deactivate View
+
+== Reproducir Efecto de Sonido (Ej. Ficha cae) ==
+DOM -> Controller : CustomEvent('game-drop')
+activate Controller
+Controller -> Controller : handleGameEvent(event)
+Controller -> Engine : playDrop()
+activate Engine
+alt Si NO está muteado y el audio está desbloqueado
+    Engine -> Engine : Ejecuta función zzfx()
+    Engine -> DOM : Emite sonido por altavoces
+end
+deactivate Engine
+deactivate Controller
+
+@enduml
