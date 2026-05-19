@@ -1,11 +1,10 @@
 import SoundEngine from './SoundEngine.js';
+import SoundView from './SoundView.js';
 
 
 class SoundManager {
     static engine = new SoundEngine();
-
-    static get isMuted() { return SoundManager.engine.isMuted; }
-    static set isMuted(val) { SoundManager.engine.isMuted = val; }
+    static view = new SoundView();
 
     // Blip corto y agudo para navegar en el menú o mover sliders
     static playHover() { SoundManager.engine.playHover(); }
@@ -27,27 +26,9 @@ class SoundManager {
 
     // Inicializar escuchas globales del DOM
     static initDOMListeners() {
-        // === CREAR BOTÓN DE MUTE GLOBAL ===
-        const muteBtn = document.createElement('button');
-        muteBtn.id = 'mute-toggle';
-        muteBtn.innerHTML = '🔊 ON';
-        muteBtn.style.position = 'fixed';
-        muteBtn.style.top = '15px';
-        muteBtn.style.right = '15px';
-        muteBtn.style.zIndex = '9999';
-        muteBtn.style.backgroundColor = '#111'; // Fondo oscuro retro
-        document.body.appendChild(muteBtn);
-
-        muteBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evitamos que otros eventos de clic interfieran
-            SoundManager.isMuted = !SoundManager.isMuted;
-            muteBtn.innerHTML = SoundManager.isMuted ? '🔇 OFF' : '🔊 ON';
-            
-            if (!SoundManager.isMuted) {
-                SoundManager.engine.unlockAudio();
-                SoundManager.playSelect(); // Suena un "blip" para confirmar que ya hay audio
-            }
-        });
+        // Conectar Modelo y Vista
+        SoundManager.view.setModel(SoundManager.engine);
+        SoundManager.view.renderMuteButton();
 
         // Desbloquear audio formalmente en la primera interacción real del usuario
         const unlockAudio = () => {

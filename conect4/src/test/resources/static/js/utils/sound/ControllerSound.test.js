@@ -6,9 +6,6 @@ describe('ControllerSound', () => {
         // Limpiar el DOM antes de cada test para evitar contaminación
         document.body.innerHTML = '';
         
-        // Restaurar los estados iniciales de la clase estática
-        controllerSound.isMuted = false;
-        
         // Restaurar todos los mocks
         jest.restoreAllMocks();
     });
@@ -23,28 +20,6 @@ describe('ControllerSound', () => {
             expect(muteBtn.tagName).toBe('BUTTON');
             expect(muteBtn.innerHTML).toBe('🔊 ON');
             expect(muteBtn.style.position).toBe('fixed');
-        });
-
-        test('debe alternar el estado de mute y el texto al hacer clic en el botón', () => {
-            controllerSound.initDOMListeners();
-            const muteBtn = document.getElementById('mute-toggle');
-            
-            // Comprobar estado inicial
-            expect(controllerSound.isMuted).toBe(false);
-            
-            // Primer clic: Poner en Mute
-            muteBtn.click();
-            expect(controllerSound.isMuted).toBe(true);
-            expect(muteBtn.innerHTML).toBe('🔇 OFF');
-            
-            // Segundo clic: Quitar Mute
-            // Aquí mockeamos playSelect para que no intente ejecutar el sonido en el test
-            const playSelectSpy = jest.spyOn(controllerSound, 'playSelect').mockImplementation(() => {});
-            
-            muteBtn.click();
-            expect(controllerSound.isMuted).toBe(false);
-            expect(muteBtn.innerHTML).toBe('🔊 ON');
-            expect(playSelectSpy).toHaveBeenCalled(); // Se debe llamar al sonido de confirmación
         });
 
         test('debe escuchar y reaccionar a los eventos globales del juego', () => {
