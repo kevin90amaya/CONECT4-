@@ -1,4 +1,10 @@
 import SoundEngine from "../../../../../../main/resources/static/js/utils/sound/SoundEngine.js";
+import { zzfx } from "../../../../../../main/resources/static/js/utils/sound/ZzFX.js";
+
+// Interceptamos la librería externa para que no ejecute audio real, solo nos avise si fue llamada
+jest.mock("../../../../../../main/resources/static/js/utils/sound/ZzFX.js", () => ({
+    zzfx: jest.fn()
+}));
 
 describe('SoundEngine (Modelo)', () => {
     
@@ -6,6 +12,7 @@ describe('SoundEngine (Modelo)', () => {
 
     beforeEach(() => {
         engine = new SoundEngine();
+        jest.clearAllMocks(); // Limpiamos el contador del espía antes de cada test
     });
 
     test('Debe inicializarse con los valores por defecto correctos', () => {
@@ -30,6 +37,29 @@ describe('SoundEngine (Modelo)', () => {
         engine.unlockAudio();
         
         expect(engine.audioUnlocked).toBe(true); // Debe haber cambiado
+    });
+
+    describe('Métodos de reproducción (play...)', () => {
+        
+        test('playDrop() debe llamar a zzfx si NO está muteado', () => {
+            engine.isMuted = false;
+            engine.playDrop();
+            expect(zzfx).toHaveBeenCalled();
+        });
+
+        test('playDrop() NO debe llamar a zzfx si ESTÁ muteado', () => {
+            engine.isMuted = true;
+            engine.playDrop();
+            expect(zzfx).not.toHaveBeenCalled(); // Aseguramos que la lógica de bloqueo funcione
+        });
+
+        test('playHover() debe llamar a zzfx solo si el audio está desbloqueado', () => {
+            engine.isMuted = false;
+            engine.audioUnlocked = false; // Estado inicial bloqueado
+            
+            engine.playHover();
+            expect(zzfx).not.toHaveBeenCalled(); // No debe sonar hasta interactuar por primera vez
+        });
     });
 
 });
