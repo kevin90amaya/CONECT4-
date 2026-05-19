@@ -8,9 +8,11 @@ participant "SoundEngine" as Engine
 == Inicialización (Arranque de la App) ==
 -> Controller : initialize()
 activate Controller
-Controller -> Engine : unlockAudio()
 Controller -> View : setModel(Engine)
 Controller -> View : renderMuteButton()
+
+Controller -> Controller : setupAudioUnlock()
+Controller -> DOM : addEventListener('click', 'touchstart', 'keydown')
 
 Controller -> Controller : setupGlobalInteractions()
 Controller -> DOM : addEventListener('click', 'mouseover')
@@ -33,7 +35,6 @@ deactivate View
 == Reproducir Efecto de Sonido (Ej. Ficha cae) ==
 DOM -> Controller : CustomEvent('game-drop')
 activate Controller
-Controller -> Controller : handleGameEvent(event)
 Controller -> Engine : playDrop()
 activate Engine
 alt Si NO está muteado y el audio está desbloqueado

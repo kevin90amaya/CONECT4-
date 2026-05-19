@@ -17,7 +17,7 @@ class SoundView {
         this.muteButton.style.top = '15px';
         this.muteButton.style.right = '15px';
         this.muteButton.style.zIndex = '9999';
-        this.muteButton.style.backgroundColor = '#111'; // Fondo retro opcional
+        this.muteButton.style.backgroundColor = '#111';
         
         this.muteButton.addEventListener('click', (e) => this.handleMuteClick(e));
         document.body.appendChild(this.muteButton);
@@ -36,8 +36,8 @@ class SoundView {
     handleMuteClick(e) {
         if (e) e.stopPropagation();
         
-        this.soundEngine.toggleMute(); // Comando: cambia el estado
-        const isMuted = this.soundEngine.getIsMuted(); // Consulta: obtiene el nuevo estado
+        this.soundEngine.toggleMute();
+        const isMuted = this.soundEngine.getIsMuted();
         
         this.updateButtonState(isMuted);
         

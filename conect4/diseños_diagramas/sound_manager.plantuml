@@ -4,17 +4,17 @@ class ControllerSound {
     - soundEngine: SoundEngine
     - soundView: SoundView
     + initialize()
+    - setupAudioUnlock()
     - setupGlobalInteractions()
     - setupGameEvents()
-    - handleGameEvent(event: Event)
 }
 
 class SoundEngine {
     - isMuted: boolean
     - audioUnlocked: boolean
     - masterVolume: float
-    - zzfx: function
-    + toggleMute(): boolean
+    + toggleMute()
+    + getIsMuted(): boolean
     + unlockAudio()
     + playHover()
     + playSelect()
@@ -30,7 +30,7 @@ class SoundView {
     + setModel(engine: SoundEngine)
     + renderMuteButton()
     + updateButtonState(isMuted: boolean)
-    - handleMuteClick()
+    - handleMuteClick(e: Event)
 }
 
 ControllerSound --> SoundEngine : usa

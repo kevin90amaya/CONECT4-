@@ -28,14 +28,17 @@ class ControllerSound {
         this.#soundView.setModel(this.#soundEngine);
         this.#soundView.renderMuteButton();
 
+        this.#setupAudioUnlock();
+        this.#setupGlobalInteractions();
+        this.#setupGameEvents();
+    }
+
+    #setupAudioUnlock() {
         const unlockAudio = () => {
             this.#soundEngine.unlockAudio();
             ['click', 'touchstart', 'keydown'].forEach(e => document.removeEventListener(e, unlockAudio, true));
         };
         ['click', 'touchstart', 'keydown'].forEach(e => document.addEventListener(e, unlockAudio, true));
-
-        this.#setupGlobalInteractions();
-        this.#setupGameEvents();
     }
 
     #setupGlobalInteractions() {
@@ -64,19 +67,10 @@ class ControllerSound {
     }
 
     #setupGameEvents() {
-        document.addEventListener('game-drop', (e) => this.#handleGameEvent(e));
-        document.addEventListener('game-win', (e) => this.#handleGameEvent(e));
-        document.addEventListener('game-draw', (e) => this.#handleGameEvent(e));
-        document.addEventListener('game-error', (e) => this.#handleGameEvent(e));
-    }
-
-    #handleGameEvent(event) {
-        switch (event.type) {
-            case 'game-drop': this.playDrop(); break;
-            case 'game-win': this.playWin(); break;
-            case 'game-draw': this.playDraw(); break;
-            case 'game-error': this.playError(); break;
-        }
+        document.addEventListener('game-drop', () => this.playDrop());
+        document.addEventListener('game-win', () => this.playWin());
+        document.addEventListener('game-draw', () => this.playDraw());
+        document.addEventListener('game-error', () => this.playError());
     }
 }
 
