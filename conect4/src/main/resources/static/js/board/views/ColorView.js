@@ -25,7 +25,7 @@ class ColorView {
             case 'WHITE':
                 return '#ffffff';
             case 'EMPTY':
-                return 'transparent';
+                return '';
         }
     }
 }

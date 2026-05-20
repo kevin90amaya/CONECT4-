@@ -51,12 +51,13 @@ class ControllerGame {
                 result = await this.playTurn();
                 await this.refreshBoard();
             } while (!this.isEndGame(result));
-            
+
             await this.resetGame();
             await this.controllerBoard.initialize();
-
-           await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
+            
+            await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
         } while (continueDialog.isAffirmative());
+        this.boardView.cleanBoard();
     }
 
     cleanGame() {
@@ -67,9 +68,6 @@ class ControllerGame {
         </div>
         <div class="game-frame">
             <div class="mode"></div>
-            <div class="board-container">
-                <div class="board"></div>
-            </div>
             <div class="status">
                 <h4></h4>
                 <p></p>

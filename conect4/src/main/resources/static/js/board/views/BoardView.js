@@ -5,22 +5,25 @@ import Message from '../../Messages/Message.js';
 class BoardView {
 
     #board;
+    #mountPoint;
     
     constructor() {
-    
+        this.#initMountPoint();
     }
-
+    
     setBoard(board) {
         this.#board = board;
     }
-
+    
     getNumberToWin() {
         return this.#board.numberToWin;
     }
-
+    
     showBoard() {
-       const boardElement = document.querySelector('.board');
-       this.cleanBoard();
+        this.cleanBoard();
+
+       const boardContainer = document.createElement('div');
+       boardContainer.className = 'board-container';
 
        const columnsContainer = document.createElement('div');
        columnsContainer.className = 'columns-container';
@@ -47,7 +50,8 @@ class BoardView {
            columnsContainer.appendChild(column);
        }
 
-       boardElement.appendChild(columnsContainer);
+       boardContainer.appendChild(columnsContainer);
+       this.#mountPoint.appendChild(boardContainer);
       
     }
 
@@ -60,9 +64,18 @@ class BoardView {
     }
 
     cleanBoard() {
-       const boardElement = document.querySelector('.board');
-       boardElement.innerHTML = '';
+       this.#mountPoint.innerHTML = '';
+    }
+
+    #initMountPoint() {
+        const gameFrame = document.querySelector('.game-frame');
+        this.#mountPoint = document.createElement('div');
+        this.#mountPoint.id = 'board-mount-point';
+        const statusElement = gameFrame.querySelector('.status');
+        
+        gameFrame.insertBefore(this.#mountPoint, statusElement);
     }
     
 }
+
 export default BoardView;
