@@ -1,0 +1,83 @@
+@startuml AutoScaleBoardSequence
+
+title Flujo de Auto-Escalado del Tablero (Toggle Button)
+
+actor "Usuario" as User
+participant "DOM" as DOM
+participant "BoardView" as View
+participant "ControllerGame" as Game
+participant "BoardService" as BoardService
+
+== 1. Inicialización (Estado Base) ==
+Controller -> Controller : initialize()
+Controller -> View 
+View -> View : #renderAutoScaleToggle()
+activate View
+note right: Renderiza el switch en estado OFF (Apagado)
+View -> DOM : addEventListener('auto-escala')
+deactivate View
+
+== 2. Ciclo de vida del boton en la vista ==
+
+Game -> DOM : dispatchEvent('juego-comenzo')
+note right: Al iniciar ControllerGame.playGames()
+DOM -> View : Captura evento 'juego-comenzo'
+activate View
+View -> View : enableAutoScaleToggle() (Activa el botón)
+deactivate View
+
+Game -> DOM : dispatchEvent('resolvemode')
+note right: Al resolver modo en ControllerGame.resolveSelectionMode()
+DOM -> View : Captura evento 'resolvemode'
+activate View
+View -> View : disableAutoScaleToggle() (Desactiva el botón)
+deactivate View
+
+== 3. Interacción del Usuario ==
+User -> Controller : Click en el botón "Auto-Escala" handlerAutoEscala()
+activate Controller
+Controller -> View : toggleVisualState()
+deactivate Controller
+activate View
+
+alt  el botón pasa a estado ON (Prendido)
+
+    View -> DOM : dispatchEvent('board-autoscale')
+   
+
+else el botón pasa a estado OFF (Apagado)
+    View -> DOM : dispatchEvent('board-reset-default')
+
+end
+deactivate View
+
+== 4. Comunicación y Actualización ==
+DOM -> Controller : handlerEvent('board-autoscale' o 'board-reset-default')
+activate Controller
+
+alt Evento: 'board-autoscale'
+    Controller -> Controller : getDimensions()
+    Controller -> API : POST /api/board/custom { rows, cols }
+    activate API
+    note right: Spring crea un nuevo tablero\ncon las dimensiones solicitadas
+    API --> Controller : 200 OK
+    deactivate API
+else Evento: 'board-reset-default'
+    Controller -> API : POST /api/board/reset
+    activate API
+    note right: Spring restaura el tablero\na 6 filas y 7 columnas
+    API --> Controller : 200 OK
+    deactivate API
+end
+
+== 5. Refresco de la Pantalla ==
+Controller -> Controller : getboard() (Fetch del nuevo estado)
+Controller -> API : GET /api/board
+activate API
+API --> Controller : 200 OK ()
+deactivate API
+
+Controller -> View : setBoard()
+deactivate Controller
+
+@enduml
