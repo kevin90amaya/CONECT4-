@@ -9,7 +9,19 @@ participant "ToggleButton" as Model
 participant "ControllerGame" as Game
 participant "ControllerToggleButton" as Controller
 
-== 1. Vista ==Ciclo de vida del boton en la vista ==
+== 0. Inicialización ==
+Controller -> Controller : initialize()
+Controller -> View : new ToggleButtonView()
+activate Controller
+activate View
+View -> View : getElement()
+note right: Crea el HTML y añade el listener de\n'click' al checkbox UNA SOLA VEZ
+deactivate View
+Controller -> DOM : addEventListener('board-autoscale')
+Controller -> DOM : addEventListener('board-reset-default')
+deactivate Controller
+
+== 1. Ciclo de vida del boton en la vista ==
 
 Game -> DOM : dispatchEvent('juego-comenzo')
 activate DOM
@@ -17,16 +29,15 @@ DOM -> Controller : Captura evento 'juego-comenzo'
 deactivate DOM
 activate Controller
 Controller -> View : enableAutoScaleToggle() (Activa el botón)
+note right: Solo cambia checkbox.disabled = false
 deactivate Controller
-activate View
-View -> DOM : addEventListener('click', 'board-autoscale-toggle')
-deactivate View
 Game -> DOM : dispatchEvent('resolvemode')
 activate DOM
 DOM -> Controller : Captura evento 'resolvemode'
 deactivate DOM
 activate Controller
 Controller -> View : disableAutoScaleToggle() (Desactiva el botón)
+note right: Solo cambia checkbox.disabled = true
 deactivate Controller
 
 == 2. alternar el estado del botón ==
