@@ -17,6 +17,8 @@ activate View
 View -> View : getElement()
 note right: Crea el HTML y añade el listener de\n'click' al checkbox UNA SOLA VEZ
 deactivate View
+Controller -> DOM : addenventlistener( 'juego-comenzo')
+Controller -> DOM : addenventlistener( 'resolvemode')
 Controller -> DOM : addEventListener('board-autoscale')
 Controller -> DOM : addEventListener('board-reset-default')
 deactivate Controller
@@ -66,9 +68,9 @@ activate Controller
 
 alt Evento: 'board-autoscale'
 
-    Controller -> API : POST /api/ToggleButton/column/{col}
+    Controller -> API : POST /api/ToggleButton/column
     activate API
-    Controller -> API : POST /api/ToggleButton/row/{row}
+    Controller -> API : POST /api/ToggleButton/row
     note right: Spring crea un nuevo tablero\ncon las dimensiones solicitadas
     API --> Controller : 200 OK
     deactivate API

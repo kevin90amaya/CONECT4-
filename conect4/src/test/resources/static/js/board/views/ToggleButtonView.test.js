@@ -104,8 +104,8 @@ describe('ToggleButtonView (TDD)', () => {
                     verticalMargin: 250
                 }));
                 expect(getDimSpy).toHaveReturnedWith(expect.objectContaining({
-                    columns: expect.any(Integer),
-                    rows: expect.any(Integer)
+                    columns: 16,
+                    rows: 9
                 }));
             });
     
