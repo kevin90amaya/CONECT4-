@@ -18,11 +18,15 @@ class ControllerToggleButton {
         document.addEventListener('board-autoscale', this.handleBoardAutoscale);
         document.addEventListener('board-reset-default', this.handleBoardReset);
         
+    }
+    
+    render(){
         // El componente fabrica su vista (Lazy) y se auto-inyecta en el DOM
         const gameFrame = document.querySelector('.game-frame');
         if (gameFrame) {
             gameFrame.insertBefore(this.view.getElement(), gameFrame.firstChild);
         }
+        
     }
 
     destroy() {

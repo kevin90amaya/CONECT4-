@@ -43,7 +43,7 @@ class ControllerGame {
         const continueDialog = new YesNoDialog();
         do {
             this.clean();
-            this.controllerBoard.controllerToggleButton.initialize();
+            this.controllerBoard.controllerToggleButton.render();
             document.dispatchEvent(new CustomEvent('juego-comenzo'));
             await this.updateBoard();
             this.boardView.showTitle();
