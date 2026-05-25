@@ -23,5 +23,10 @@ export const ENDPOINTS = {
     MODE: `${BASE}/api/players/mode`,
     LIST_PLAYERS: `${BASE}/api/players/list-players`,
     CURRENT_PLAYER: `${BASE}/api/players/current-player`,
-    NUMBER_OF_PLAYERS: `${BASE}/api/players/number-of-players`
+    NUMBER_OF_PLAYERS: `${BASE}/api/players/number-of-players`,
+
+    TOGGLE_COLUMN: `${BASE}/api/ToggleButton/column`,
+    TOGGLE_ROW: `${BASE}/api/ToggleButton/row`,
+    TOGGLE_RESET: `${BASE}/api/ToggleButton/reset`
+    
 };

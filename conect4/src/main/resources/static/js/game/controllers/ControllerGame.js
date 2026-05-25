@@ -42,6 +42,9 @@ class ControllerGame {
     async playGames() {
         const continueDialog = new YesNoDialog();
         do {
+            this.clean();
+            this.controllerBoard.controllerToggleButton.initialize();
+            document.dispatchEvent(new CustomEvent('juego-comenzo'));
             await this.updateBoard();
             this.boardView.showTitle();
            await this.resolveSelectionMode();
@@ -57,22 +60,30 @@ class ControllerGame {
             
             await continueDialog.read(Message.getInstance().getMessages("CONTINUE_DIALOG").ask_question);
         } while (continueDialog.isAffirmative());
+        this.clean();
+        this.cleanGame();
+    }
+    
+    clean(){
         this.boardView.cleanBoard();
+        this.playerView.cleanStatus();
     }
 
     cleanGame() {
-        const gameContainer = document.querySelector('.game-container');
-        gameContainer.innerHTML = `
-        <div class="game-title">
-            <h1></h1>
-        </div>
-        <div class="game-frame">
-            <div class="mode"></div>
-            <div class="status">
-                <h4></h4>
-                <p></p>
-            </div>
-        </div>`;
+        // Vaciamos el texto y contenido sin destruir los contenedores
+        const gameTitle = document.querySelector('.game-title h1');
+        if (gameTitle) gameTitle.textContent = '';
+
+        const mode = document.querySelector('.mode');
+        if (mode) mode.innerHTML = '';
+
+        const status = document.querySelector('.status');
+        if (status) status.innerHTML = `<h4></h4><p></p>`;
+
+        const toggleContainer = document.querySelector('.toggle-container');
+        if (toggleContainer) toggleContainer.remove(); // Lo quitamos para que no se vea en el menú principal
+        
+        this.boardView.cleanBoard();
     }
     
     async getNumberOfPlayers() {
@@ -81,6 +92,7 @@ class ControllerGame {
     
     async resolveSelectionMode() {
         await this.controllerPlayers.selectAndProcessMode();
+        document.dispatchEvent(new CustomEvent('resolvemode'));
     }
 
     async playTurn() {

@@ -1,4 +1,5 @@
 import ControllerToggleButton from "../../../../../../main/resources/static/js/board/controllers/ControllerToggleButton.js";
+import { ENDPOINTS } from "../../../../../../main/resources/static/js/api/endpoints.js";
 
 describe('ControllerToggleButton (TDD)', () => {
     let controller;
@@ -9,6 +10,11 @@ describe('ControllerToggleButton (TDD)', () => {
         
         // Limpiamos los espías entre cada test para evitar cruces de datos
         jest.clearAllMocks();
+    });
+
+    afterEach(() => {
+        // Limpiamos los eventos del DOM para que los controladores "viejos" no se acumulen y reaccionen en otros tests
+        controller.destroy();
     });
 
     describe('initialize()', () => {
@@ -30,10 +36,15 @@ describe('ControllerToggleButton (TDD)', () => {
             expect(addEventSpy).toHaveBeenCalledWith('resolvemode', expect.any(Function));
         });
 
-        test('debe registrar los eventos "board-autoscale" y "board-reset-default" en el DOM', () => {
+        test('debe registrar el evento "board-autoscale" en el DOM', () => {
             const addEventSpy = jest.spyOn(document, 'addEventListener');
             controller.initialize();
             expect(addEventSpy).toHaveBeenCalledWith('board-autoscale', expect.any(Function));
+        });
+
+        test('debe registrar el evento "board-reset-default" en el DOM', () => {
+            const addEventSpy = jest.spyOn(document, 'addEventListener');
+            controller.initialize();
             expect(addEventSpy).toHaveBeenCalledWith('board-reset-default', expect.any(Function));
         });
     });
@@ -77,8 +88,8 @@ describe('ControllerToggleButton (TDD)', () => {
             
             // Verificamos que se hayan hecho 2 llamadas HTTP POST a los endpoints correctos
             expect(global.fetch).toHaveBeenCalledTimes(2);
-            expect(global.fetch).toHaveBeenCalledWith('/api/ToggleButton/column', expect.objectContaining({ method: 'POST' }));
-            expect(global.fetch).toHaveBeenCalledWith('/api/ToggleButton/row', expect.objectContaining({ method: 'POST' }));
+            expect(global.fetch).toHaveBeenCalledWith(ENDPOINTS.TOGGLE_COLUMN, expect.objectContaining({ method: 'POST' }));
+            expect(global.fetch).toHaveBeenCalledWith(ENDPOINTS.TOGGLE_ROW, expect.objectContaining({ method: 'POST' }));
         });
 
         test('cuando el DOM emite "board-reset-default", debe hacer una petición POST a /api/ToggleButton/reset', () => {
@@ -87,7 +98,7 @@ describe('ControllerToggleButton (TDD)', () => {
             document.dispatchEvent(new Event('board-reset-default'));
             
             expect(global.fetch).toHaveBeenCalledTimes(1);
-            expect(global.fetch).toHaveBeenCalledWith('/api/ToggleButton/reset', expect.objectContaining({ method: 'POST' }));
+            expect(global.fetch).toHaveBeenCalledWith(ENDPOINTS.TOGGLE_RESET, expect.objectContaining({ method: 'POST' }));
         });
     });
 });

@@ -1,5 +1,6 @@
 import ToggleButtonView from "../views/ToggleButtonView.js";
 import ToggleButton from "../ToggleButton.js";
+import { ENDPOINTS } from "../../api/endpoints.js";
 
 class ControllerToggleButton {
     constructor() {
@@ -9,37 +10,51 @@ class ControllerToggleButton {
     }
 
     initialize() {
-        // Inyectamos el modelo en la vista
         this.view.setModel(this.model);
 
-        // Registramos los eventos del ciclo de vida del juego
-        document.addEventListener('juego-comenzo', this.handleJuegoComenzo.bind(this));
-        document.addEventListener('resolvemode', this.handleResolveMode.bind(this));
+        document.addEventListener('juego-comenzo', this.handleJuegoComenzo);
+        document.addEventListener('resolvemode', this.handleResolveMode);
         
-        // Registramos los eventos despachados por la Vista
-        document.addEventListener('board-autoscale', this.handleBoardAutoscale.bind(this));
-        document.addEventListener('board-reset-default', this.handleBoardReset.bind(this));
+        document.addEventListener('board-autoscale', this.handleBoardAutoscale);
+        document.addEventListener('board-reset-default', this.handleBoardReset);
+        
+        // El componente fabrica su vista (Lazy) y se auto-inyecta en el DOM
+        const gameFrame = document.querySelector('.game-frame');
+        if (gameFrame) {
+            gameFrame.insertBefore(this.view.getElement(), gameFrame.firstChild);
+        }
     }
 
-    handleJuegoComenzo(event) {
-        this.view.enableAutoScaleToggle();
+    destroy() {
+        // Desconectamos los eventos del DOM cuando el componente ya no se necesite
+        document.removeEventListener('juego-comenzo', this.handleJuegoComenzo);
+        document.removeEventListener('resolvemode', this.handleResolveMode);
+        document.removeEventListener('board-autoscale', this.handleBoardAutoscale);
+        document.removeEventListener('board-reset-default', this.handleBoardReset);
     }
 
-    handleResolveMode(event) {
-        this.view.disableAutoScaleToggle();
+    handleJuegoComenzo = (event) => {
+        try {
+            this.view.enableAutoScaleToggle();
+        } catch(e) { } // Silenciamos si ya estaba habilitado
     }
 
-    async handleBoardAutoscale(event) {
+    handleResolveMode = (event) => {
+        try {
+            this.view.disableAutoScaleToggle();
+        } catch(e) { } // Silenciamos si ya estaba deshabilitado
+    }
+
+    handleBoardAutoscale = async (event) => {
         const { rows, cols } = event.detail;
 
-        // Hacemos las peticiones HTTP POST a nuestra API de Spring en paralelo
         const [colResponse, rowResponse] = await Promise.all([
-            fetch('/api/ToggleButton/column', {
+            fetch(ENDPOINTS.TOGGLE_COLUMN, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ value: cols }) // El backend de Spring recibirá este valor
+                body: JSON.stringify({ value: cols })
             }),
-            fetch('/api/ToggleButton/row', {
+            fetch(ENDPOINTS.TOGGLE_ROW, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ value: rows })
@@ -50,9 +65,9 @@ class ControllerToggleButton {
         if (!rowResponse.ok) throw new Error("Fallo en la petición: No se pudieron actualizar las filas");
     }
 
-    async handleBoardReset(event) {
+    handleBoardReset = async (event) => {
         // Petición HTTP POST para resetear al tablero de 6x7 por defecto
-        const response = await fetch('/api/ToggleButton/reset', {
+        const response = await fetch(ENDPOINTS.TOGGLE_RESET, {
             method: 'POST'
         });
 

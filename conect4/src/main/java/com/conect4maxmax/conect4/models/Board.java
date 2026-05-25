@@ -39,6 +39,13 @@ public void reset() {
     this.colorActual = null;
 }
 
+public void resetDefault() {
+    this.numberColumns = 7;
+    this.numberRows = 6;
+    this.numberToWin = 4;
+    this.reset();
+}
+
 public Cell[][] getColumns() {
     return this.columns;  
 }

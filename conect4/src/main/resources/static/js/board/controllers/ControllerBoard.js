@@ -1,15 +1,21 @@
 import BoardView from "../views/BoardView.js";
 import { ENDPOINTS } from "../../api/endpoints.js";
-
+import ControllerToggleButton from "./ControllerToggleButton.js";
 
 class ControllerBoard {
     
     boardView;
     board;
+    controllerToggleButton;
     
     constructor() {
         this.boardView = new BoardView();
         this.board = null;
+        this.controllerToggleButton = new ControllerToggleButton();
+    }
+
+    getcontrollerToggleButton() {
+        return this.controllerToggleButton
     }
 
     getboardView() {
@@ -31,6 +37,7 @@ class ControllerBoard {
     }
     
     async initialize() {
+        this.controllerToggleButton.initialize();
         await this.createBoard();
         await this.getboard();
         this.setBoard();

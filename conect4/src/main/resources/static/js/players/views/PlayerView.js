@@ -54,6 +54,11 @@ class PlayerView {
         `;
     }
 
+    cleanStatus(){
+        const statusElement = document.querySelector('.status');
+        statusElement.innerHTML = '';
+    }
+
     showTurn(){
         const statusElement = document.querySelector('.status');
         statusElement.innerHTML = `

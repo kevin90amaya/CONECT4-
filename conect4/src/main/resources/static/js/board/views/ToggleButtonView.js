@@ -17,51 +17,54 @@ class ToggleButtonView {
         if (!this.#element) {
             this.#element = document.createElement('div');
             this.#element.className = 'toggle-container';
+            
+            this.#element.style.opacity = '0.5';
+            this.#element.style.cursor = 'not-allowed';
 
             const label = document.createElement('span');
             label.className = 'toggle-label';
-            label.textContent = 'AUTO-ESCALA';
+            label.textContent = 'RESPONSIVE';
+            label.style.cursor = 'inherit';
 
             this.#checkbox = document.createElement('input');
             this.#checkbox.type = 'checkbox';
             this.#checkbox.checked = false;
-            this.#checkbox.disabled = false;
+            this.#checkbox.disabled = true; // Inicia bloqueado hasta que empiece la partida
             
-            // Al hacer clic, detenemos al navegador y delegamos todo a nuestro método
-            this.#checkbox.addEventListener('click', (e) => {
-                e.preventDefault(); 
-                this.toggleVisualState();
-            });
+            const toggleSwitch = document.createElement('div');
+            toggleSwitch.className = 'toggle-switch';
+            toggleSwitch.style.cursor = 'inherit';
 
             const slider = document.createElement('div');
             slider.className = 'slider';
 
+            toggleSwitch.appendChild(this.#checkbox);
+            toggleSwitch.appendChild(slider);
+
             // Ensamblamos los elementos
             this.#element.appendChild(label);
-            this.#element.appendChild(this.#checkbox);
-            this.#element.appendChild(slider);
+            this.#element.appendChild(toggleSwitch);
+
+            // Escuchamos el clic en todo el contenedor (mejor experiencia de usuario)
+            this.#element.addEventListener('click', (e) => {
+                e.preventDefault(); // Evitamos que el navegador haga el toggle nativo
+                if (this.#checkbox.disabled) return; // Ignoramos el clic si está bloqueado
+                this.toggleVisualState();
+            });
         }
         return this.#element;
     }
 
     enableAutoScaleToggle() {
-        if (!this.#checkbox) {
-            throw new Error("Precondición fallida: El checkbox no ha sido renderizado.");
-        }
-        if (!this.#checkbox.disabled) {
-            throw new Error("Precondición fallida: El checkbox ya está habilitado.");
-        }
         this.#checkbox.disabled = false;
+        this.#element.style.opacity = '1';
+        this.#element.style.cursor = 'pointer';
     }
 
     disableAutoScaleToggle() {
-        if (!this.#checkbox) {
-            throw new Error("Precondición fallida: El checkbox no ha sido renderizado.");
-        }
-        if (this.#checkbox.disabled) {
-            throw new Error("Precondición fallida: El checkbox ya está deshabilitado.");
-        }
         this.#checkbox.disabled = true;
+        this.#element.style.opacity = '0.5';
+        this.#element.style.cursor = 'not-allowed';
     }
 
     toggleVisualState() {
