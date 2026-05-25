@@ -16,6 +16,7 @@ export const ENDPOINTS = {
     COLUMNS: `${BASE}/api/setting-menu/columns`,
     SET_NUMBER_OF_PLAYERS: `${BASE}/api/setting-menu/number-of-players`,
     SET_LIST_PLAYERS: `${BASE}/api/setting-menu/list-players`,
+    RESET_PLAYERS: `${BASE}/api/setting-menu/reset-players`,
     
     PLAYERS: `${BASE}/api/players`,
     CURRENT_MODE: `${BASE}/api/players/current-mode`,

@@ -96,5 +96,10 @@ class ViewMenu {
         const editPlayersModal = new EditPlayersModal(listPlayers, numberPlayers);
         editPlayersModal.show();
     }
+
+    resetPlayers() {
+        const msg = Message.getInstance().getMessages("SettingsMenu").resetPlayersSuccess;
+        alert(msg);
+    }
 }
 export default ViewMenu;

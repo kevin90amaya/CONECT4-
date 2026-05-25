@@ -23,6 +23,15 @@ public class Players {
         this.players.add(new PlayerProperties("YELLOW", Color.YELLOW, PlayerTipe.COMPUTER, 1));
     }
 
+    public void reset() {
+        this.mode = GameMode.HUMAN_VS_COMPUTER; 
+        this.turn = 0;
+        this.number_players = 2;
+        this.players.clear();
+        this.players.add(new PlayerProperties("RED", Color.RED, PlayerTipe.HUMAN, 0));
+        this.players.add(new PlayerProperties("YELLOW", Color.YELLOW, PlayerTipe.COMPUTER, 1));
+    }
+
     public void setPlayers(List<PlayerProperties> listPlayers) {
         if (listPlayers.size() != this.number_players) {
             throw new IllegalArgumentException("El número de jugadores no puede ser diferente al número de jugadores configurados");

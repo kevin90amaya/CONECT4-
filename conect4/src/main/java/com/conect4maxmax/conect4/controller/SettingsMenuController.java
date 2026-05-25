@@ -45,4 +45,9 @@ public class SettingsMenuController {
         settingsMenuService.setListPlayers(listPlayers);
     }
     
+    @PostMapping("/reset-players")
+    public void resetPlayers() {
+        settingsMenuService.resetPlayers();
+    }
+    
 }

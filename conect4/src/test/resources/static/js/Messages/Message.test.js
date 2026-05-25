@@ -86,7 +86,9 @@ describe('Message', () => {
                 language: "Idioma",
                 gameMode: "Modo de Juego",
                 numberOfPlayers: "Numero de Jugadores",
-                editBoard: "Editar Tablero"
+                editBoard: "Editar Tablero",
+                resetPlayers: "Resetear Jugadores",
+                resetPlayersSuccess: "Jugadores reseteados correctamente."
             });
         });
     });

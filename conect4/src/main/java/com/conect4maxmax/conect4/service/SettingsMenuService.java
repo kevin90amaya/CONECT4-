@@ -43,5 +43,9 @@ public class SettingsMenuService {
     public void setListPlayers(List<PlayerProperties> listPlayers) {
         players.setPlayers(listPlayers);
     }
+
+    public void resetPlayers() {
+        players.reset();
+    }
     
 }

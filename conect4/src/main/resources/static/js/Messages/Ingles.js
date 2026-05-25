@@ -17,7 +17,9 @@ class Ingles extends Idiomas {
             language: "Language",
             gameMode: "Game Mode",
             numberOfPlayers: "Number of Players",
-            editBoard: "Edit Board"
+            editBoard: "Edit Board",
+            resetPlayers: "Reset Players",
+            resetPlayersSuccess: "Players successfully reset."
         };
     }
 

@@ -27,9 +27,10 @@ class ControllerMenu {
             "edit-conect-to-win": () => this.editConectToWin(),
             "edit-rows": () => this.editRows(),
             "edit-columns": () => this.editColumns(),
-            "edit-players": () => this.editPlayers()
+            "edit-players": () => this.editPlayers(),
+            "reset-players": () => this.resetPlayers()
         };
-     
+    
     }
 
      initialize() {
@@ -219,6 +220,14 @@ class ControllerMenu {
             };
             document.addEventListener('save-players', onSave);
         });
+    }
+    
+    async resetPlayers() {
+        await fetch(`${ENDPOINTS.RESET_PLAYERS}`, {
+            method: 'POST'
+        });
+        this.viewMenu.resetPlayers();
+        this.loadMenu();
     }
 
 }
