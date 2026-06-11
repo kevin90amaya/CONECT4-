@@ -9,6 +9,9 @@
     // Esta es la magia: inyecta Node 22 en tu contenedor de Java
     "ghcr.io/devcontainers/features/node:1": {
       "version": "22"
+    },
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "version": "latest"
     }
   },
   "customizations": {
@@ -17,10 +20,12 @@
         "vscjava.vscode-java-pack",            // Pack de Java (Debugger, Maven, etc)
         "vmware.vscode-spring-boot-dashboard", // Panel para Spring Boot
         "firsttris.vscode-jest-runner",        // Botón "Run" para tus tests de Jest
-        "dbaeumer.vscode-eslint"               // Corrector de JS
+        "dbaeumer.vscode-eslint",              // Corrector de JS
+        "ms-playwright.playwright"             // Extensión oficial de Playwright
       ]
     }
   },
-  "postCreateCommand": "npm install",
+  "forwardPorts": [9323, 6080, 5901],
+  "postCreateCommand": "npm install && npx playwright install-deps",
   "remoteUser": "root"
 }
