@@ -234,6 +234,8 @@ body {
     box-shadow: 8px 8px 0 #000; /* Sombra cuadrada estilo 8-bits */
     text-align: center;
     min-width: 350px;
+    max-height: 90vh;
+    overflow-y: auto;
     color: var(--term-green);
 }
 

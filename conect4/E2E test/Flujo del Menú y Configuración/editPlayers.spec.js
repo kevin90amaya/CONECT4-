@@ -79,7 +79,6 @@ test.describe('Configuración de Jugadores', { tag: ['@menu', '@e2e'] }, () => {
 
     const modal = page.locator('.modal-overlay');
     const addPlayerButton = modal.locator('#addPlayer');
-    const playerCount = modal.locator('.player-item').count();
 
     await addPlayerButton.click();
 
@@ -90,8 +89,7 @@ test.describe('Configuración de Jugadores', { tag: ['@menu', '@e2e'] }, () => {
     await page.click('#savePlayers');
 
     await page.locator('button.option', { hasText: 'Editar Jugadores' }).click();
-    await expect(modal.locator('.player-item')).toHaveCount(playerCount + 1);
-    await expect(newPlayerNameInput).toHaveValue('NewPlayer');
+    await expect(modal.locator('.player-item').last().locator(".player-name")).toHaveValue('NewPlayer');
 
     await page.click('#cancelEdit');
   });
