@@ -18,14 +18,14 @@ export default defineConfig({
   grep: process.env.RUN_E2E ? /@e2e/ : undefined,
   /* Exclude E2E tests by default unless RUN_E2E is specified */
   grepInvert: process.env.RUN_E2E ? undefined : /@e2e/,
-  /* Run tests in files in parallel */
-  fullyParallel: true,
+  /* Run tests in parallel, but disable it for E2E tests to run sequentially */
+  fullyParallel: process.env.RUN_E2E ? false : true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  /* Limit to 1 worker for E2E tests to run in queue and avoid backend collisions */
+  workers: process.env.RUN_E2E ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
