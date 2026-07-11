@@ -1,4 +1,4 @@
-import YesNoDialog from "../../utils/yesNoDialog.js";
+import YesNoDialog from "../../utils/YesNoDialog.js";
 import Message from "../../Messages/Message.js";
 import ControllerBoard from "../../board/controllers/ControllerBoard.js";
 import ControllerPlayers from "../../players/controllers/ControllerPlayers.js";
