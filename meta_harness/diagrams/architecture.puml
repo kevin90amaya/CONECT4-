@@ -1,0 +1,58 @@
+@startuml arquitectura.puml
+skinparam componentStyle rectangle
+
+package "Meta Harness (Raíz)" {
+    [README.md] as Readme
+    [init_meta.sh] as InitMeta
+    
+    package "agents/" {
+        [ORCHESTRATOR.md] as Agents
+        note bottom of Agents : Reglas de inicio, permisos\ny prohibiciones (Scope limits)
+    }
+
+    package "state/" {
+        [session_handoff.md] as Handoff
+        [progress.md] as Progress
+        [pendings.md] as Pendings
+        note bottom of Handoff : Relevo exacto del último cierre
+    }
+
+    package "specs/" {
+        [meta-project-spec.md] as MetaSpec
+        [bob-project-spec.md] as BobSpec
+        note bottom of MetaSpec : Especificaciones conversadas
+    }
+
+    package "features/" {
+        [meta_feature_list.json] as MetaBacklog
+        [bob_feature_list.json] as BobBacklog
+        [.feature files] as GherkinFeatures
+        note bottom of MetaBacklog : Backlog de tareas y escenarios
+    }
+
+    package "docs/" {
+        [harness-engineering-manifesto.md] as Manifesto
+        note bottom of Manifesto : Límite de alcance (Solo Lectura)
+    }
+
+    package "estructura/" {
+        [META_ARCHITECTURE.md] as MetaArch
+        [META_PRODUCT.md] as MetaProd
+        note bottom of MetaArch : Definición y diagramas del sistema
+    }
+
+    package "diagrams/" {
+        [architecture.puml] as ArchPuml
+    }
+
+    package ".agents/skills/" {
+        [graphify] as GraphifySkill
+        note bottom of GraphifySkill : Motor de exploración semántica\ny mapa de conocimiento
+    }
+
+    Agents --> Handoff : Guía el comportamiento
+    Handoff --> MetaBacklog : Define tareas inmediatas
+    Handoff --> BobBacklog : Define tareas inmediatas
+    MetaArch --> ArchPuml : Documenta a través de
+}
+@enduml

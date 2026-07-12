@@ -1,0 +1,70 @@
+{
+  "features": [
+    {
+      "id": "F01_andamiaje_inicial",
+      "description": "Análisis, planificación y andamiaje inicial del arnés bob-harness (Pasos 1 al 8)",
+      "status": "passing",
+      "evidence": "Archivos creados (AGENTS.md, CHECKPOINTS.md, etc.) y tools/mutate.sh ejecutado y validado."
+    },
+    {
+      "id": "F02_estudio_harness",
+      "description": "Estudio teórico y práctico de Harness Engineering, plugin-dev y skills (Pasos 9.0 a 9.2)",
+      "status": "passing",
+      "evidence": "Archivo harness-engineering-manifesto.md consolidado con los 10 principios y lecciones."
+    },
+    {
+      "id": "F03_reestructuracion_meta_harness",
+      "description": "Reorganizar estructura de meta_harness (JSON, init.sh, handoff) para cumplir el Core Model",
+      "status": "passing",
+      "evidence": "Se implementó JSON estricto, init_meta.sh y session_handoff.md superando la validación del script."
+    },
+    {
+      "id": "F06_proyecto_01_arnes_minimo",
+      "description": "Validar paquete base de meta_harness (Proyecto 01). Limpiar README.md para que sea enrutador puro. (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "README.md reescrito como enrutador estricto. Referencias a tasks.md eliminadas."
+    },
+    {
+      "id": "F07_proyecto_02_workspace_legible",
+      "description": "Separar documentación del meta_harness (en META_ARCHITECTURE.md y META_PRODUCT.md) y asegurar Continuidad (Proyecto 02). (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "Creados META_PRODUCT.md, META_ARCHITECTURE.md y AGENTS.md. README.md limpio como enrutador."
+    },
+    {
+      "id": "F_PENDIENTE_05.2_05.3_control_cuotas_graphify",
+      "description": "Resolver bloqueo de cuota (HTTP 429) implementando Throttling local para la extracción semántica de graphify, y asegurar uso del mapa.",
+      "status": "passing",
+      "evidence": "Script throttled_extraction.py creado, cuota configurada en .env y mapa HTML generado exitosamente (graphify-out/graph.html)."
+    },
+    {
+      "id": "F08_proyecto_03_control_alcance",
+      "description": "Crear clean-state-checklist.md en el meta_harness obligando a 5 dimensiones antes del handoff (Proyecto 03). (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "Archivo clean-state-checklist.md creado e integrado; auditoría en verifications/history/F08_checklist.md"
+    },
+    {
+      "id": "F09_proyecto_04_observabilidad_reglas",
+      "description": "Convertir reglas de texto pasivas del meta_harness en scripts bash de validación (Proyecto 04). (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "Script scripts/check-wip.sh creado y validado. Checklist en verifications/history/F09_checklist.md"
+    },
+    {
+      "id": "F10_proyecto_05_separacion_roles",
+      "description": "Implementar sprint-contract.md y evaluator-rubric.md en el meta_harness para autoverificación (Proyecto 05). (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "Aprobado (Revision 2) con puntuación 4.6/5. Checklist en verifications/history/F10_checklist.md"
+    },
+    {
+      "id": "F11_proyecto_06_capstone",
+      "description": "Ensamblaje final de meta_harness Capstone y script de limpieza de basura (Proyecto 06). (OBLIGATORIO: El manifiesto es un resumen, debes seguir las rutas exactas de los proyectos originales listadas en harness-engineering-manifesto.md para aprender de ellos).",
+      "status": "passing",
+      "evidence": "Auditoría completada. Evidencia en verifications/history/F11_checklist.md y scripts/cleanup-scanner.sh"
+    },
+    {
+      "id": "F_PENDIENTE_05.5_harness_mapper",
+      "description": "Construir Mapeador Interno Propio (Extractor Híbrido, Auditor Estricto y Caching)",
+      "status": "passing",
+      "evidence": "Agentes separados (Extractor y Verifier) creados. Mapa HTML y json construidos exitosamente."
+    }
+  ]
+}
