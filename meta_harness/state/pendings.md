@@ -1,4 +1,4 @@
-# aqui se guardan agustes pendientes de este meta_arnes y de bob-harness 
+# aqui se guardan agustes pendientes de este meta_arnes y de harness_conect4 
 
 deves listar los pendientes y preguntar si es momento de resolverlos y luego actualizar este archivo
 
@@ -15,4 +15,4 @@ pendientes
    - [x] ~~5.4. Indicarle a los agentes que tienen que usar en sus fases exploratorias el mapa de graphify, para ahorrar contexto.~~ *(Cancelado: Tras auditoría manual, se comprobó que Graphify omite referencias críticas. Se reemplaza por el 5.5).*
    - [x] 5.5. Diseñar y construir un Mapeador Interno Propio (Harness Mapper) con validación cruzada entre agentes. Ver justificación y debate en `docs/graphify_analysis_conversation.md`. *(Completado y mapeo finalizado).*
    - [ ] 6. INTEGRAR HARNESS MAPPER , HAY QUE INDICARLE A LOS AGENTES COMO USARLO EN FASES EXPLORATORIAS
-- [ ] 7. code-review-graph para mapear el src." esta si deve ser una caracteristica o funcionalidad del bob-harness "
+- [ ] 7. code-review-graph para mapear el src." esta si deve ser una caracteristica o funcionalidad del harness_conect4 "

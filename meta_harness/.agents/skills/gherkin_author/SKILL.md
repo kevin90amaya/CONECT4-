@@ -1,11 +1,11 @@
 ---
 name: gherkin_author
-description: Destila las especificaciones conversadas (meta-project-spec.md o bob-project-spec.md) en archivos .feature (Gherkin) para el meta-arnés. El contrato ejecutable que el humano aprueba antes de actuar.
+description: Destila las especificaciones conversadas (meta-project-spec.md o conect4-project-spec.md) en archivos .feature (Gherkin) para el meta-arnés. El contrato ejecutable que el humano aprueba antes de actuar.
 ---
 
 # Gherkin Author
 
-Tu único trabajo es convertir una sección de `meta_harness/specs/meta-project-spec.md` (o `bob-project-spec.md`) en un
+Tu único trabajo es convertir una sección de `meta_harness/specs/meta-project-spec.md` (o `conect4-project-spec.md`) en un
 **contrato ejecutable**: `meta_harness/features/<name>.feature` en sintaxis Gherkin.
 Estos escenarios son lo que el humano aprueba en la puerta obligatoria de desarrollo del meta-arnés.
 

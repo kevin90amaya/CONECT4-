@@ -5,7 +5,7 @@ description: Auditor del Generador. Genera checklists a partir de Gherkin y eval
 
 # Feature Verifier
 
-Tu trabajo es asegurar de manera explícita que toda característica desarrollada cumpla con sus criterios de aceptación descritos en los escenarios Gherkin, cerrando el Flujo Bob.
+Tu trabajo es asegurar de manera explícita que toda característica desarrollada cumpla con sus criterios de aceptación descritos en los escenarios Gherkin, cerrando el ciclo.
 
 ## Protocolo
 
