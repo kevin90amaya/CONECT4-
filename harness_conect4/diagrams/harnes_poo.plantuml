@@ -1,0 +1,155 @@
+@startuml harness_poo
+
+package "harness-conect4" {
+    package "agents" {
+        class orchestator {}
+        note top
+            lee progress y delega a todos los agentes 
+        end note
+
+        class specpartner {}
+        note right
+            new branch feacture
+        end note
+
+        class gherkinauthor {}
+        class desingpartner {}
+        class testpartner {}
+        class codepartner {}
+        class mutationtester {}
+        class judge {}
+        class refactorpartner {}
+        class verifierfeacture {}
+        class verifiersession {}
+        note right
+            merge to main 
+        end note
+    }
+
+    package "diagrams" {}
+    package "docs" {}
+    package "structura" {}
+    package "panteon" {}
+    package "judgereports" {}
+    package "viewharness" {
+        class indexHTML {}
+        class scriptsJS { 
+            * render()
+        }
+    }
+    note bottom
+        renderiza : 
+        *state
+        *tareas
+        *specs
+        *feactures
+        *judgereports
+        *verifications
+        *diagrams
+    end note
+
+    package "feactures" {}
+
+    package "scripts" {
+        class cleanupscannerSH {}
+        class checkwipSH {}
+        class mutateSH {}
+    }
+    package "specs" {}
+    package "state" {
+        class cleanupreport {}
+        class progress {
+            * turn
+        }
+
+        note right
+            todos los agentes delegan "D" a traves de my
+        end note
+
+        class gitAGENT{
+            if turn = specpartner => "new branch <feactures>_<id>"
+            if turn = verifiersession => "merge to main <feactures>_<id>"
+            if turn = gents.* => "commit <agents._id>"
+        }
+        class sessionhandoff {}
+        class cleanstatechecklist {}
+    }
+    package "tareas" {}
+    package "verifications" {}
+
+    class AGENTINIT {}
+    class initSH {}
+
+}
+
+package "conect4src" {
+    package "dominio" {}
+    package "main" {}
+    package "test" {}
+}
+
+
+AGENTINIT *--> initSH
+initSH *--> checkwipSH
+AGENTINIT --> orchestator  
+orchestator .. state :depende 
+orchestator *--> tareas :crea
+orchestator --> specpartner :D 
+
+progress *--> gitAGENT
+
+
+specpartner .. tareas  
+specpartner *--> specs 
+specpartner --> gherkinauthor :D
+
+
+gherkinauthor .. specs 
+gherkinauthor *--> feactures 
+gherkinauthor --> desingpartner :D
+
+
+desingpartner .. feactures
+desingpartner *--> dominio 
+desingpartner --> testpartner :D
+
+
+testpartner .. feactures
+testpartner .. dominio 
+testpartner *--> test 
+testpartner --> codepartner :D
+
+
+codepartner .. test 
+codepartner *--> main 
+codepartner --> judge :D
+
+
+refactorpartner .. judgereports 
+refactorpartner --> desingpartner :D
+refactorpartner --> testpartner :D
+refactorpartner --> codepartner :D
+refactorpartner *--> mutationtester
+
+mutationtester *--> mutateSH 
+
+judge *--> panteon 
+panteon *--> judgereports 
+panteon .. conect4src 
+judge --> refactorpartner :D
+
+
+refactorpartner --> verifierfeacture :D
+verifierfeacture --> verifiersession :D
+verifierfeacture *--> verifications 
+
+
+verifiersession *--> sessionhandoff
+verifiersession *--> cleanstatechecklist 
+
+cleanstatechecklist *--> cleanupscannerSH
+
+cleanupscannerSH *--> cleanupreport
+
+
+@enduml

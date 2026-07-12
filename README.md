@@ -55,10 +55,13 @@ Durante la partida, el juego ofrece un control completo del flujo y una gran int
 * **Java 21**
 * **Maven** (o usar el wrapper incluido `./mvnw`)
 * **Node.js** y **NPM**
+* **Docker** (opcional, necesario si se desea ejecutar la aplicación mediante contenedores)
 
 ### Levantar la aplicación
 
-1. Navega al directorio del proyecto:
+#### Opción 1: De forma local (Desarrollo)
+
+1. Navega al directorio de la aplicación:
    ```bash
    cd conect4
    ```
@@ -68,6 +71,32 @@ Durante la partida, el juego ofrece un control completo del flujo y una gran int
    mvn spring-boot:run
    ```
    La aplicación se levantará normalmente en `http://localhost:8080`.
+
+#### Opción 2: Usando Docker (Contenedorizado)
+
+El proyecto cuenta con un `Dockerfile` optimizado con compilación multi-etapa (*multi-stage build*) que automatiza la instalación de Node.js, compila los recursos del frontend con Vite, compila el backend de Java con Maven y genera una imagen final ligera basada en Alpine.
+
+1. Navega al directorio donde se encuentra el `Dockerfile`:
+   ```bash
+   cd conect4
+   ```
+
+2. Construye la imagen Docker localmente:
+   ```bash
+   docker build -t spring-boot-docker .
+   ```
+
+3. Inicia el contenedor mapeando el puerto `8080`:
+   ```bash
+   docker run -d -p 8080:8080 --name conect4-app spring-boot-docker
+   ```
+   La aplicación estará disponible en `http://localhost:8080`.
+
+4. Para detener y eliminar el contenedor activo:
+   ```bash
+   docker stop conect4-app
+   docker rm conect4-app
+   ```
 
 ### Pruebas de Frontend y E2E
 
