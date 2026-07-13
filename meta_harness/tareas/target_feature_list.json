@@ -3,7 +3,7 @@
     {
       "id": "F00_instalacion_desacoplamiento",
       "description": "Implementar el agente instalador y configurar el mapeo del stack tecnológico en direcciones/paths.json para lograr el desacoplamiento del código fuente.",
-      "status": "not_started",
+      "status": "in_progress",
       "evidence": ""
     },
     {

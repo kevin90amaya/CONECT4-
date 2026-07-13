@@ -19,8 +19,8 @@ El proceso de desarrollo sigue una secuencia estricta de delegación (denotada c
 
 ### Funciones Específicas de los Agentes
 
-*   **instalador (Instalador)**: Configura y adapta el arnés al proyecto objetivo, administrando las rutas centralizadas (`direcciones`) y el stack de tecnologías para lograr un desacoplamiento completo del código fuente (`src`).
-*   **AGENTINIT (Inicializador)**: Ejecuta `init.sh` (que corre `check-wip.sh`) para preparar la sesión de trabajo en un estado limpio (WIP=0/1) y lanzar al Orquestador.
+*   **instalador (Instalador)**: Configura y adapta el arnés al proyecto objetivo realizando la detección híbrida del stack tecnológico y generando el mapeo centralizado en `direcciones/paths.json` para desacoplar el código fuente (`src`). Su alcance se limita a la configuración agnóstica; no crea estructuras de ejecución física.
+*   **AGENTINIT (Inicializador)**: Inicializa y prepara físicamente el espacio de la sesión de trabajo. Crea los directorios operativos base (como `panteon`, `judgereports`, `specs`, `tareas`, `state`, etc.), prepara los archivos de estado (`state/progress.md`) y ejecuta `init.sh` / `check-wip.sh`.
 1.  **Orchestrator (Orquestador)**
     *   **Responsabilidad**: Coordina la sesión completa, lee el archivo de progreso, gestiona/crea tareas en los JSON correspondientes y delega la ejecución al socio de especificación (`SpecPartner`).
 2.  **SpecPartner (Socio de Especificación)**
@@ -74,15 +74,16 @@ Este plan aplica los 4 pilares fundamentales (el diagrama `harnes_poo`, la estru
 *   **Entregables/Salidas**:
     *   Configuración centralizada de rutas del proyecto objetivo en `direcciones/paths.json`.
     *   Lógica del agente `instalador` para autoconfigurar el entorno de manera desacoplada del código fuente (`src`).
-*   **ViewHarness (Incremental)**: Creación del esqueleto base del dashboard (`index.html` y `scripts.js`) configurando la visualización dinámica del árbol de directorios y el stack de tecnologías obtenido de `direcciones/`.
+    *   *Nota*: El instalador no genera la estructura de carpetas operativa del arnés; su rol es puramente configurativo y evoluciona dinámicamente añadiendo nuevos parámetros (ej. rutas de `panteon` o tests de mutación) conforme se implementen futuros agentes.
+*   **ViewHarness (Incremental)**: Creación del esqueleto base del dashboard (`index.html` y `scripts.js`) configurando la visualización dinámica del árbol de directorios y el stack de tecnologías obtenido de `direcciones/paths.json`.
 
 #### Paso 1: AGENTINIT y Capa de Estado Base (Bootstrap)
 *   **Agente/Componente**: `AGENTINIT` (incluyendo `init.sh` y `check-wip.sh`).
 *   **Dependencias de Entrada**: Capa de Instalación y Desacoplamiento (Paso 0) establecida.
 *   **Entregables/Salidas**:
-    *   Estructura base de directorios del arnés inicializada.
-    *   Archivos de estado iniciales: `state/progress.md`
-*   **ViewHarness (Incremental)**: Ampliación del dashboard para renderizar e interactuar con el estado de la sesión activa cargado desde el registro de `direcciones`.
+    *   Estructura base de directorios del arnés inicializada físicamente (`panteon`, `judgereports`, `specs`, `tareas`, `state`, etc.).
+    *   Archivos de estado iniciales (`state/progress.md`).
+*   **ViewHarness (Incremental)**: Ampliación del dashboard para renderizar e interactuar con el estado de la sesión activa cargado desde el registro de `direcciones` y los archivos de estado.
 
 #### Paso 2: Orchestrator y Capa de Tareas
 *   **Agente/Componente**: `Orchestrator` (Orquestador).
