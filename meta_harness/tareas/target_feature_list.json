@@ -3,8 +3,8 @@
     {
       "id": "F00_instalacion_desacoplamiento",
       "description": "Implementar el agente instalador y configurar el mapeo del stack tecnológico en direcciones/paths.json para lograr el desacoplamiento del código fuente.",
-      "status": "in_progress",
-      "evidence": ""
+      "status": "passing",
+      "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F00_instalacion_desacoplamiento_checklist.md"
     },
     {
       "id": "F01_andamiaje_harness_universal",

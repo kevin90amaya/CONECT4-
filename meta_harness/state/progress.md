@@ -4,7 +4,7 @@ Este archivo sirve como puntero de contexto para la sesión de pair programming.
 
 ## Estado Actual
 * **Última Actualización:** 2026-07-13
-* **Tarea Activa actual:** Tarea de Mapeador Interno Propio (F_PENDIENTE_05.5_harness_mapper) finalizada con éxito. A la espera de selección de la siguiente tarea.
+* **Tarea Activa actual:** Ninguna (reposo, WIP=0). Se completó la característica F00_instalacion_desacoplamiento.
 
 > **Nota vital:** Para ver el desglose de tareas, qué está pendiente y las evidencias de lo completado, consulta **exclusivamente** el archivo estructurado correspondiente a tu arnés activo (`meta_feature_list.json` o `target_feature_list.json` dentro de la carpeta `tareas/`).
 

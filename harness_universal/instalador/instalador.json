@@ -1,0 +1,38 @@
+{
+  "name": "instalador",
+  "role": "Capa de Instalación y Desacoplamiento Agnóstico",
+  "description": "Agente instalador encargado de escanear el stack tecnológico del proyecto objetivo, interactuar con el usuario para confirmar la configuración, normalizar rutas, resolver permisos y generar el archivo paths.json.",
+  "version": "1.0.0",
+  "entrypoint": "harness_universal/instalador/instalador.mjs",
+  "inputs": {
+    "projectPath": {
+      "type": "string",
+      "description": "Ruta relativa o absoluta al proyecto objetivo (e.g., conect4)",
+      "required": true
+    }
+  },
+  "outputs": {
+    "pathsFile": {
+      "path": "harness_universal/direcciones/paths.json",
+      "format": "json",
+      "schema": {
+        "project_path": "string (ruta absoluta normalizada)",
+        "stack": "string (stack tecnológico detectado/confirmado)",
+        "commands": {
+          "build": "string (comando de compilación)",
+          "test": "string (comando de pruebas)",
+          "lint": "string (comando de análisis estático)",
+          "clean": "string (comando de limpieza)"
+        }
+      }
+    }
+  },
+  "scenarios_covered": [
+    "Detección híbrida exitosa de stack y confirmación interactiva",
+    "Detección con stack no soportado (modo interactivo asistido)",
+    "Generación de la estructura de direcciones y archivo paths.json con rutas absolutas y comandos dinámicos",
+    "Intento de instalación con ruta de proyecto objetivo inválida",
+    "Normalización de rutas relativas a absolutas en paths.json",
+    "Error de permisos al intentar escribir en el directorio de direcciones"
+  ]
+}
