@@ -1,6 +1,25 @@
 @startuml harness_poo
 
-package "harness-conect4" {
+package "harness-universal" {
+
+    package "instalador" {
+        class instalador {}
+    }
+
+    package "direcciones" {
+         
+    }
+
+    package "stack tecnologias" {
+        
+    }
+
+    instalador *--> direcciones
+    instalador *--> "stack tecnologias"
+    
+
+
+
     package "agents" {
         class orchestator {}
         note top
@@ -19,6 +38,7 @@ package "harness-conect4" {
         class mutationtester {}
         class judge {}
         class refactorpartner {}
+        class refactoringXP { }
         class verifierfeacture {}
         class verifiersession {}
         note right
@@ -80,9 +100,40 @@ package "harness-conect4" {
     class AGENTINIT {}
     class initSH {}
 
+   class agentsALL {
+        * AGENTINIT
+        * orchestator
+        * gitAGENT
+        * specpartner
+        * gherkinauthor
+        * desingpartner
+        * testpartner
+        * codepartner
+        * judge
+        * refactorpartner
+        * mutationtester
+        * refactoringXP
+        * verifierfeacture
+        * verifiersession
+   }
+   note right
+        todos los agentes tienen un
+        archivo aparte de
+         su clase agente
+        archivo json que
+        contiene un JSON-POO-DbC
+        disenio por contrato
+        precondicion
+        poscondicion
+        invariant
+        que deven cumplir
+        tambien tienen un boleano para nodo manual o automatico 
+   end note
+
 }
 
-package "conect4src" {
+
+package "src" {
     package "dominio" {}
     package "main" {}
     package "test" {}
@@ -130,12 +181,13 @@ refactorpartner --> desingpartner :D
 refactorpartner --> testpartner :D
 refactorpartner --> codepartner :D
 refactorpartner *--> mutationtester
+refactorpartner *-->refactoringXP
 
 mutationtester *--> mutateSH 
 
 judge *--> panteon 
 panteon *--> judgereports 
-panteon .. conect4src 
+panteon .. src 
 judge --> refactorpartner :D
 
 

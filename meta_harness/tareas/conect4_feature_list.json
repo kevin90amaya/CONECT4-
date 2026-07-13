@@ -1,3 +1,10 @@
 {
-  "features": []
+  "features": [
+    {
+      "id": "F01_andamiaje_harness_conect4",
+      "description": "Configurar la estructura base de directorios y validar scripts iniciales de inicialización para harness_conect4",
+      "status": "not_started",
+      "evidence": ""
+    }
+  ]
 }

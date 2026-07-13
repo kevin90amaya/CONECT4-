@@ -7,10 +7,11 @@ Al iniciar una nueva sesión o si se vacía la ventana de contexto, el Agente DE
 1. **Confirmar directorio:** Ejecutar `pwd` para validar que estamos en la raíz.
 2. **Leer este archivo (`agents/ORCHESTRATOR.md`):** Comprender las reglas de interacción y límites.
 3. **Leer `estructura/META_ARCHITECTURE.md` y `estructura/META_PRODUCT.md`:** Entender la estructura y propósito del meta-arnés.
-4. **Leer `state/session_handoff.md`:** Identificar la acción inmediata dejada en la sesión anterior.
-5. **Leer `state/progress.md`:** Ver el estado de alto nivel.
-6. **Leer `tareas/meta_feature_list.json` y `tareas/conect4_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres crear una nueva tarea o invoco al spec_partner para desarrollar una?". No proceder hasta obtener respuesta.
-7. **Leer `state/pendings.md`:** Consultar ajustes menores o deuda técnica pendiente.
+4. **Leer `docs/harness_conect4_target_architecture.md`:** Entender la arquitectura objetivo, el pipeline de agentes especialistas (como `refactoringXP`) y el principio de diseño agnóstico al proyecto.
+5. **Leer `state/session_handoff.md`:** Identificar la acción inmediata dejada en la sesión anterior.
+6. **Leer `state/progress.md`:** Ver el estado de alto nivel.
+7. **Leer `tareas/meta_feature_list.json` y `tareas/conect4_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres crear una nueva tarea o invoco al spec_partner para desarrollar una?". No proceder hasta obtener respuesta.
+8. **Leer `state/pendings.md`:** Consultar ajustes menores o deuda técnica pendiente.
 
 ## Límites de Alcance (Scope)
 

@@ -434,3 +434,23 @@ El consenso actual de la industria asume que "Agente = Modelo + Arnés", tratand
 4. **Intención Declarada vs. Inferida:** El agente no debe "adivinar" eternamente qué está bien. Debe existir una especificación estricta redactada por un humano (el contrato) contra la cual el sistema se evalúe mecánicamente.
 5. **Disciplina de Sustracción (Anti-Acumulación):** Un arnés que solo suma (código, memoria, agentes) aumenta la superficie de ataque y los errores de estado. El arnés debe incluir mecanismos o agentes dedicados exclusivamente a **borrar** y simplificar; el arte de maximizar el trabajo *no* generado.
 6. **Coordinación por Protocolos, no por Archivos:** Múltiples agentes no logran coherencia solo por leer el mismo sistema de archivos. Se requieren especificaciones y contratos de interfaz claros para que sus resultados converjan y no se contradigan.
+
+## Parte 8: Diseño y Arquitectura de Arneses Agnósticos (Modularidad y Desacoplamiento)
+
+*(Directrices extraídas para el diseño del arnés agnóstico de Conecta 4 y futuros sistemas de automatización)*
+
+### 1. El Desacoplamiento de la Lógica del Negocio (Agnosticismo)
+Para evitar que un arnés de ingeniería quede acoplado permanentemente a un único proyecto (ej. las reglas y comandos de Conecta 4):
+- **Encapsulación en Plugins:** Los agentes, habilidades, reglas locales y scripts específicos del proyecto objetivo se deben empaquetar en directorios autocontenidos (ej. dentro de `.agents/plugins/{domain}-plugin/`).
+- **Abstracción del Entorno:** El orquestador interactúa a través de abstracciones estandarizadas y parametrizables de Entrada/Salida para compilación, linting, tests unitarios, tests de mutación y observabilidad.
+- **Configuraciones Declarativas:** Toda la ruta del backlog de tareas (`feature_list.json`), especificaciones (`project-spec.md`) y relevos (`session_handoff.md`) se diseña con un esquema uniforme e independiente del lenguaje de programación.
+
+### 2. Coordinación y Flujo de Trabajo Multi-Agente
+- **Pipeline Segregado (WIP = 1):** Los agentes se dividen por roles estrictos de responsabilidad (ej. `SpecPartner` para especificaciones, `GherkinAuthor` para comportamiento, `DesignPartner` para firmas, `TestPartner` para pruebas, `CodePartner` para implementación, `Judge` para ejecución aislada y `Verifier` para auditoría).
+- **Consenso por Contratos:** Las transiciones entre agentes se validan mediante el cumplimiento de Precondiciones, Poscondiciones e Invariantes definidos formalmente en archivos JSON de contrato, no por simple lectura heurística del código.
+- **Cierre del Ciclo Generador-Juez (Producer-Reviewer):** Se implementan bucles cerrados de retroalimentación acotados (máximo 2-3 iteraciones) entre el programador y el validador/juez para evitar consumo infinito de tokens.
+
+### 3. Mitigación de Errores de Integración (Boundary Mismatches)
+- **Fronteras Críticas de Evaluación:** Se deben auditar las interfaces de comunicación (ej. contratos de APIs vs. consumo de endpoints en el cliente, consistencia de las máquinas de estado vs. base de datos, y enrutamientos/URLs).
+- **Regla de Lectura Doble (Double-Read Rule):** El agente validador debe inspeccionar de manera simultánea ambos lados del límite de la integración antes de dar por válido un feature.
+- **Validación Incremental:** La validación ocurre de forma asíncrona pero inmediata al concluir cada sub-módulo de la integración, evitando arrastrar errores de frontera al final del ciclo de vida.
