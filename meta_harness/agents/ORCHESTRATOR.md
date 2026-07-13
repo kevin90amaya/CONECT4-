@@ -7,20 +7,20 @@ Al iniciar una nueva sesión o si se vacía la ventana de contexto, el Agente DE
 1. **Confirmar directorio:** Ejecutar `pwd` para validar que estamos en la raíz.
 2. **Leer este archivo (`agents/ORCHESTRATOR.md`):** Comprender las reglas de interacción y límites.
 3. **Leer `estructura/META_ARCHITECTURE.md` y `estructura/META_PRODUCT.md`:** Entender la estructura y propósito del meta-arnés.
-4. **Leer `docs/harness_conect4_target_architecture.md`:** Entender la arquitectura objetivo, el pipeline de agentes especialistas (como `refactoringXP`) y el principio de diseño agnóstico al proyecto.
+4. **Leer `docs/target_harness_architecture.md`:** Entender la arquitectura objetivo, el pipeline de agentes especialistas (como `refactoringXP`) y el principio de diseño agnóstico al proyecto.
 5. **Leer `state/session_handoff.md`:** Identificar la acción inmediata dejada en la sesión anterior.
 6. **Leer `state/progress.md`:** Ver el estado de alto nivel.
-7. **Leer `tareas/meta_feature_list.json` y `tareas/conect4_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres crear una nueva tarea o invoco al spec_partner para desarrollar una?". No proceder hasta obtener respuesta.
+7. **Leer `tareas/meta_feature_list.json` y `tareas/target_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres crear una nueva tarea o invoco al spec_partner para desarrollar una?". No proceder hasta obtener respuesta.
 8. **Leer `state/pendings.md`:** Consultar ajustes menores o deuda técnica pendiente.
 
 ## Límites de Alcance (Scope)
 
-1. **El Manifiesto (Ruta de Referencia):** `/workspaces/harness-sdd/meta_harness/docs/harness-engineering-manifesto.md`
+1. **El Manifiesto (Ruta de Referencia):** `/workspaces/CONECT4-/meta_harness/docs/harness-engineering-manifesto.md`
    * **Regla:** **Solo Lectura**. Prohibido leer sin permiso previo. Prohibido escribir.
-2. **Meta-Arnés (`meta_harness`):** `/workspaces/harness-sdd/meta_harness/`
-   * **Regla:** **Lectura y Escritura**. El objetivo principal de este entorno es mejorarse a sí mismo y construir/mejorar al `harness_conect4`.
-3. **Harness_Conect4 y Proyecto Objetivo:** `/workspaces/CONECT4-/harness_conect4/` y `/workspaces/CONECT4-/conect4/`
-   * **Regla:** **Lectura y Escritura**. El código de producción (el juego de Conecta 4) será un problema a resolver por el `harness_conect4`. Desde el meta_harness solo interactuamos aquí para construir o mejorar al `harness_conect4` en sí mismo, delegándole a él el trabajo de producción.
+2. **Meta-Arnés (`meta_harness`):** `/workspaces/CONECT4-/meta_harness/`
+   * **Regla:** **Lectura y Escritura**. El objetivo principal de este entorno es mejorarse a sí mismo y construir/mejorar al `harness_universal`.
+3. **Harness_Universal y Proyecto Objetivo:** `/workspaces/CONECT4-/harness_universal/` y `/workspaces/CONECT4-/conect4/` (o ruta del proyecto objetivo)
+   * **Regla:** **Lectura y Escritura**. El código de producción (el proyecto objetivo) será un problema a resolver por el `harness_universal`. Desde el meta_harness solo interactuamos aquí para construir o mejorar al `harness_universal` en sí mismo, delegándole a él el trabajo de producción.
 
 ## Reglas Inquebrantables de Trabajo
 
@@ -34,8 +34,8 @@ Al iniciar una nueva sesión o si se vacía la ventana de contexto, el Agente DE
 
 ## Pipeline de Desarrollo (El Flujo Bob)
 
-Toda tarea listada en `meta_feature_list.json` o `conect4_feature_list.json` que deba ejecutarse desde este entorno, DEBE seguir este ciclo:
-1. **Debate y Plan (spec_partner):** El agente primero debate y crea el documento de especificación (`meta-project-spec.md` o `conect4-project-spec.md`). **REGLA CRÍTICA:** Al seleccionar la tarea, el agente spec_partner DEBE cambiar su estado a `in_progress` en el JSON correspondiente para bloquear otras tareas (WIP=1).
+Toda tarea listada en `meta_feature_list.json` o `target_feature_list.json` que deba ejecutarse desde este entorno, DEBE seguir este ciclo:
+1. **Debate y Plan (spec_partner):** El agente primero debate y crea el documento de especificación (`meta-project-spec.md` o `target-project-spec.md`). **REGLA CRÍTICA:** Al seleccionar la tarea, el agente spec_partner DEBE cambiar su estado a `in_progress` en el JSON correspondiente para bloquear otras tareas (WIP=1).
 2. **Destilación Gherkin (gherkin_author):** Se extraen escenarios de comportamiento en archivos `.feature` que se guardan en la carpeta `meta_harness/features/`.
 3. **Puerta Humana Obligatoria:** El agente DEBE detener su ejecución y solicitar aprobación explícita de los escenarios antes de iniciar cualquier cambio estructural o de código.
 4. **Desarrollo:** Tras la aprobación humana, el Agente delega la escritura del código invocando a la habilidad `generator_partner`. El agente principal asume el rol de Orquestador y no programa.

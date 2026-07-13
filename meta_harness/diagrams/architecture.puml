@@ -19,13 +19,13 @@ package "Meta Harness (Raíz)" {
 
     package "specs/" {
         [meta-project-spec.md] as MetaSpec
-        [conect4-project-spec.md] as Conect4Spec
+        [target-project-spec.md] as TargetSpec
         note bottom of MetaSpec : Especificaciones conversadas
     }
 
     package "features/" {
         [meta_feature_list.json] as MetaBacklog
-        [conect4_feature_list.json] as Conect4Backlog
+        [target_feature_list.json] as TargetBacklog
         [.feature files] as GherkinFeatures
         note bottom of MetaBacklog : Backlog de tareas y escenarios
     }
@@ -52,7 +52,7 @@ package "Meta Harness (Raíz)" {
 
     Agents --> Handoff : Guía el comportamiento
     Handoff --> MetaBacklog : Define tareas inmediatas
-    Handoff --> Conect4Backlog : Define tareas inmediatas
+    Handoff --> TargetBacklog : Define tareas inmediatas
     MetaArch --> ArchPuml : Documenta a través de
 }
 @enduml

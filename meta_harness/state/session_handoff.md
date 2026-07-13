@@ -3,17 +3,19 @@
 > Llenar estrictamente este documento al finalizar el día o antes de cerrar la ventana de contexto.
 
 ## 1. Qué se logró
-- Se finalizó exitosamente la tarea **F11_proyecto_06_capstone** (Ensamblaje final y Escáner de Limpieza).
-- Se implementó el script `scripts/cleanup-scanner.sh` con rutas explícitas para evitar falsos positivos y sin borrado automático (modo Dry-Run estricto).
-- Se actualizó el checklist de estado limpio (`clean-state-checklist.md`) para exigir que el reporte de limpieza (`state/cleanup-report.md`) esté 100% libre de errores antes de permitir el relevo.
-- Se instruyó formalmente al Orquestador y al `session_verifier` (`ORCHESTRATOR.md`) para auditar este reporte.
+- Se finalizó exitosamente la tarea **F_PENDIENTE_05.5_harness_mapper** (Mapeador Interno Propio).
+- Se diseñó y construyó un extractor híbrido local con caché y auditoría cruzada entre agentes para mapear el codebase de forma precisa, superando las limitaciones semánticas detectadas en Graphify.
+- Se validó el estado del Meta-Arnés mediante la revisión interactiva del checklist de cierre (`clean-state-checklist.md`) con Kevin, obteniendo aprobación total en todas las dimensiones (Build Estructural, Control de Alcance WIP=0, Calidad de Código, Documentación y Reporte de Limpieza).
+- El reporte de limpieza (`state/cleanup-report.md`) fue validado con **Estado: LIMPIO (0 issues)**.
 
 ## 2. Tarea Activa (Siguiente Paso)
-- **ID Activo:** Ninguno. La tarea F11 ha concluido y el estado general es de reposo (WIP=0).
-- **Acción Inmediata al reiniciar:** El agente Orquestador debe coordinar con el humano para seleccionar la siguiente tarea (ej. `F_PENDIENTE_05.5` u otras pendientes) de `meta_feature_list.json` o enfocarse en el entorno secundario `bob-harness`.
+- **ID Activo:** Ninguno. La tarea F_PENDIENTE_05.5 ha concluido y el estado general es de reposo (WIP=0).
+- **Acción Inmediata al reiniciar:** El agente Orquestador debe coordinar con el humano para seleccionar la siguiente tarea de la bitácora:
+  - **Opción Recomendada 1:** Integración formal del Harness Mapper en las directrices de exploración de los agentes (Pendiente 6 en `state/pendings.md`).
+  - **Opción 2:** Iniciar el desarrollo del arnés universal mediante la primera tarea en `target_feature_list.json` (`F01_andamiaje_harness_universal`).
 
 ## 3. Decisiones clave tomadas (El "Por qué")
-- **Dry-Run Físico (No destructivo):** Se decidió que el escáner NUNCA borre archivos de forma automática y siempre vuelque su análisis en un archivo físico (`cleanup-report.md`) en lugar de imprimir todo en consola. Esto protege la memoria de contexto a largo plazo del Agente LLM, evitando ahogar el chat.
+- **Mapeador Propio sobre Graphify:** Se decidió prescindir del uso directo de Graphify debido a que su análisis omitía referencias de imports y herencias críticas. Se construyó el Harness Mapper personalizado, el cual ofrece un mapa HTML completo en `graphify-out/graph.html` con un consumo controlado de cuota (throttling).
 
 ## 4. Bloqueos actuales (Blockers)
-- **Ninguno.** El arnés está validado mecánicamente: 0 issues reportados por el escáner de limpieza, y 0 tareas activas (WIP). Entorno listo y seguro para el relevo.
+- **Ninguno.** El entorno está validado, limpio y sin tareas en progreso (WIP=0), listo para iniciar la siguiente fase del pipeline.

@@ -7,7 +7,7 @@
 - [x] El script finalizó sin errores (código de salida 0).
 
 ## 2. Feature Verification (Documental)
-- [x] El estado de la tarea en el JSON correspondiente (`meta_feature_list.json` o `conect4_feature_list.json`) está actualizado.
+- [x] El estado de la tarea en el JSON correspondiente (`meta_feature_list.json` o `target_feature_list.json`) está actualizado.
 - [x] El campo `"evidence"` de la tarea contiene el comando exacto o la ruta física que demuestra su funcionamiento.
 
 ## 3. Scope Control (WIP=1)

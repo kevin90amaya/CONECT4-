@@ -1,21 +1,21 @@
-# Arquitectura Objetivo del Arnés de Conecta 4 (harness_conect4)
+# Arquitectura Objetivo del Arnés Universal (harness_universal)
 
-Este documento describe la arquitectura y el pipeline de agentes objetivo para el desarrollo del **harness_conect4**, basado en el diseño conceptual modelado en `harness_conect4/diagrams/harnes_poo.plantuml`.
+Este documento describe la arquitectura y el pipeline de agentes objetivo para el desarrollo del **harness_universal**, basado en el diseño conceptual modelado en `harness_universal/diagrams/harnes_poo.plantuml`.
 
-El objetivo final de `harness_conect4` es automatizar todo el proceso de desarrollo de características (features) para el juego Connect 4 mediante una cadena estructurada de agentes interactivos con roles segregados (WIP = 1).
+El objetivo final de `harness_universal` es automatizar todo el proceso de desarrollo de características (features) para el proyecto objetivo mediante una cadena estructurada de agentes interactivos con roles segregados (WIP = 1).
 
 ## 1. Estructura de Directorios y Alcance
 
 El sistema divide el espacio de trabajo en dos componentes:
-*   **`harness-conect4`** (Meta-Entorno): Alberga a los agentes especialistas, scripts operativos, especificaciones y reportes de validación.
-*   **`conect4src`** (Entorno de Producción): Contiene el código fuente del juego Connect 4, organizado en `dominio` (lógica), `main` (interfaz/ejecución) y `test` (batería de pruebas).
+*   **`harness_universal`** (Meta-Entorno): Alberga a los agentes especialistas, scripts operativos, especificaciones y reportes de validación.
+*   **`src`** (Entorno de Producción): Contiene el código fuente del proyecto objetivo, organizado en `dominio` (lógica), `main` (interfaz/ejecución) y `test` (batería de pruebas).
 
 ---
 
 ## 2. El Pipeline de Agentes Especialistas
 
 El proceso de desarrollo sigue una secuencia estricta de delegación (denotada como `--> :D`), donde cada agente realiza su tarea y pasa el control al siguiente. El diseño visual completo del flujo, paquetes, agentes y scripts se encuentra modelado en el diagrama PlantUML original:
-*   Ver diagrama: [harnes_poo.plantuml](file:///workspaces/CONECT4-/harness_conect4/diagrams/harnes_poo.plantuml)
+*   Ver diagrama: [harnes_poo.plantuml](file:///workspaces/CONECT4-/harness_universal/diagrams/harnes_poo.plantuml)
 
 ### Funciones Específicas de los Agentes
 
@@ -28,11 +28,11 @@ El proceso de desarrollo sigue una secuencia estricta de delegación (denotada c
 3.  **GherkinAuthor (Autor Gherkin)**
     *   **Responsabilidad**: Traduce la especificación en escenarios de prueba funcionales en formato Gherkin (archivos `.feature` en la carpeta `features/`). Delega al diseñador.
 4.  **DesignPartner (Socio de Diseño)**
-    *   **Responsabilidad**: Diseña la estructura del código y define la interfaz del dominio en `conect4src/dominio`. Delega al probador.
+    *   **Responsabilidad**: Diseña la estructura del código y define la interfaz del dominio en `src/dominio`. Delega al probador.
 5.  **TestPartner (Socio de Pruebas)**
-    *   **Responsabilidad**: Escribe las pruebas unitarias y de integración en `conect4src/test` basándose en los escenarios `.feature` de Gherkin. Delega al socio de código.
+    *   **Responsabilidad**: Escribe las pruebas unitarias y de integración en `src/test` basándose en los escenarios `.feature` de Gherkin. Delega al socio de código.
 6.  **CodePartner (Socio de Código)**
-    *   **Responsabilidad**: Escribe el código de producción real en `conect4src/main` para hacer pasar las pruebas escritas por `TestPartner`. Delega en el juez.
+    *   **Responsabilidad**: Escribe el código de producción real en `src/main` para hacer pasar las pruebas escritas por `TestPartner`. Delega en el juez.
 7.  **Judge (Juez)**
     *   **Responsabilidad**: Ejecuta las pruebas en un entorno aislado (`panteon`), almacena reportes de ejecución (`judgereports`) y delega al socio de refactorización.
 8.  **RefactorPartner (Socio de Refactorización)**
@@ -62,7 +62,7 @@ Todos los agentes del sistema tienen unjson con un disenio por contrato que deve
 
 ## 4. Plan de Construcción Agente por Agente (Secuencial y con ViewHarness Incremental)
 
-La construcción de `harness_conect4` se realizará de manera estrictamente secuencial de arriba hacia abajo (siguiendo el flujo de dependencias de entrada y salida de cada agente). A la par de la implementación de cada agente, se desarrollará e integrará de forma incremental la interfaz **ViewHarness** para reflejar la observabilidad de las nuevas salidas.
+La construcción de `harness_universal` se realizará de manera estrictamente secuencial de arriba hacia abajo (siguiendo el flujo de dependencias de entrada y salida de cada agente). A la par de la implementación de cada agente, se desarrollará e integrará de forma incremental la interfaz **ViewHarness** para reflejar la observabilidad de las nuevas salidas.
 
 Este plan aplica los 4 pilares fundamentales (el diagrama `harnes_poo`, la estructura de `meta_harness`, el manifiesto y `bob-harness`) de manera iterativa:
 
@@ -88,14 +88,14 @@ Este plan aplica los 4 pilares fundamentales (el diagrama `harnes_poo`, la estru
 *   **Agente/Componente**: `Orchestrator` (Orquestador).
 *   **Dependencias de Entrada**: Capa de Estado Base (`state/`).
 *   **Entregables/Salidas**:
-    *   Backlog y control de tareas (`tareas/conect4_feature_list.json`).
+    *   Backlog y control de tareas (`tareas/target_feature_list.json`).
     *   Lógica del bucle principal del Orquestador para delegar el control.
 *   **ViewHarness (Incremental)**: Ampliación del dashboard para renderizar e interactuar con el listado de tareas en tiempo real.
 
 #### Paso 3: SpecPartner y Capa de Especificación
 *   **Agente/Componente**: `SpecPartner` (incluyendo su interacción con `gitAGENT` para crear ramas `features_<id>`).
 *   **Dependencias de Entrada**: Tarea activa seleccionada por el Orquestador.
-*   **Entregables/Salidas**: Documento de especificación técnica (`specs/conect4-project-spec.md`).
+*   **Entregables/Salidas**: Documento de especificación técnica (`specs/target-project-spec.md`).
 *   **ViewHarness (Incremental)**: Integración en la interfaz de la visualización del spec de la tarea activa.
 
 #### Paso 4: GherkinAuthor y Capa de Comportamiento
@@ -107,19 +107,19 @@ Este plan aplica los 4 pilares fundamentales (el diagrama `harnes_poo`, la estru
 #### Paso 5: DesignPartner y Capa de Diseño de Dominio
 *   **Agente/Componente**: `DesignPartner`.
 *   **Dependencias de Entrada**: Escenarios Gherkin.
-*   **Entregables/Salidas**: Estructuración del dominio en `conect4src/dominio`.
+*   **Entregables/Salidas**: Estructuración del dominio en `src/dominio`.
 *   **ViewHarness (Incremental)**: Visualización del estado del diseño del dominio.
 
 #### Paso 6: TestPartner y Capa de Pruebas
 *   **Agente/Componente**: `TestPartner`.
 *   **Dependencias de Entrada**: Escenarios Gherkin e interfaces de dominio.
-*   **Entregables/Salidas**: Tests unitarios y de integración en `conect4src/test`.
+*   **Entregables/Salidas**: Tests unitarios y de integración en `src/test`.
 *   **ViewHarness (Incremental)**: Visualización y estadísticas de cobertura/estado de las pruebas.
 
 #### Paso 7: CodePartner y Capa de Producción
 *   **Agente/Componente**: `CodePartner`.
 *   **Dependencias de Entrada**: Pruebas redactadas.
-*   **Entregables/Salidas**: Implementación de la lógica del juego en `conect4src/main`.
+*   **Entregables/Salidas**: Implementación de la lógica del juego en `src/main`.
 *   **ViewHarness (Incremental)**: Visualización de los archivos de código modificados y estado del build.
 
 #### Paso 8: Judge y Capa de Ejecución Aislada
@@ -148,10 +148,10 @@ Este plan aplica los 4 pilares fundamentales (el diagrama `harnes_poo`, la estru
 
 ## 5. Diseño y Arquitectura Agnóstica al Proyecto (Modularidad y Reusabilidad)
 
-Con el fin de garantizar que el arnés no esté acoplado de forma rígida a la lógica específica de Conecta 4, se adopta el principio de **Arquitectura Agnóstica al Proyecto**. Esto permitirá reutilizar la lógica de orquestación, el pipeline de agentes y las verificaciones en futuros desarrollos.
+Con el fin de garantizar que el arnés no esté acoplado de forma rígida a la lógica específica de un proyecto particular, se adopta el principio de **Arquitectura Agnóstica al Proyecto**. Esto permitirá reutilizar la lógica de orquestación, el pipeline de agentes y las verificaciones en futuros desarrollos.
 
 Para lograr este desacoplamiento:
 1. **Abstracción del Dominio**: Las interfaces de comunicación entre los agentes y el código del juego deben ser genéricas (ej. utilizando abstracciones de entrada/salida para compilar, probar y validar sin importar el lenguaje de programación o el juego en cuestión).
 2. **Estudio de Patrones de Referencia**: Se analizarán detalladamente los recursos y casos de estudio ubicados en la carpeta [dominio/EJEMPLOS HARNES/](file:///workspaces/CONECT4-/dominio/EJEMPLOS%20HARNES/) (especialmente en subcarpetas de agentes, plugins y estudios de arneses) para extraer implementaciones previas y aplicar esos aprendizajes al diseño del arnés agnóstico.
-3. **Centralización de Rutas (Desacoplamiento del src)**: Ningún agente especialista interactúa directamente con rutas fijas de `src/` o `conect4/`. Todas las rutas son consultadas de manera dinámica en el archivo centralizado `direcciones/paths.json` generado por el agente `instalador`, garantizando portabilidad absoluta del arnés a cualquier otro proyecto.
+3. **Centralización de Rutas (Desacoplamiento del src)**: Ningún agente especialista interactúa directamente con rutas fijas del código fuente. Todas las rutas son consultadas de manera dinámica en el archivo centralizado `direcciones/paths.json` generado por el agente `instalador`, garantizando portabilidad absoluta del arnés a cualquier otro proyecto.
 

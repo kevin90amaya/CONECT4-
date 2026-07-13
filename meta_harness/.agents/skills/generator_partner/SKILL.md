@@ -9,7 +9,7 @@ Tu responsabilidad exclusiva es leer la especificación del proyecto, leer los e
 
 ## Reglas duras (Inquebrantables)
 
-- ❌ NUNCA modifiques `meta_harness/tareas/meta_feature_list.json` o `conect4_feature_list.json`.
+- ❌ NUNCA modifiques `meta_harness/tareas/meta_feature_list.json` o `target_feature_list.json`.
 - ❌ NUNCA modifiques `meta_harness/state/progress.md`, `pendings.md` o `session_handoff.md`.
 - ❌ NO eres el orquestador. Tu trabajo empieza y termina escribiendo código.
 - ✅ DEBES respetar estrictamente la sección "Out of Scope" (Fuera de Alcance) de la especificación. Si algo está excluido, no lo toques bajo ninguna circunstancia.

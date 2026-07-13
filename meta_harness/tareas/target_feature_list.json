@@ -1,0 +1,16 @@
+{
+  "features": [
+    {
+      "id": "F00_instalacion_desacoplamiento",
+      "description": "Implementar el agente instalador y configurar el mapeo del stack tecnológico en direcciones/paths.json para lograr el desacoplamiento del código fuente.",
+      "status": "not_started",
+      "evidence": ""
+    },
+    {
+      "id": "F01_andamiaje_harness_universal",
+      "description": "Configurar la estructura base de directorios y validar scripts iniciales de inicialización para harness_universal",
+      "status": "not_started",
+      "evidence": ""
+    }
+  ]
+}

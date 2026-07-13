@@ -29,11 +29,11 @@ El Meta Harness no es código de producción, sino una estructura de reglas, con
 +-----------------------------------------------------------+
 |   features/        |   Backlog de Tareas                  |
 |  meta_feature_list...-> Features del meta-harness         |
-|  bob_feature_list... -> Features del bob-harness          |
+|  target_feature_list.json -> Features del target-harness     |
 +-----------------------------------------------------------+
 |   specs/           |   Especificaciones Conversadas       |
-|  meta-project-s... -> Spec del meta-harness               |
-|  bob-project-sp... -> Spec del bob-harness                |
+|  meta-project-spec.md  -> Spec del meta-harness           |
+|  target-project-spec.md -> Spec del target-harness        |
 +-----------------------------------------------------------+
 |   docs/            |   Manifiesto y Referencias           |
 |   estructura/      |   Definición de Producto y Arq.      |
@@ -44,8 +44,8 @@ El Meta Harness no es código de producción, sino una estructura de reglas, con
 
 ## Data Storage
 
-Todos los archivos residen en `/workspaces/harness-sdd/meta_harness/`.
+Todos los archivos residen en `/workspaces/CONECT4-/meta_harness/`.
 - `clean-state-checklist.md`: Contrato de verificación final requerido antes del handoff.
 - `verifications/history/`: Directorio donde se archivan los checklists auditados.
-- `meta_feature_list.json` / `bob_feature_list.json`: Arrays JSON estructurados con IDs, descripciones, status y evidencia. Separados por arnés.
+- `meta_feature_list.json` / `target_feature_list.json`: Arrays JSON estructurados con IDs, descripciones, status y evidencia. Separados por arnés.
 - Archivos `.md`: Documentos Markdown puros y estáticos sin código ejecutable que actúan como memoria a largo plazo.
