@@ -1,0 +1,61 @@
+@startuml clases_mvc
+
+package "ViewHarness MVC Architecture" {
+
+    class ProgressModel {
+        - rawContent : String
+        - turn : String
+        - wip : Number
+        + fetchProgress() : Promise<void>
+        + parseMarkdown(mdText: String) : void
+        + getTurn() : String
+        + getWip() : Number
+    }
+
+    class DiagramModel {
+        - svgContent : String
+        + fetchSvg() : Promise<void>
+        + getSvgContent() : String
+    }
+
+    class HarnessView {
+        - appContainer : HTMLElement
+        - progressTab : HTMLElement
+        - diagramTab : HTMLElement
+        - progressContent : HTMLElement
+        - diagramContent : HTMLElement
+        - loadingOverlay : HTMLElement
+        - turnElement : HTMLElement
+        - wipElement : HTMLElement
+        - detailPanel : HTMLElement
+        + bindTabChange(handler : Function) : void
+        + bindRefresh(handler : Function) : void
+        + renderProgress(turn : String, wip : Number) : void
+        + renderDiagram(svgContent : String) : void
+        + showTab(tabName : String) : void
+        + toggleLoading(show : Boolean) : void
+        + showError(message : String) : void
+        + bindSvgHover(handler : Function) : void
+        + showAgentDetails(agentName : String, details : Object) : void
+    }
+
+    class HarnessController {
+        - progressModel : ProgressModel
+        - diagramModel : DiagramModel
+        - view : HarnessView
+        - pollingInterval : Number
+        - agentDetailsDb : Object
+        + init() : Promise<void>
+        + handleTabChange(tabName : String) : void
+        + handleRefresh() : Promise<void>
+        + handleAgentHover(agentName : String) : void
+        - startPolling() : void
+        - stopPolling() : void
+    }
+
+    HarnessController --> ProgressModel : "Actualiza y consulta"
+    HarnessController --> DiagramModel : "Consulta"
+    HarnessController --> HarnessView : "Controla y escucha eventos"
+}
+
+@enduml

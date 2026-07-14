@@ -73,3 +73,25 @@
 - **Casos Límite:**
   - Si `paths.json` no existe o no tiene formato JSON válido, `init.mjs` debe fallar con un error explícito.
   - Si más de una tarea en `target_feature_list.json` está marcada como `in_progress`, el script `check-wip.mjs` debe fallar impidiendo cualquier ejecución subsecuente.
+
+## Feature: F02_vista_harness_universal - Desarrollo Incremental de la Vista (ViewHarness)
+- **Propósito:** Implementar la interfaz visual (dashboard) interactiva y responsiva para el `harness_universal` en `/workspaces/CONECT4-/harness_universal/viewharness/` que visualice el estado de progreso actual y los diagramas de arquitectura del arnés.
+- **Comportamiento:**
+  1. **Interfaz Premium (Estética y Responsiva):** Diseño con paleta oscura, tipografía premium, tarjetas animadas y un menú de pestañas para alternar entre la vista de **Progreso** y la de **Diagramas**.
+  2. **Panel de Progreso:** Muestra la fase activa, el turno actual y el estado WIP de forma gráfica. Carga y parsea dinámicamente `/workspaces/CONECT4-/harness_universal/state/progress.md`.
+  3. **Panel de Diagramas:** Muestra de manera interactiva el diagrama de arquitectura cargando el archivo SVG estático `/workspaces/CONECT4-/harness_universal/diagrams/harnes_poo.svg`.
+  4. **Modo Autónomo:** El dashboard se ejecuta abriendo directamente `index.html` en el navegador (usando fetch con rutas relativas a la carpeta `viewharness`).
+- **Diseño por Contrato (DbC):**
+  - **Precondiciones:**
+    * El archivo `/workspaces/CONECT4-/harness_universal/state/progress.md` debe existir.
+    * El archivo `/workspaces/CONECT4-/harness_universal/diagrams/harnes_poo.plantuml` debe existir.
+  - **Poscondiciones:**
+    * Creados los archivos `/workspaces/CONECT4-/harness_universal/viewharness/index.html`, `style.css` y `app.js` en `viewharness/`.
+    * Generado el archivo SVG estático `/workspaces/CONECT4-/harness_universal/diagrams/harnes_poo.svg` a partir del archivo PlantUML.
+    * La vista renderiza de forma interactiva tanto el progreso actual como el diagrama de arquitectura del arnés.
+  - **Invariantes:**
+    * No se modifica ningún archivo del proyecto objetivo `conect4`.
+- **Fuera de Alcance:**
+  - Visualización del stack en `paths.json` (se pospone para una fase posterior).
+  - Escaneo de la estructura de archivos del proyecto (se pospone para una fase posterior).
+  - Reportes del Juez o especificaciones de tareas que aún no han sido completadas o creadas.

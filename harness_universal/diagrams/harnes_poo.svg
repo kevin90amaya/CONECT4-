@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 600" width="100%" height="100%">
+  <defs>
+    <!-- Gradientes Premium para Nodos -->
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e2230" />
+      <stop offset="100%" stop-color="#141822" />
+    </linearGradient>
+    <linearGradient id="activeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2b20" />
+      <stop offset="100%" stop-color="#0b1a14" />
+    </linearGradient>
+    
+    <!-- Marcador de Punta de Flecha -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#303c54" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#00e676" />
+    </marker>
+    
+    <!-- Filtro de Sombra -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <drop-shadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <style>
+    /* Estilos internos del SVG para compatibilidad directa */
+    .svg-bg { fill: transparent; }
+    .connection-line { fill: none; stroke: #303c54; stroke-width: 2; stroke-dasharray: 4,4; }
+    .connection-line-solid { fill: none; stroke: #303c54; stroke-width: 2; }
+    .node-rect { fill: url(#nodeGrad); stroke: #212836; stroke-width: 1.5; filter: url(#shadow); transition: all 0.3s ease; }
+    .node-text { fill: #f0f3f8; font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600; text-anchor: middle; pointer-events: none; }
+    .node-text-subtitle { fill: #8b949e; font-family: 'Inter', system-ui, sans-serif; font-size: 9px; text-anchor: middle; pointer-events: none; }
+    
+    /* Efecto Hover */
+    [data-agent]:hover .node-rect {
+      fill: #1f2636;
+      stroke: #00b0ff;
+      stroke-width: 2px;
+      filter: drop-shadow(0 0 6px rgba(0, 176, 255, 0.4));
+    }
+    
+    /* Agente Activo */
+    .svg-agent-active .node-rect {
+      stroke: #00e676 !important;
+      stroke-width: 2.5px !important;
+    }
+    
+    /* Títulos de Fase */
+    .phase-label { fill: #8b949e; font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  </style>
+
+  <rect width="100%" height="100%" class="svg-bg" />
+
+  <!-- LÍNEAS DE CONEXIÓN DE PIPELINE -->
+  <!-- Fila 1 -->
+  <path d="M 190 75 L 250 75" class="connection-line-solid" marker-end="url(#arrow)" />
+  <path d="M 390 75 L 450 75" class="connection-line-solid" marker-end="url(#arrow)" />
+  <path d="M 590 75 L 650 75" class="connection-line-solid" marker-end="url(#arrow)" />
+  
+  <!-- Codo Fila 1 a Fila 2 -->
+  <path d="M 720 100 L 720 140 L 720 140 L 720 205 L 650 205" class="connection-line-solid" marker-end="url(#arrow)" />
+
+  <!-- Fila 2 (Izquierda) -->
+  <path d="M 510 205 L 450 205" class="connection-line-solid" marker-end="url(#arrow)" />
+  <path d="M 310 205 L 250 205" class="connection-line-solid" marker-end="url(#arrow)" />
+  
+  <!-- Codo Fila 2 a Fila 3 -->
+  <path d="M 110 230 L 110 335 L 190 335" class="connection-line-solid" marker-end="url(#arrow)" />
+
+  <!-- Fila 3 (Derecha) -->
+  <path d="M 330 335 L 450 335" class="connection-line-solid" marker-end="url(#arrow)" />
+  <path d="M 590 335 L 650 335" class="connection-line-solid" marker-end="url(#arrow)" />
+
+  <!-- Ramificaciones a Mutation y RefactoringXP -->
+  <path d="M 260 360 L 260 415 L 250 415" class="connection-line" marker-end="url(#arrow)" />
+  <path d="M 260 360 L 260 475 L 250 475" class="connection-line" marker-end="url(#arrow)" />
+  
+  <!-- Conexiones hacia gitAGENT y sessionhandoff -->
+  <path d="M 720 360 L 720 535 L 590 535" class="connection-line-solid" marker-end="url(#arrow)" />
+  <path d="M 350 535 L 250 535" class="connection-line-solid" marker-end="url(#arrow)" />
+
+  <!-- NODOS INTERACTIVOS (AGENTES) -->
+  
+  <!-- Fila 1: Entrada y Planificación -->
+  <text x="50" y="30" class="phase-label">Fase 1: Inicio</text>
+  
+  <g data-agent="AGENTINIT" id="node-agentinit">
+    <rect x="50" y="50" width="140" height="50" rx="8" class="node-rect" />
+    <text x="120" y="75" class="node-text">AGENTINIT</text>
+    <text x="120" y="90" class="node-text-subtitle">Inicialización</text>
+  </g>
+
+  <g data-agent="orchestator" id="node-orchestator">
+    <rect x="250" y="50" width="140" height="50" rx="8" class="node-rect" />
+    <text x="320" y="75" class="node-text">orchestator</text>
+    <text x="320" y="90" class="node-text-subtitle">Orquestador Central</text>
+  </g>
+
+  <g data-agent="specpartner" id="node-specpartner">
+    <rect x="450" y="50" width="140" height="50" rx="8" class="node-rect" />
+    <text x="520" y="75" class="node-text">specpartner</text>
+    <text x="520" y="90" class="node-text-subtitle">Especificaciones</text>
+  </g>
+
+  <g data-agent="gherkinauthor" id="node-gherkinauthor">
+    <rect x="650" y="50" width="140" height="50" rx="8" class="node-rect" />
+    <text x="720" y="75" class="node-text">gherkinauthor</text>
+    <text x="720" y="90" class="node-text-subtitle">Escenarios Gherkin</text>
+  </g>
+
+  <!-- Fila 2: Diseño y TDD -->
+  <text x="650" y="160" class="phase-label" text-anchor="end">Fase 2: Construcción</text>
+
+  <g data-agent="desingpartner" id="node-desingpartner">
+    <rect x="650" y="180" width="140" height="50" rx="8" class="node-rect" />
+    <text x="720" y="205" class="node-text">desingpartner</text>
+    <text x="720" y="220" class="node-text-subtitle">Diseño POO / MVC</text>
+  </g>
+
+  <g data-agent="testpartner" id="node-testpartner">
+    <rect x="450" y="180" width="140" height="50" rx="8" class="node-rect" />
+    <text x="520" y="205" class="node-text">testpartner</text>
+    <text x="520" y="220" class="node-text-subtitle">Pruebas (TDD)</text>
+  </g>
+
+  <g data-agent="codepartner" id="node-codepartner">
+    <rect x="250" y="180" width="140" height="50" rx="8" class="node-rect" />
+    <text x="320" y="205" class="node-text">codepartner</text>
+    <text x="320" y="220" class="node-text-subtitle">Desarrollo Código</text>
+  </g>
+
+  <g data-agent="judge" id="node-judge">
+    <rect x="50" y="180" width="140" height="50" rx="8" class="node-rect" />
+    <text x="120" y="205" class="node-text">judge</text>
+    <text x="120" y="220" class="node-text-subtitle">Reportes de Tests</text>
+  </g>
+
+  <!-- Fila 3: Calidad y Verificación -->
+  <text x="190" y="295" class="phase-label">Fase 3: Refactor y Mutación</text>
+
+  <g data-agent="refactorpartner" id="node-refactorpartner">
+    <rect x="190" y="310" width="140" height="50" rx="8" class="node-rect" />
+    <text x="260" y="335" class="node-text">refactorpartner</text>
+    <text x="260" y="350" class="node-text-subtitle">Refactorización</text>
+  </g>
+
+  <!-- Auxiliares de Refactor -->
+  <g data-agent="mutationtester" id="node-mutationtester">
+    <rect x="110" y="390" width="140" height="50" rx="8" class="node-rect" />
+    <text x="180" y="415" class="node-text">mutationtester</text>
+    <text x="180" y="430" class="node-text-subtitle">Tests de Mutaciones</text>
+  </g>
+
+  <g data-agent="refactoringXP" id="node-refactoringxp">
+    <rect x="110" y="450" width="140" height="50" rx="8" class="node-rect" />
+    <text x="180" y="475" class="node-text">refactoringXP</text>
+    <text x="180" y="490" class="node-text-subtitle">Refactorización XP</text>
+  </g>
+
+  <g data-agent="verifierfeacture" id="node-verifierfeacture">
+    <rect x="450" y="310" width="140" height="50" rx="8" class="node-rect" />
+    <text x="520" y="335" class="node-text">verifierfeacture</text>
+    <text x="520" y="350" class="node-text-subtitle">Verificador de Feature</text>
+  </g>
+
+  <g data-agent="verifiersession" id="node-verifiersession">
+    <rect x="650" y="310" width="140" height="50" rx="8" class="node-rect" />
+    <text x="720" y="335" class="node-text">verifiersession</text>
+    <text x="720" y="350" class="node-text-subtitle">Verificador de Sesión</text>
+  </g>
+
+  <!-- Soporte Inferior: Versionado y Control -->
+  <text x="450" y="495" class="phase-label">Fase 4: Integración y Git</text>
+
+  <g data-agent="gitAGENT" id="node-gitagent">
+    <rect x="450" y="510" width="140" height="50" rx="8" class="node-rect" />
+    <text x="520" y="535" class="node-text">gitAGENT</text>
+    <text x="520" y="550" class="node-text-subtitle">Versionado Reactivo</text>
+  </g>
+</svg>

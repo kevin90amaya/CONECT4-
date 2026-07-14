@@ -1,0 +1,48 @@
+@startuml procesos_mvc
+
+actor Usuario
+participant HarnessView as Vista
+participant HarnessController as Controlador
+participant ProgressModel as ModeloProgreso
+participant DiagramModel as ModeloDiagrama
+
+== Inicialización de la Aplicación ==
+Usuario -> Controlador : Iniciar / DOMContentLoaded
+Controlador -> Vista : toggleLoading(true)
+Controlador -> ModeloProgreso : fetchProgress()
+Controlador -> ModeloDiagrama : fetchSvg()
+alt Carga Exitosa
+    ModeloProgreso --> Controlador : Datos de progreso
+    ModeloDiagrama --> Controlador : Contenido SVG
+    Controlador -> Vista : renderProgress(turno, wip)
+    Controlador -> Vista : renderDiagram(svgContent)
+    Controlador -> Vista : toggleLoading(false)
+else Error en Carga
+    Controlador -> Vista : showError(message)
+    Controlador -> Vista : toggleLoading(false)
+end
+
+== Interacción: Hover en Agente (SVG) ==
+Usuario -> Vista : Pasa cursor sobre nodo agente
+Vista -> Controlador : handleAgentHover(agentName)
+Controlador -> Controlador : Buscar detalles del agente
+Controlador -> Vista : showAgentDetails(agentName, detalles)
+Vista --> Usuario : Renderiza detalles en panel lateral
+
+== Interacción: Refresco Manual ==
+Usuario -> Vista : Clic en botón "Actualizar"
+Vista -> Controlador : handleRefresh()
+Controlador -> Vista : toggleLoading(true)
+Controlador -> ModeloProgreso : fetchProgress()
+ModeloProgreso --> Controlador : Datos actualizados
+Controlador -> Vista : renderProgress(turno, wip)
+Controlador -> Vista : toggleLoading(false)
+
+== Interacción: Refresco por Polling (Cada 5s) ==
+Controlador -> ModeloProgreso : fetchProgress() (en segundo plano)
+ModeloProgreso --> Controlador : Datos de progreso
+opt Si hay cambios en los datos
+    Controlador -> Vista : renderProgress(turno, wip)
+end
+
+@enduml

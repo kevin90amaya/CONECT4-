@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harness Universal - ViewHarness Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js" defer></script>
+</head>
+<body class="dark-theme">
+    <header class="app-header">
+        <div class="logo-container">
+            <span class="logo-icon">⚡</span>
+            <h1>ViewHarness <span class="logo-subtitle">Universal</span></h1>
+        </div>
+        <nav class="app-nav">
+            <button id="btn-progress-tab" class="tab-btn tab-active">Progreso de Sesión</button>
+            <button id="btn-diagram-tab" class="tab-btn">Diagrama Interactivo</button>
+        </nav>
+        <div class="header-actions">
+            <span class="update-time">Actualizado: <span id="last-updated-value">-</span></span>
+            <button id="btn-refresh" class="refresh-btn" title="Actualizar progreso">
+                <span class="icon-refresh">🔄</span> Actualizar
+            </button>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- Overlay de carga -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>Cargando datos del arnés...</p>
+        </div>
+
+        <!-- Notificación de error -->
+        <div id="error-toast" class="error-toast hidden">
+            <span class="error-icon">⚠️</span>
+            <span id="error-message">Ha ocurrido un error al cargar los datos.</span>
+        </div>
+
+        <!-- PANEL DE PROGRESO -->
+        <section id="panel-progress" class="panel-section">
+            <div class="grid-container">
+                <div class="card status-card">
+                    <h2>Estado del Arnés</h2>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">Turno Activo</span>
+                            <span id="turn-value" class="status-value highlight-text">AGENTINIT</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">WIP (Work In Progress)</span>
+                            <span id="wip-value" class="status-value">1</span>
+                        </div>
+                    </div>
+                    <div id="wip-warning" class="wip-warning-alert hidden">
+                        <span class="warning-icon">🚨</span> 
+                        <span><strong>¡Peligro de Multitarea!</strong> Hay más de 1 tarea activa. Reduce el WIP a 1 para cumplir con el contrato de desarrollo.</span>
+                    </div>
+                </div>
+
+                <div class="card decisions-card">
+                    <h2>Decisiones del Pipeline</h2>
+                    <ul id="decisions-list" class="decisions-list">
+                        <li class="decision-item-empty">Cargando decisiones...</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL DE DIAGRAMAS -->
+        <section id="panel-diagram" class="panel-section hidden">
+            <div class="diagram-workspace">
+                <div class="diagram-canvas-card card">
+                    <h2>Mapa del Flujo de Agentes</h2>
+                    <p class="diagram-instruction">Pasa el cursor (o presiona) sobre un agente para ver su contrato de comportamiento.</p>
+                    <div id="svg-container" class="svg-container">
+                        <!-- El SVG interactivo se cargará de forma dinámica -->
+                    </div>
+                </div>
+                
+                <aside id="agent-details-panel" class="agent-details-sidebar card">
+                    <h2>Contrato de Agente</h2>
+                    <div id="agent-details-placeholder" class="agent-details-placeholder">
+                        <div class="placeholder-icon">🔍</div>
+                        <p>Pasa el cursor sobre un nodo del diagrama de flujo para ver sus responsabilidades de contrato.</p>
+                    </div>
+                    <div id="agent-details-content" class="agent-details-content hidden">
+                        <h3 id="agent-name" class="agent-title-highlight">AGENTINIT</h3>
+                        <div class="detail-section">
+                            <h4>Rol / Responsabilidad</h4>
+                            <p id="agent-role">Cargando...</p>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Precondición</h4>
+                            <ul id="agent-pre" class="contract-list">
+                                <!-- Precondiciones -->
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Postcondición</h4>
+                            <ul id="agent-post" class="contract-list">
+                                <!-- Postcondiciones -->
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Invariante</h4>
+                            <ul id="agent-inv" class="contract-list">
+                                <!-- Invariantes -->
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>CONECT4 - Meta-Arnés Universal &copy; 2026. Diseñado bajo Arquitectura MVC y POO.</p>
+    </footer>
+</body>
+</html>

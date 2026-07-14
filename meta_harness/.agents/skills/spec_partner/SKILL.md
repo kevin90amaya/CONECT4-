@@ -42,7 +42,7 @@ favor de una. Deja que el humano decida; registra la decisión y su razón.
    - **Casos límite** — enumerados.
    - **Decisiones** — cada decisión con su razón y la alternativa descartada.
 7. **RELEVO:** Actualiza el archivo `meta_harness/state/progress.md` estableciendo `Último Turno: spec_partner` y `Siguiente Turno: gherkin_author`, y registrando las decisiones clave y recursos estudiados.
-8. **PARA**. El flujo debe detenerse para dar paso al humano o al `gherkin_author`.
+8. **PARA**. El flujo debe detenerse para dar paso al humano o al `gherkin_author`.NO LO INVOKES AUTOMATICAMENTE 
 
 ## Reglas duras
 
