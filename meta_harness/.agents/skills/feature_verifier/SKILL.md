@@ -16,7 +16,8 @@ Usa `ask_question` (con `is_multi_select=true`) para mostrarle al humano la punt
 
 Si hay fallos, registra el ciclo de revisión (ej. "Revision 1") y detén el flujo para que el generador corrija.
 4. **Cierre y Auditoría:** Cuando el checklist esté 100% completado (`[x]`) y la puntuación sea aceptable, muévelo a `meta_harness/verifications/history/` bajo un nombre descriptivo (ej. `[Feature_ID]_checklist.md`). Luego, actualiza el JSON de tareas a `passing` e incluye la ruta en el campo `evidence`.
-5. **PARA:** Una vez archivado y actualizado el JSON, avisa al humano que la característica se cerró con éxito.
+5. **RELEVO:** Edita `meta_harness/state/progress.md` estableciendo `Último Turno: feature_verifier` y `Siguiente Turno:`session_verifier`, registrando el checklist completado y la puntuación de la rúbrica.
+6. **PARA:** Una vez archivado, actualizado el JSON y registrado el relevo, avisa al humano que la característica se cerró con éxito.
 
 ## Reglas duras
 - ❌ NUNCA borres el archivo `verification_checklist.md` terminado.

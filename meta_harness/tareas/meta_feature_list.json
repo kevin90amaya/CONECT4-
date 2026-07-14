@@ -65,6 +65,12 @@
       "description": "Construir Mapeador Interno Propio (Extractor Híbrido, Auditor Estricto y Caching)",
       "status": "passing",
       "evidence": "Agentes separados (Extractor y Verifier) creados. Mapa HTML y json construidos exitosamente."
+    },
+    {
+      "id": "F12_redefinicion_progress_meta_harness",
+      "description": "Redefinir las reglas de edición y la función del archivo progress.md en el meta_harness, modificando las políticas del Orquestador.",
+      "status": "passing",
+      "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F12_redefinicion_progress_meta_harness_checklist.md"
     }
   ]
 }

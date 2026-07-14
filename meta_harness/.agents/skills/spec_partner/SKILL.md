@@ -41,7 +41,8 @@ favor de una. Deja que el humano decida; registra la decisión y su razón.
    - **Out of Scope (Fuera de Alcance)** — exclusiones explícitas de los archivos, carpetas o lógicas que la habilidad `generator_partner` NO debe modificar ni tocar bajo ninguna circunstancia.
    - **Casos límite** — enumerados.
    - **Decisiones** — cada decisión con su razón y la alternativa descartada.
-7. **PARA**. El flujo debe detenerse para dar paso al humano o al `gherkin_author`.
+7. **RELEVO:** Actualiza el archivo `meta_harness/state/progress.md` estableciendo `Último Turno: spec_partner` y `Siguiente Turno: gherkin_author`, y registrando las decisiones clave y recursos estudiados.
+8. **PARA**. El flujo debe detenerse para dar paso al humano o al `gherkin_author`.
 
 ## Reglas duras
 

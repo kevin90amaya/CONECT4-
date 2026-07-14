@@ -90,3 +90,21 @@
 - **Decisiones:**
   1. **Control Total (Código + Docs).** Razón: Garantiza la limpieza exhaustiva en ambas capas del meta-arnés.
   2. **Modo Dry-Run con Reporte Físico.** Razón: Evoluciona el diseño original del Proyecto 06, previniendo eliminaciones accidentales y evitando inundar la memoria del chat al depositar los resultados en un archivo.
+
+## Feature: F12_redefinicion_progress_meta_harness - Redefinición del rol de progress.md
+- **Propósito:** Redefinir la función del archivo `progress.md` en el `meta_harness` para que actúe como un relevo dinámico entre agentes (en lugar de relevo de sesiones), facilitando la continuidad entre fases y permitiendo que todos los agentes registren sus decisiones.
+- **In Scope (En Alcance):**
+  - Actualizar `progress.md` para soportar una estructura que incluya: ID de tarea activa, fase actual del Flujo Bob, `último_turno` (Last Turn), `siguiente_turno` (Next Turn), decisiones tomadas y recursos estudiados.
+  - Modificar las reglas en `ORCHESTRATOR.md` para autorizar a todos los agentes en el pipeline a editar `progress.md` al finalizar su fase (tras el OK del humano).
+  - Modificar las reglas en `.agents/skills/session_verifier/SKILL.md` y `.agents/skills/generator_partner/SKILL.md` para reflejar que `progress.md` ya no es responsabilidad exclusiva de `session_verifier`.
+  - Definir la estructura estandarizada que debe tener la bitácora de relevo de cada agente dentro de `progress.md`.
+- **Out of Scope (Fuera de Alcance):**
+  - Modificar el comportamiento de `session_handoff.md` o del checklist `clean-state-checklist.md` (estos siguen siendo de exclusividad de `session_verifier` en la auditoría general de sesión).
+  - Automatizar la escritura de `progress.md` mediante scripts complejos del sistema (la edición sigue siendo realizada por el agente activo en su turno tras la validación humana).
+- **Casos límite:**
+  - Si un agente inicia su turno y detecta que el `siguiente_turno` en `progress.md` no coincide con su rol, debe alertar de inmediato al humano y detenerse.
+  - Al concluir la sesión completa de trabajo (handoff general), el estado final de `progress.md` debe estar en reposo (`último_turno: session_verifier`, `siguiente_turno: Orchestrator` o `ninguno`).
+- **Decisiones:**
+  - **Permisos distribuidos:** Se descentraliza la edición de `progress.md` para que cada agente especialista registre su relevo directo, evitando sobrecargar al `session_verifier` con la síntesis detallada de micro-decisiones de diseño o código que él no implementó.
+  - **Estructura de Relevo Simple:** Se mantiene un formato estructurado en Markdown legible tanto por humanos como por futuros agentes que inicien en frío.
+

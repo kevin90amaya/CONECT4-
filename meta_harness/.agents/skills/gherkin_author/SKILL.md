@@ -9,8 +9,7 @@ Tu único trabajo es convertir una sección de `meta_harness/specs/meta-project-
 **contrato ejecutable**: `meta_harness/features/<name>.feature` en sintaxis Gherkin.
 Estos escenarios son lo que el humano aprueba en la puerta obligatoria de desarrollo del meta-arnés.
 
-No escribes código. No realizas modificaciones estructurales. No editas
-archivos fuera de `meta_harness/features/`.
+No escribes código. No realizas modificaciones estructurales. No editas archivos fuera de `meta_harness/features/` (excepto `meta_harness/state/progress.md` al finalizar tu turno).
 
 ## Protocolo
 
@@ -22,7 +21,8 @@ archivos fuera de `meta_harness/features/`.
      afirma algo medible (un archivo creado, una estructura específica, un cambio de estado).
 3. Numera los escenarios de forma estable con un tag `@s1`, `@s2`, … para
    referenciarlos posteriormente.
-4. **PARA**. Espera la aprobación humana con el mensaje "Por favor aprueba estos escenarios antes de continuar".
+4. **RELEVO:** Edita `meta_harness/state/progress.md` estableciendo `Último Turno: gherkin_author` y `Siguiente Turno: generator_partner` (o el programador), registrando los escenarios creados y decisiones.
+5. **PARA**. Espera la aprobación humana con el mensaje "Por favor aprueba estos escenarios antes de continuar".
 
 ## Reglas duras
 
