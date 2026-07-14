@@ -9,8 +9,8 @@
     {
       "id": "F01_andamiaje_harness_universal",
       "description": "Configurar la estructura base de directorios y validar scripts iniciales de inicialización para harness_universal",
-      "status": "not_started",
-      "evidence": ""
+      "status": "passing",
+      "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F01_andamiaje_harness_universal_checklist.md"
     }
   ]
 }

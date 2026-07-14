@@ -20,3 +20,56 @@
   - **Comandos Dinámicos en paths.json:** Asegura que los agentes operativos como `Judge` y `RefactorPartner` sean 100% agnósticos y reutilizables en cualquier stack tecnológico.
   - **Gobernanza mediante Turnos y Git Reactivo:** Consolida el control de la sesión en un único lugar (`progress`), manteniendo un histórico limpio en Git sin la sobrecarga de un directorio de workspace temporal.
   - **Divulgación Progresiva en `docs/` del arnés:** Evita la fatiga de contexto de los LLMs al separar los prompts de habilidades de las guías y manuales técnicos.
+
+## Feature: F01_andamiaje_harness_universal - Andamiaje de Harness Universal (Estructura Inicial y WIP=1)
+- **Propósito:** Configurar la estructura base de directorios y validar scripts iniciales de inicialización para `harness_universal`. Esto incluye la especificación del agente `AGENTINIT` encargado de asegurar que la estructura del directorio del arnés y los archivos de estado estén en su lugar antes de proceder con el desarrollo del pipeline.
+- **Comportamiento y Decisiones de Diseño:**
+  1. **Motor del Script de Inicialización (`init.mjs`):** Un script de Node.js/ESM que leerá el archivo `/workspaces/CONECT4-/harness_universal/direcciones/paths.json` y creará únicamente el directorio requerido para el estado del `harness_universal` (específicamente la carpeta `state/` para alojar `progress.md`). Los demás directorios operativos (`panteon`, `judgereports`, `specs`, `tareas`, etc.) se crearán bajo demanda por cada agente correspondiente en su respectivo turno.
+  2. **Validador WIP=1 (`check-wip.mjs`):** Un script de Node.js/ESM que analizará el archivo `/workspaces/CONECT4-/meta_harness/tareas/target_feature_list.json`. El script contará cuántas tareas tienen el estado `in_progress` o `active`. Si la suma es estrictamente mayor que 1, el script fallará (saldrá con código de retorno `1`) e imprimirá un mensaje explicativo, impidiendo que avance el desarrollo si hay multitarea.
+  3. **Arquitectura Dúo para Agentes (AGENTINIT):** Cada agente en el arnés objetivo se compone de un dúo físico de archivos lado a lado en el mismo directorio:
+     - Un archivo markdown (`.md`) que define las instrucciones y rol del agente.
+     - Un archivo JSON (`.json`) que contiene el contrato JSON-POO-DbC (con `precondicion`, `poscondicion`, e `invariant`) y el booleano `manualMode` para el modo de operación.
+     Para el agente `AGENTINIT`, ubicado en la raíz del arnés (`harness_universal/`), sus archivos son:
+     - `/workspaces/CONECT4-/harness_universal/AGENTINIT.md`
+     - `/workspaces/CONECT4-/harness_universal/AGENTINIT.json`
+     La inicialización debe asegurar la creación de este dúo.
+  4. **Escáner de Limpieza fuera de alcance:** El desarrollo de un escáner de limpieza (`cleanup-scanner` o similar) queda explícitamente **FUERA DE ALCANCE** para esta feature. Pertenece al alcance de la sesión del verificador (`VerifierSession`) y se implementará cuando lleguemos a ese agente.
+- **DbC (Diseño por Contrato):**
+  - **Precondiciones:**
+    * El archivo de mapeo `/workspaces/CONECT4-/harness_universal/direcciones/paths.json` debe existir y ser legible en el disco.
+  - **Postcondiciones:**
+    * Se ha creado y está disponible el directorio de estado del arnés universal (`state/`). Los directorios de los demás agentes se delegarán a su respectivo inicio de ejecución.
+    * Se ha inicializado el archivo `/workspaces/CONECT4-/harness_universal/state/progress.md` si no existía previamente.
+    * El script de validación `check-wip.mjs` se ejecuta exitosamente, validando que se cumple la restricción WIP=1 (únicamente la tarea `F01_andamiaje_harness_universal` en progreso en este momento).
+    * Se ha creado el dúo físico del agente `AGENTINIT` (`AGENTINIT.md` y `AGENTINIT.json`) en la raíz del arnés `harness_universal/`.
+  - **Invariantes:**
+    * Ningún código fuente de producción del proyecto objetivo (bajo `src` o según defina `paths.json`) puede ser alterado o modificado durante la inicialización.
+- **Estructura del Contrato DbC (AGENTINIT.json):**
+  El archivo `/workspaces/CONECT4-/harness_universal/AGENTINIT.json` debe cumplir exactamente con la siguiente estructura:
+  ```json
+  {
+    "name": "AGENTINIT",
+    "role": "Inicializador del Arnés Universal",
+    "description": "Agente encargado de inicializar y preparar físicamente el espacio de la sesión de trabajo. Crea los directorios operativos base y los archivos de estado iniciales.",
+    "manualMode": false,
+    "precondicion": {
+      "paths_exists": "El archivo de mapeo /workspaces/CONECT4-/harness_universal/direcciones/paths.json debe existir y ser legible en el disco."
+    },
+    "poscondicion": {
+      "directories_created": "Se ha creado y está disponible el directorio state/ en harness_universal/.",
+      "progress_initialized": "Se ha inicializado el archivo /workspaces/CONECT4-/harness_universal/state/progress.md si no existía previamente.",
+      "check_wip_success": "El script de validación check-wip.mjs se ejecuta exitosamente, validando que se cumple la restricción WIP=1 (únicamente la tarea F01_andamiaje_harness_universal en progreso en este momento).",
+      "duo_files_exist": "Los archivos duo /workspaces/CONECT4-/harness_universal/AGENTINIT.md y /workspaces/CONECT4-/harness_universal/AGENTINIT.json se han creado en la raíz de harness_universal/."
+    },
+    "invariant": {
+      "production_code_untouched": "Ningún código fuente de producción del proyecto objetivo (bajo src o según defina paths.json) puede ser alterado o modificado durante la inicialización."
+    }
+  }
+  ```
+- **Fuera de Alcance (Out of Scope):**
+  - El escáner de limpieza (cleanup-scanner) queda excluido de esta feature.
+  - No se realiza automatización del versionado de git en este paso.
+  - La creación de directorios operativos no relacionados directamente con AGENTINIT (`panteon`, `judgereports`, `specs`, `tareas`, etc.) queda excluida de esta característica.
+- **Casos Límite:**
+  - Si `paths.json` no existe o no tiene formato JSON válido, `init.mjs` debe fallar con un error explícito.
+  - Si más de una tarea en `target_feature_list.json` está marcada como `in_progress`, el script `check-wip.mjs` debe fallar impidiendo cualquier ejecución subsecuente.

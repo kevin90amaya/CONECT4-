@@ -1,0 +1,10 @@
+{
+  "project_path": "/workspaces/CONECT4-/conect4",
+  "stack": "Node.js y Vite",
+  "commands": {
+    "build": "npm run build",
+    "test": "npm test",
+    "lint": "npm run lint",
+    "clean": "npm run clean"
+  }
+}

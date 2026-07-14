@@ -1,0 +1,18 @@
+{
+  "name": "AGENTINIT",
+  "role": "Inicializador del Arnés Universal",
+  "description": "Agente encargado de inicializar y preparar físicamente el espacio de la sesión de trabajo. Crea los directorios operativos base y los archivos de estado iniciales.",
+  "manualMode": false,
+  "precondicion": {
+    "paths_exists": "El archivo de mapeo /workspaces/CONECT4-/harness_universal/direcciones/paths.json debe existir y ser legible en el disco."
+  },
+  "poscondicion": {
+    "directories_created": "Se ha creado y está disponible el directorio state/ en harness_universal/.",
+    "progress_initialized": "Se ha inicializado el archivo /workspaces/CONECT4-/harness_universal/state/progress.md si no existía previamente.",
+    "check_wip_success": "El script de validación check-wip.mjs se ejecuta exitosamente, validando que se cumple la restricción WIP=1 (únicamente la tarea F01_andamiaje_harness_universal en progreso en este momento).",
+    "duo_files_exist": "Los archivos duo /workspaces/CONECT4-/harness_universal/AGENTINIT.md y /workspaces/CONECT4-/harness_universal/AGENTINIT.json se han creado en la raíz de harness_universal/."
+  },
+  "invariant": {
+    "production_code_untouched": "Ningún código fuente de producción del proyecto objetivo (bajo src o según defina paths.json) puede ser alterado o modificado durante la inicialización."
+  }
+}
