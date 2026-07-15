@@ -3,8 +3,10 @@ export class HarnessView {
         // Cachear elementos del DOM
         this.appContainer = document.getElementById('app');
         this.btnProgressTab = document.getElementById('btn-progress-tab');
+        this.btnTasksTab = document.getElementById('btn-tasks-tab');
         this.btnDiagramTab = document.getElementById('btn-diagram-tab');
         this.panelProgress = document.getElementById('panel-progress');
+        this.panelTasks = document.getElementById('panel-tasks');
         this.panelDiagram = document.getElementById('panel-diagram');
         
         this.loadingOverlay = document.getElementById('loading-overlay');
@@ -18,6 +20,9 @@ export class HarnessView {
         this.decisionsList = document.getElementById('decisions-list');
         this.btnRefresh = document.getElementById('btn-refresh');
         this.lastUpdatedValue = document.getElementById('last-updated-value');
+        
+        // Elemento contenedor del backlog de tareas
+        this.tasksListContainer = document.getElementById('tasks-list-container');
         
         // Elementos del diagrama
         this.svgContainer = document.getElementById('svg-container');
@@ -37,10 +42,13 @@ export class HarnessView {
 
     /**
      * Vincula el cambio de pestañas.
-     * @param {Function} handler Callback con el nombre de la pestaña ('progress' | 'diagram')
+     * @param {Function} handler Callback con el nombre de la pestaña ('progress' | 'tasks' | 'diagram')
      */
     bindTabChange(handler) {
         this.btnProgressTab.addEventListener('click', () => handler('progress'));
+        if (this.btnTasksTab) {
+            this.btnTasksTab.addEventListener('click', () => handler('tasks'));
+        }
         this.btnDiagramTab.addEventListener('click', () => handler('diagram'));
     }
 
@@ -61,19 +69,26 @@ export class HarnessView {
     }
 
     /**
-     * Alterna la visualización de las pestañas.
-     * @param {string} tabName Nombre de la pestaña ('progress' o 'diagram')
+     * Alterna la visualización de las pestañas y paneles.
+     * @param {string} tabName Nombre de la pestaña ('progress', 'tasks' o 'diagram')
      */
     showTab(tabName) {
+        this.btnProgressTab.classList.remove('tab-active');
+        if (this.btnTasksTab) this.btnTasksTab.classList.remove('tab-active');
+        this.btnDiagramTab.classList.remove('tab-active');
+        
+        this.panelProgress.classList.add('hidden');
+        if (this.panelTasks) this.panelTasks.classList.add('hidden');
+        this.panelDiagram.classList.add('hidden');
+
         if (tabName === 'progress') {
             this.btnProgressTab.classList.add('tab-active');
-            this.btnDiagramTab.classList.remove('tab-active');
             this.panelProgress.classList.remove('hidden');
-            this.panelDiagram.classList.add('hidden');
-        } else {
-            this.btnProgressTab.classList.remove('tab-active');
+        } else if (tabName === 'tasks') {
+            if (this.btnTasksTab) this.btnTasksTab.classList.add('tab-active');
+            if (this.panelTasks) this.panelTasks.classList.remove('hidden');
+        } else if (tabName === 'diagram') {
             this.btnDiagramTab.classList.add('tab-active');
-            this.panelProgress.classList.add('hidden');
             this.panelDiagram.classList.remove('hidden');
         }
     }
@@ -122,21 +137,78 @@ export class HarnessView {
     }
 
     /**
+     * Renderiza el backlog de tareas con estética premium.
+     * @param {Array<Object>} tasks
+     */
+    renderTasks(tasks) {
+        if (!this.tasksListContainer) return;
+        this.tasksListContainer.innerHTML = '';
+
+        if (!tasks || tasks.length === 0) {
+            this.tasksListContainer.innerHTML = `
+                <div class="empty-state-card card">
+                    <div class="empty-icon">📋</div>
+                    <p class="empty-text">El backlog de tareas está vacío.</p>
+                    <p class="empty-subtext">Crea tareas utilizando el Agente Orquestador para iniciar el desarrollo.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'tasks-grid';
+
+        tasks.forEach(task => {
+            const card = document.createElement('div');
+            const statusClass = this.getStatusClass(task.status);
+            card.className = `card task-card status-border-${statusClass}`;
+            
+            card.innerHTML = `
+                <div class="task-header">
+                    <span class="task-id">${task.id || 'N/A'}</span>
+                    <span class="task-badge badge-${statusClass}">${this.formatStatus(task.status)}</span>
+                </div>
+                <h3 class="task-title">${task.name || 'Sin título'}</h3>
+                <p class="task-desc">${task.description || 'Sin descripción detallada disponible'}</p>
+                <div class="task-footer">
+                    <span class="task-assignee">👤 ${task.assignee || 'Sin asignar'}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        this.tasksListContainer.appendChild(grid);
+    }
+
+    getStatusClass(status) {
+        if (!status) return 'pending';
+        const s = status.toLowerCase();
+        if (s === 'active' || s === 'in_progress' || s === 'in-progress') return 'active';
+        if (s === 'completed' || s === 'done' || s === 'resolved') return 'completed';
+        return 'pending';
+    }
+
+    formatStatus(status) {
+        if (!status) return 'Pendiente';
+        const s = status.toLowerCase();
+        if (s === 'active') return 'Activa';
+        if (s === 'in_progress' || s === 'in-progress') return 'En Progreso';
+        if (s === 'completed' || s === 'done' || s === 'resolved') return 'Completada';
+        return status;
+    }
+
+    /**
      * Renderiza e inicializa los eventos del SVG.
      * @param {string} svgContent
      */
     renderDiagram(svgContent) {
         this.svgContainer.innerHTML = svgContent;
         
-        // Asociar eventos a todos los elementos del SVG que representen agentes
-        // En nuestro SVG a medida usaremos el atributo [data-agent] en los grupos <g>
         const agentElements = this.svgContainer.querySelectorAll('[data-agent]');
         
         agentElements.forEach(el => {
             el.addEventListener('mouseenter', (e) => {
                 const agentName = el.getAttribute('data-agent');
-                
-                // Efecto visual hover en SVG
                 el.classList.add('svg-agent-hover');
                 
                 if (this.onAgentHover) {
@@ -152,10 +224,8 @@ export class HarnessView {
                 }
             });
             
-            // Soporte para pantallas táctiles (clic/touch)
             el.addEventListener('click', (e) => {
                 const agentName = el.getAttribute('data-agent');
-                // Quitar hover de otros elementos
                 agentElements.forEach(other => other.classList.remove('svg-agent-hover'));
                 el.classList.add('svg-agent-hover');
                 
@@ -166,7 +236,6 @@ export class HarnessView {
             });
         });
 
-        // Limpiar hover si se hace clic fuera de los agentes en el SVG
         const svgEl = this.svgContainer.querySelector('svg');
         if (svgEl) {
             svgEl.addEventListener('click', () => {
@@ -175,7 +244,6 @@ export class HarnessView {
             });
         }
 
-        // Si ya hay un turno cargado, resaltarlo
         const currentTurn = this.turnValue.textContent;
         if (currentTurn) {
             this.highlightActiveAgentInSvg(currentTurn);
@@ -201,25 +269,22 @@ export class HarnessView {
     /**
      * Muestra la información de un agente en el panel lateral.
      * @param {string} agentName
-     * @param {Object} details Detalles del agente (role, precondicion, poscondicion, invariant, etc.)
+     * @param {Object} details Detalles del agente
      */
     showAgentDetails(agentName, details) {
         if (!agentName || !details) {
-            // Mostrar placeholder y ocultar contenido
             this.agentDetailsPlaceholder.classList.remove('hidden');
             this.agentDetailsContent.classList.add('hidden');
             return;
         }
 
-        // Mostrar contenido y ocultar placeholder
         this.agentDetailsPlaceholder.classList.add('hidden');
         this.agentDetailsContent.classList.remove('hidden');
 
-        // Llenar datos
         this.agentNameEl.textContent = agentName;
         this.agentRoleEl.textContent = details.role || 'Sin rol especificado';
         
-        // Precondición
+        // Precondiciones
         this.agentPreEl.innerHTML = '';
         if (details.precondicion) {
             Object.entries(details.precondicion).forEach(([key, val]) => {
@@ -231,7 +296,7 @@ export class HarnessView {
             this.agentPreEl.innerHTML = '<li>Ninguna</li>';
         }
 
-        // Postcondición
+        // Postcondiciones
         this.agentPostEl.innerHTML = '';
         if (details.poscondicion) {
             Object.entries(details.poscondicion).forEach(([key, val]) => {
@@ -243,7 +308,7 @@ export class HarnessView {
             this.agentPostEl.innerHTML = '<li>Ninguna</li>';
         }
 
-        // Invariante
+        // Invariantes
         this.agentInvEl.innerHTML = '';
         if (details.invariant) {
             Object.entries(details.invariant).forEach(([key, val]) => {
@@ -269,14 +334,13 @@ export class HarnessView {
     }
 
     /**
-     * Muestra un mensaje de error elegante.
+     * Muestra un mensaje de error.
      * @param {string} message
      */
     showError(message) {
         this.errorMessage.textContent = message;
         this.errorToast.classList.remove('hidden');
         
-        // Ocultar automáticamente después de 5 segundos
         setTimeout(() => {
             this.errorToast.classList.add('hidden');
         }, 5000);

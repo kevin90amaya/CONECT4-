@@ -2,11 +2,13 @@ export class HarnessController {
     /**
      * @param {ProgressModel} progressModel
      * @param {DiagramModel} diagramModel
+     * @param {TasksModel} tasksModel
      * @param {HarnessView} view
      */
-    constructor(progressModel, diagramModel, view) {
+    constructor(progressModel, diagramModel, tasksModel, view) {
         this.progressModel = progressModel;
         this.diagramModel = diagramModel;
+        this.tasksModel = tasksModel;
         this.view = view;
         
         this.pollingIntervalId = null;
@@ -58,7 +60,7 @@ export class HarnessController {
             "specpartner": {
                 role: "Especialista en Definición y Especificaciones",
                 precondicion: {
-                    "turn_active": "El turno en progress.md es specpartner.",
+                    "turn_active": "El turno en progress.md is specpartner.",
                     "task_assigned": "Existe una tarea activa en progreso en el listado de tareas."
                 },
                 poscondicion: {
@@ -218,20 +220,25 @@ export class HarnessController {
     async loadInitialData() {
         this.view.toggleLoading(true);
         try {
-            // Cargar en paralelo
+            // Cargar en paralelo (Progreso, SVG y Backlog)
             await Promise.all([
                 this.progressModel.fetchProgress(),
-                this.diagramModel.fetchSvg()
+                this.diagramModel.fetchSvg(),
+                this.tasksModel.fetchTasks()
             ]);
 
-            // Renderizar datos en la vista
+            // Renderizar datos de progreso
             this.view.renderProgress(
                 this.progressModel.getTurn(),
                 this.progressModel.getWip(),
                 this.progressModel.getDecisions()
             );
             
+            // Renderizar SVG del diagrama
             this.view.renderDiagram(this.diagramModel.getSvgContent());
+
+            // Renderizar backlog de tareas
+            this.view.renderTasks(this.tasksModel.getTasks());
         } catch (error) {
             this.view.showError(`Error al cargar datos iniciales: ${error.message}`);
         } finally {
@@ -254,7 +261,11 @@ export class HarnessController {
     async handleRefresh() {
         this.view.toggleLoading(true);
         try {
-            await this.progressModel.fetchProgress();
+            await Promise.all([
+                this.progressModel.fetchProgress(),
+                this.diagramModel.fetchSvg(),
+                this.tasksModel.fetchTasks()
+            ]);
             
             // Volver a renderizar
             this.view.renderProgress(
@@ -263,9 +274,8 @@ export class HarnessController {
                 this.progressModel.getDecisions()
             );
             
-            // Cargar SVG de nuevo si es necesario
-            await this.diagramModel.fetchSvg();
             this.view.renderDiagram(this.diagramModel.getSvgContent());
+            this.view.renderTasks(this.tasksModel.getTasks());
         } catch (error) {
             this.view.showError(`Error en actualización manual: ${error.message}`);
         } finally {
@@ -283,7 +293,7 @@ export class HarnessController {
             return;
         }
 
-        // Buscar en la base de datos local (case insensitive para tolerar variaciones del SVG)
+        // Buscar en la base de datos local
         const matchedKey = Object.keys(this.agentDetailsDb).find(
             key => key.toLowerCase() === agentName.toLowerCase()
         );
@@ -291,7 +301,6 @@ export class HarnessController {
         if (matchedKey) {
             this.view.showAgentDetails(matchedKey, this.agentDetailsDb[matchedKey]);
         } else {
-            // Si no se encuentra, mostrar datos genéricos de fallback
             this.view.showAgentDetails(agentName, {
                 role: "Agente del Pipeline",
                 precondicion: { "descripcion": "Especificación no definida" },
@@ -302,25 +311,29 @@ export class HarnessController {
     }
 
     /**
-     * Inicia el polling automático cada 5 segundos.
+     * Inicia el polling automático cada 5 segundos (Refresco dinámico).
      */
     startPolling() {
         if (this.pollingIntervalId) return;
 
         this.pollingIntervalId = setInterval(async () => {
             try {
-                // Almacenamos el turno y wip anteriores para verificar si han cambiado
                 const prevTurn = this.progressModel.getTurn();
                 const prevWip = this.progressModel.getWip();
                 const prevDecisionsLength = this.progressModel.getDecisions().length;
+                const prevTasksStr = JSON.stringify(this.tasksModel.getTasks());
 
-                await this.progressModel.fetchProgress();
+                // Fetch paralelo del estado y las tareas
+                await Promise.all([
+                    this.progressModel.fetchProgress(),
+                    this.tasksModel.fetchTasks()
+                ]);
 
                 const turnChanged = prevTurn !== this.progressModel.getTurn();
                 const wipChanged = prevWip !== this.progressModel.getWip();
                 const decisionsChanged = prevDecisionsLength !== this.progressModel.getDecisions().length;
+                const tasksChanged = prevTasksStr !== JSON.stringify(this.tasksModel.getTasks());
 
-                // Solo renderizamos si realmente hubo un cambio para evitar parpadeos visuales
                 if (turnChanged || wipChanged || decisionsChanged) {
                     this.view.renderProgress(
                         this.progressModel.getTurn(),
@@ -328,10 +341,12 @@ export class HarnessController {
                         this.progressModel.getDecisions()
                     );
                 }
+
+                if (tasksChanged) {
+                    this.view.renderTasks(this.tasksModel.getTasks());
+                }
             } catch (error) {
-                // El error de polling se maneja silenciosamente para no interrumpir la experiencia,
-                // pero se muestra en consola.
-                console.warn("Error en polling de actualización de progreso:", error);
+                console.warn("Error en polling de actualización de progreso/backlog:", error);
             }
         }, 5000);
     }

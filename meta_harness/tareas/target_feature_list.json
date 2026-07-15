@@ -17,6 +17,12 @@
       "description": "Empezar a desarrollar la vista (ViewHarness) del harness universal de forma incremental.",
       "status": "passing",
       "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F02_vista_harness_universal_checklist.md"
+    },
+    {
+      "id": "F03_orquestador_y_tareas",
+      "description": "Implementar el Agente Orchestrator y la Capa de Tareas en harness_universal, con su visualización incremental en ViewHarness.",
+      "status": "in_progress",
+      "evidence": ""
     }
   ]
 }

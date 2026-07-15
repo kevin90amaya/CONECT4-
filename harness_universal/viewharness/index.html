@@ -15,6 +15,7 @@
         </div>
         <nav class="app-nav">
             <button id="btn-progress-tab" class="tab-btn tab-active">Progreso de Sesión</button>
+            <button id="btn-tasks-tab" class="tab-btn">Backlog de Tareas</button>
             <button id="btn-diagram-tab" class="tab-btn">Diagrama Interactivo</button>
         </nav>
         <div class="header-actions">
@@ -65,6 +66,17 @@
                         <li class="decision-item-empty">Cargando decisiones...</li>
                     </ul>
                 </div>
+            </div>
+        </section>
+
+        <!-- PANEL DE TAREAS -->
+        <section id="panel-tasks" class="panel-section hidden">
+            <div class="backlog-header">
+                <h2>Backlog de Desarrollo</h2>
+                <p class="backlog-subtitle">Lista de características y requerimientos registrados para el arnés objetivo.</p>
+            </div>
+            <div id="tasks-list-container">
+                <!-- Render dinámico de las tareas del backlog -->
             </div>
         </section>
 

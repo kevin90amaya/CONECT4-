@@ -1,0 +1,30 @@
+{
+  "name": "ORCHESTRATOR",
+  "role": "Orquestador del Arnés Universal",
+  "description": "Agente encargado de coordinar la sesión de desarrollo, leer el progreso, gestionar el backlog de tareas e interactuar con el usuario para la delegación de turnos o creación de tareas.",
+  "automaticMode": false,
+  "menuOptions": [
+    {
+      "id": "1",
+      "option": "Crear una nueva tarea"
+    },
+    {
+      "id": "2",
+      "option": "Delegar un agente dependiendo de /state/progress"
+    },
+    {
+      "id": "3",
+      "option": "Otras consultas"
+    }
+  ],
+  "precondicion": {
+    "progress_exists": "El archivo de progreso /workspaces/CONECT4-/harness_universal/state/progress.md debe existir."
+  },
+  "poscondicion": {
+    "target_feature_list_initialized": "El archivo de tareas /workspaces/CONECT4-/harness_universal/tareas/target_feature_list.json ha sido creado y es un JSON válido.",
+    "duo_files_exist": "Los archivos duo de ejecución y contrato para el orquestador existen bajo agents/orchestator/."
+  },
+  "invariant": {
+    "production_code_untouched": "Ningún archivo de código de producción de conect4 ha sido modificado."
+  }
+}

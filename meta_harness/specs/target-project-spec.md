@@ -95,3 +95,77 @@
   - Visualización del stack en `paths.json` (se pospone para una fase posterior).
   - Escaneo de la estructura de archivos del proyecto (se pospone para una fase posterior).
   - Reportes del Juez o especificaciones de tareas que aún no han sido completadas o creadas.
+
+## Feature: F03_orquestador_y_tareas - Agente Orchestrator y Capa de Tareas
+- **Propósito:** Implementar el Agente Orchestrator y la Capa de Tareas de `harness_universal`. Esto incluye el archivo backlog `harness_universal/tareas/target_feature_list.json` para registrar y dar seguimiento a las tareas de desarrollo del proyecto objetivo (`conect4`), la lógica de control del Orquestador (`harness_universal/agents/orchestator/orchestator.mjs`) para coordinar el relevo de agentes basado en `progress.md`, y la actualización incremental de `ViewHarness` para visualizar las tareas del backlog y su estado en tiempo real.
+- **Comportamiento y Decisiones de Diseño:**
+  1. **Capa de Tareas:** Crear el directorio `/workspaces/CONECT4-/harness_universal/tareas/` si no existe e inicializar `/workspaces/CONECT4-/harness_universal/tareas/target_feature_list.json` con un array estructurado vacío. Si el archivo ya existe, no se debe sobrescribir para conservar el progreso histórico de las tareas.
+  2. **Archivos Dúo y Ubicación de Agentes:** Los agentes se colocan en su respectiva subcarpeta bajo `harness_universal/agents/`. Para el Orquestador, su dúo físico consta de:
+     - `/workspaces/CONECT4-/harness_universal/agents/orchestator/orchestator.md` (definición de rol e instrucciones del agente, donde se establece explícitamente que el agente debe respetar las reglas y contrato definidos en su archivo JSON).
+     - `/workspaces/CONECT4-/harness_universal/agents/orchestator/orchestator.json` (diseño por contrato DbC, automaticMode y menuOptions).
+     La lógica ejecutable del agente se coloca en:
+     - `/workspaces/CONECT4-/harness_universal/agents/orchestator/orchestator.mjs` (script de ejecución).
+  3. **Lógica de Ejecución del Orquestador (`orchestator.mjs`):**
+     - Lee `/workspaces/CONECT4-/harness_universal/state/progress.md` para verificar el estado de la tarea activa y el `Turno actual`.
+     - Lee su archivo de contrato `orchestator.json` para verificar si `automaticMode` está activo (`true` o `false`).
+     - Si el turno en `progress.md` es `orchestator` u `Orchestrator`, y `automaticMode` es `false` (modo interactivo), presenta en la consola un menú interactivo con las opciones obtenidas de `menuOptions`:
+       * Opción 1: Crear una nueva tarea.
+       * Opción 2: Delegar un agente dependiendo de `/state/progress.md`.
+       * Opción 3: Otras consultas.
+     - Si no es el turno del orquestador, el script informará en consola y finalizará sin alterar el estado.
+  4. **Integración con ViewHarness:**
+     - La integración con la vista sigue el patrón de diseño MVC en `viewharness/`:
+       * Se agrega una clase de modelo de tareas (Model) encargada de cargar y gestionar los datos del backlog `/workspaces/CONECT4-/harness_universal/tareas/target_feature_list.json`.
+       * Se implementan los métodos correspondientes en el controlador (Controller) y en la vista (View) de `ViewHarness` para renderizar dinámicamente las tareas y su estado.
+- **Diseño por Contrato (DbC):**
+  - **Precondiciones:**
+    * El directorio `/workspaces/CONECT4-/harness_universal/state/` y el archivo `progress.md` deben existir.
+  - **Poscondiciones:**
+    * Creado e inicializado el archivo `/workspaces/CONECT4-/harness_universal/tareas/target_feature_list.json` (sin sobreescribir contenido existente).
+    * Creado el dúo del agente Orchestrator en la ruta `harness_universal/agents/orchestator/`: `orchestator.md`, `orchestator.json` y `orchestator.mjs`.
+    * Al ejecutar `node agents/orchestator/orchestator.mjs`, si el turno es `orchestator` y el usuario aprueba la delegación en la consola interactiva, se actualiza el archivo `progress.md` transicionando al siguiente turno.
+    * El backend y frontend de ViewHarness se estructuran bajo MVC utilizando la clase Model de tareas y las extensiones correspondientes en Controller y View.
+  - **Invariantes:**
+    * No se modifica ningún archivo del código fuente de producción del proyecto objetivo `conect4`.
+- **Estructura del Contrato DbC (orchestator.json):**
+  El archivo `/workspaces/CONECT4-/harness_universal/agents/orchestator/orchestator.json` debe cumplir exactamente con la siguiente estructura:
+  ```json
+  {
+    "name": "ORCHESTRATOR",
+    "role": "Orquestador del Arnés Universal",
+    "description": "Agente encargado de coordinar la sesión de desarrollo, leer el progreso, gestionar el backlog de tareas e interactuar con el usuario para la delegación de turnos o creación de tareas.",
+    "automaticMode": false,
+    "menuOptions": [
+      {
+        "id": "1",
+        "option": "Crear una nueva tarea"
+      },
+      {
+        "id": "2",
+        "option": "Delegar un agente dependiendo de /state/progress"
+      },
+      {
+        "id": "3",
+        "option": "Otras consultas"
+      }
+    ],
+    "precondicion": {
+      "progress_exists": "El archivo de progreso /workspaces/CONECT4-/harness_universal/state/progress.md debe existir."
+    },
+    "poscondicion": {
+      "target_feature_list_initialized": "El archivo de tareas /workspaces/CONECT4-/harness_universal/tareas/target_feature_list.json ha sido creado y es un JSON válido.",
+      "duo_files_exist": "Los archivos duo de ejecución y contrato para el orquestador existen bajo agents/orchestator/.",
+      "runner_exists": "Existe el script agents/orchestator/orchestator.mjs.",
+      "interactive_delegation_successful": "Al ejecutarse, si el turno es orchestator y el usuario decide delegar, transiciona el turno en progress.md al siguiente agente."
+    },
+    "invariant": {
+      "production_code_untouched": "Ningún archivo de código de producción de conect4 ha sido modificado."
+    }
+  }
+  ```
+- **Fuera de Alcance (Out of Scope):**
+  - No se implementa la lógica real de SpecPartner ni de creación de ramas git.
+  - No se implementan las pruebas unitarias ni de integración del juego `conect4`.
+- **Casos Límite:**
+  - Si no hay tareas activas en `target_feature_list.json`, el script del orquestador debe informar al usuario y restringir la transición de turno hasta que se defina una.
+  - Si el archivo `progress.md` tiene un formato inválido, el script debe informar del error en consola y abortar.

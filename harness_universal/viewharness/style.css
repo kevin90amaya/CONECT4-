@@ -528,3 +528,155 @@ body {
         border-color: rgba(255, 61, 0, 0.7);
     }
 }
+
+/* ==========================================================================
+   ESTILOS PARA EL BACKLOG DE TAREAS (FEATURE F03)
+   ========================================================================== */
+.backlog-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.backlog-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.task-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    background-color: var(--bg-card-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-id {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background-color: rgba(0, 176, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.task-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.task-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Bordes Dinámicos según Estado */
+.status-border-active {
+    border-left: 4px solid var(--accent-yellow) !important;
+}
+
+.status-border-completed {
+    border-left: 4px solid var(--accent-green) !important;
+}
+
+.status-border-pending {
+    border-left: 4px solid var(--text-muted) !important;
+}
+
+/* Badges de Estado */
+.task-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+
+.badge-active {
+    background-color: rgba(255, 214, 0, 0.1);
+    color: var(--accent-yellow);
+    border: 1px solid rgba(255, 214, 0, 0.3);
+}
+
+.badge-completed {
+    background-color: rgba(0, 230, 70, 0.1);
+    color: var(--accent-green);
+    border: 1px solid rgba(0, 230, 70, 0.3);
+}
+
+.badge-pending {
+    background-color: rgba(139, 148, 158, 0.1);
+    color: var(--text-muted);
+    border: 1px solid rgba(139, 148, 158, 0.3);
+}
+
+/* Tarjeta vacía de Backlog */
+.empty-state-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+    gap: 0.75rem;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+    animation: bounce 2s infinite;
+}
+
+.empty-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.empty-subtext {
+    font-size: 0.85rem;
+    max-width: 400px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}

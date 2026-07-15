@@ -10,7 +10,7 @@ Al iniciar una nueva sesión o si se vacía la ventana de contexto, el Agente DE
 4. **Leer `docs/target_harness_architecture.md`:** Entender la arquitectura objetivo, el pipeline de agentes especialistas (como `refactoringXP`) y el principio de diseño agnóstico al proyecto.
 5. **Leer `state/session_handoff.md`:** Identificar la acción inmediata dejada en la sesión anterior.
 6. **Leer `state/progress.md`:** Ver el estado de alto nivel e identificar el último y siguiente turno en el relevo entre agentes.
-7. **Leer `tareas/meta_feature_list.json` y `tareas/target_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres invocar al agente asignado en `Siguiente Turno` en el progreso, crear una nueva tarea o realizar otra acción?". No proceder hasta obtener respuesta.
+7. **Leer `tareas/meta_feature_list.json` y `tareas/target_feature_list.json`:** El Orquestador DEBE detenerse y preguntar siempre al usuario ofreciendo opciones: "¿Quieres invocar al agente asignado en `Siguiente Turno` en el progress, crear una nueva tarea o realizar otra acción?". No proceder hasta obtener respuesta.
 8. **Leer `state/pendings.md`:** Consultar ajustes menores o deuda técnica pendiente.
 
 ## Límites de Alcance (Scope)
