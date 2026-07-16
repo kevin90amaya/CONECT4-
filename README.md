@@ -2,6 +2,18 @@
 
 Una aplicación web completa del clásico juego **Conecta 4**, construida con arquitectura cliente-servidor moderno. Ofrece una experiencia interactiva completa con soporte para múltiples modos de juego, personalización del tablero e IA integrada.
 
+<div align="center">
+  
+  [![Jugar Online](https://img.shields.io/badge/🎮_JUGAR_AHORA-EN_VIVO-success?style=for-the-badge&logo=render)](https://conect4.onrender.com)
+  
+  <h3><strong>👉 <a href="https://conect4.onrender.com">https://conect4.onrender.com</a> 👈</strong></h3>
+  
+  *¡Prueba la experiencia completa directamente en tu navegador sin necesidad de instalar nada!*
+
+  > ⚠️ **Nota:** El servidor utiliza la capa gratuita de Render. Si nadie ha jugado recientemente, **puede tardar alrededor de 1 minuto en arrancar** la primera vez. ¡Gracias por la paciencia! ⏳
+
+</div>
+
 ---
 
 ## 📋 Tabla de Contenidos
