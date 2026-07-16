@@ -2,8 +2,9 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Instalar Node.js y npm en el contenedor de construcción
-RUN apt-get update && apt-get install -y nodejs npm
+# Copiar Node.js y npm desde la imagen oficial de Node.js v20
+COPY --from=node:20 /usr/local/bin /usr/local/bin
+COPY --from=node:20 /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 # Copiamos pom.xml y package.json para aprovechar la caché de Docker
 COPY pom.xml .
