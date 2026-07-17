@@ -45,31 +45,100 @@ Para ejecutar las pruebas en este entorno de desarrollo (dentro del contenedor d
 
 Este grupo valida la interacción con los menús que requieren que la aplicación y su servidor backend estén en ejecución, ya que realizan peticiones HTTP para actualizar el estado del juego o configurarlo de manera persistente.
 
-*   **Caso 1.1: Configuración de Jugadores (Modal y Persistencia en el Servidor)**
-    *   **Descripción:** Comprobar que se puede acceder a la configuración de jugadores y modificar sus nombres y cantidad, persistiendo estos datos en el servidor.
+#### Suite 1.1: Configuración de Jugadores
+
+**Descripción:** Suite de pruebas para validar la configuración de jugadores, incluyendo modificación de nombres, colores, tipos, cantidad y validación de restricciones de duplicados.
+
+*   **Caso 1.1.1: Abrir y cerrar modal de configuración de jugadores**
     *   **Acciones:**
         1.  Desde `MainMenu`, ir a "Configuración" -> "Jugadores".
         2.  Entrar a "Editar Jugadores" para levantar el modal (`EditPlayersModal`).
-        3.  Cambiar la cantidad de jugadores y editar los nombres de los jugadores.
-        4.  Hacer clic en Guardar.
-    *   **Resultado esperado:** Se envían peticiones POST (`SET_NUMBER_OF_PLAYERS` y `SET_LIST_PLAYERS`) al servidor, el modal se cierra y el menú se refresca. Los nuevos nombres quedan guardados y persisten al volver a consultarse.
+        3.  Hacer clic en "Cancelar".
+    *   **Resultado esperado:** El modal se abre correctamente y se cierra al hacer clic en cancelar.
 
-*   **Caso 1.2: Reinicio de Jugadores**
-    *   **Descripción:** Validar que la acción de resetear jugadores restablezca sus valores por defecto en el backend.
+*   **Caso 1.1.2: Modificar nombres de jugadores y persistir en servidor**
     *   **Acciones:**
-        1.  Ir a "Configuración" -> "Resetear Jugadores".
-    *   **Resultado esperado:** Se realiza la petición POST (`RESET_PLAYERS`) al servidor, los valores de los jugadores vuelven a su estado original de fábrica y el navegador muestra una alerta de confirmación con éxito.
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Modificar el nombre del primer jugador.
+        3.  Hacer clic en Guardar.
+        4.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El nombre se guarda en el servidor y persiste al volver a consultarse.
 
-*   **Caso 1.3: Modificación de Dimensiones del Tablero (`BoardMenu` y Modales)**
-    *   **Descripción:** Comprobar que se pueden configurar las dimensiones de juego (Filas, Columnas y Fichas necesarias para ganar) y que se actualizan en el backend.
+*   **Caso 1.1.3: Cambiar color de jugador y persistir**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Cambiar el color del primer jugador.
+        3.  Hacer clic en Guardar.
+        4.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El color se guarda en el servidor y persiste al volver a consultarse.
+
+*   **Caso 1.1.4: Cambiar tipo de jugador (HUMAN/COMPUTER) y persistir**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Cambiar el tipo del primer jugador a COMPUTER.
+        3.  Hacer clic en Guardar.
+        4.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El tipo se guarda en el servidor y persiste al volver a consultarse.
+
+*   **Caso 1.1.5: Agregar un nuevo jugador y persistir**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Hacer clic en "Agregar Jugador".
+        3.  Ingresar nombre y color para el nuevo jugador.
+        4.  Hacer clic en Guardar.
+        5.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El nuevo jugador se agrega y persiste al volver a consultarse.
+
+*   **Caso 1.1.6: Eliminar un jugador y persistir**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Agregar un jugador temporal.
+        3.  Guardar cambios.
+        4.  Reabrir el modal.
+        5.  Eliminar el jugador agregado.
+        6.  Guardar cambios.
+        7.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El jugador se elimina y el cambio persiste al volver a consultarse.
+
+*   **Caso 1.1.7: Validar error al guardar nombre duplicado**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Establecer el nombre del segundo jugador igual al primero.
+        3.  Hacer clic en Guardar.
+    *   **Resultado esperado:** Se muestra un error indicando que el nombre ya está en uso y los cambios no se aplican.
+
+*   **Caso 1.1.8: Validar error al guardar color duplicado**
+    *   **Acciones:**
+        1.  Abrir el modal de "Editar Jugadores".
+        2.  Establecer el color del segundo jugador igual al primero.
+        3.  Hacer clic en Guardar.
+    *   **Resultado esperado:** Se muestra un error indicando que el color ya está en uso y los cambios no se aplican.
+
+**Nota:** Después de cada test en esta suite, se ejecuta automáticamente una acción de limpieza que resetea los jugadores a sus valores por defecto mediante la petición POST (`RESET_PLAYERS`) al servidor.
+
+#### Suite 1.2: Modificación de Dimensiones del Tablero
+
+*   **Caso 1.2.1: Editar filas del tablero**
     *   **Acciones:**
         1.  Ir a "Configuración" -> "Tablero".
         2.  Hacer clic en "Editar Filas", ingresar un nuevo valor (ej. 8) y guardar.
-        3.  Hacer clic en "Editar Columnas", ingresar un nuevo valor (ej. 9) y guardar.
-        4.  Hacer clic en "Editar Conectar para ganar", ingresar un nuevo valor (ej. 5) y guardar.
-    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante peticiones POST a `ROWS`, `COLUMNS` y `CONECT_TO_WIN`), persistiendo los cambios para las siguientes partidas.
+    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `ROWS`).
 
-*   **Caso 1.4: Iniciar Juego (Transición del Menú Principal al Tablero)**
+*   **Caso 1.2.2: Editar columnas del tablero**
+    *   **Acciones:**
+        1.  Ir a "Configuración" -> "Tablero".
+        2.  Hacer clic en "Editar Columnas", ingresar un nuevo valor (ej. 9) y guardar.
+    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `COLUMNS`).
+
+*   **Caso 1.2.3: Editar fichas necesarias para ganar**
+    *   **Acciones:**
+        1.  Ir a "Configuración" -> "Tablero".
+        2.  Hacer clic en "Editar Conectar para ganar", ingresar un nuevo valor (ej. 5) y guardar.
+    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `CONECT_TO_WIN`).
+
+#### Suite 1.3: Iniciar Juego
+
+*   **Caso 1.3.1: Transición del Menú Principal al Tablero**
     *   **Descripción:** Validar que al seleccionar la opción de jugar ("Play" o "Jugar") desde el menú principal (`MainMenu`), la aplicación se comunica con el backend para iniciar la partida, limpia el menú y monta el tablero de juego.
     *   **Acciones:**
         1.  Estando en el menú principal (`MainMenu`), hacer clic en el botón de jugar.
@@ -79,11 +148,16 @@ Este grupo valida la interacción con los menús que requieren que la aplicació
 
 ### 2. Mecánica de Turnos e Inserción (`@gameplay` y `@e2e`)
 
-*   **Caso 2.1: Colocar ficha en columna vacía**
+#### Suite 2.1: Inserción de Fichas
+
+*   **Caso 2.1.1: Colocar ficha en columna vacía**
     *   **Descripción:** Validar que al interactuar con una columna, la ficha se sitúa en la posición inferior correspondiente.
     *   **Acciones:** Hacer clic en la columna 1.
     *   **Resultado esperado:** La ficha del jugador actual aparece en la fila inferior de la columna 1.
-*   **Caso 2.2: Alternancia de Turnos y Colores**
+
+#### Suite 2.2: Alternancia de Turnos
+
+*   **Caso 2.2.1: Alternancia de Turnos y Colores**
     *   **Descripción:** Comprobar que el sistema alterna de manera correcta entre los dos jugadores.
     *   **Acciones:**
         1.  Jugador 1 coloca una ficha en la columna 2.
@@ -92,7 +166,10 @@ Este grupo valida la interacción con los menús que requieren que la aplicació
         *   La ficha en la columna 2 es del color asignado al Jugador 1 (ej. Rojo).
         *   La ficha en la columna 3 es del color asignado al Jugador 2 (ej. Amarillo).
         *   El indicador de estado actualiza visualmente de quién es el turno.
-*   **Caso 2.3: Apilamiento Físico (Gravedad)**
+
+#### Suite 2.3: Gravedad y Apilamiento
+
+*   **Caso 2.3.1: Apilamiento Físico (Gravedad)**
     *   **Descripción:** Comprobar que las fichas caen y se apilan adecuadamente sin flotar ni solaparse.
     *   **Acciones:** Colocar dos fichas consecutivas en la misma columna.
     *   **Resultado esperado:** La segunda ficha se apila en la celda inmediatamente superior a la primera ficha.
@@ -101,19 +178,26 @@ Este grupo valida la interacción con los menús que requieren que la aplicació
 
 ### 3. Condiciones de Fin de Partida y Reglas (`@victory` / `@gameover` y `@e2e`)
 
-*   **Caso 3.1: Detección de Victoria Horizontal**
+#### Suite 3.1: Detección de Victoria
+
+*   **Caso 3.1.1: Detección de Victoria Horizontal**
     *   **Descripción:** Validar que 4 fichas consecutivas del mismo color en línea horizontal detienen la partida y declaran ganador.
     *   **Acciones:** Realizar jugadas alternas hasta conseguir alinear 4 fichas consecutivas de forma horizontal para el Jugador 1.
     *   **Resultado esperado:** El juego finaliza, no se permiten nuevos clics en el tablero y el sistema muestra un mensaje claro indicando "¡Ganador: Jugador 1!".
-*   **Caso 3.2: Detección de Victoria Vertical**
+
+*   **Caso 3.1.2: Detección de Victoria Vertical**
     *   **Descripción:** Validar que 4 fichas en línea vertical otorgan la victoria.
     *   **Acciones:** Realizar jugadas para alinear 4 fichas consecutivas de forma vertical para un jugador.
     *   **Resultado esperado:** El juego finaliza y se notifica al ganador.
-*   **Caso 3.3: Detección de Victoria Diagonal**
+
+*   **Caso 3.1.3: Detección de Victoria Diagonal**
     *   **Descripción:** Validar que 4 fichas alineadas diagonalmente finalizan el juego.
     *   **Acciones:** Colocar fichas estratégicamente para formar una diagonal de 4 fichas consecutivas del mismo color.
     *   **Resultado esperado:** Se detiene el tablero y se muestra al ganador.
-*   **Caso 3.4: Detección de Empate**
+
+#### Suite 3.2: Detección de Empate
+
+*   **Caso 3.2.1: Detección de Empate**
     *   **Descripción:** Validar el comportamiento del juego al llenar por completo el tablero sin ganadores.
     *   **Acciones:** Completar la inserción en las 42 celdas del tablero bloqueando las líneas de 4.
     *   **Resultado esperado:** El tablero queda bloqueado y se muestra un mensaje de empate.
@@ -122,7 +206,9 @@ Este grupo valida la interacción con los menús que requieren que la aplicació
 
 ### 4. Reinicio y Navegación (`@navigation` y `@e2e`)
 
-*   **Caso 4.1: Volver a Jugar (Reinicio de Tablero)**
+#### Suite 4.1: Reinicio de Partida
+
+*   **Caso 4.1.1: Volver a Jugar (Reinicio de Tablero)**
     *   **Descripción:** Comprobar que al finalizar una partida, se puede restablecer el juego al estado inicial.
     *   **Acciones:** Tras finalizar una partida (por victoria o empate), hacer clic en el botón de reiniciar/volver a jugar.
     *   **Resultado esperado:** El tablero se limpia por completo, el turno se restablece al primer jugador y se puede jugar una nueva partida.
