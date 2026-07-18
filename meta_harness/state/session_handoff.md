@@ -3,21 +3,20 @@
 > Llenar estrictamente este documento al finalizar el día o antes de cerrar la ventana de contexto.
 
 ## 1. Qué se logró
-- **Logro principal:** Se completó y auditó formalmente la característica **`F03_orquestador_y_tareas`** (implementación del Agente Orchestrator y la Capa de Tareas en harness_universal con su visualización incremental en ViewHarness).
+- **Logro principal:** Se completó y auditó formalmente la característica **`F04_contrato_progress_y_git_agent`** (diseño e implementación del contrato JSON de progreso y el dúo de archivos de gitAGENT para modo manual en harness_universal).
 - **Entregables:**
-  - Verificación exitosa de los 10 escenarios Gherkin definidos en `F03_orquestador_y_tareas.feature` contra la implementación, obteniendo una calificación perfecta de 15/15 (Funcionalidad: 5/5, Alcance: 5/5, Calidad de Código: 5/5).
-  - Conservación del checklist detallado de verificación en [F03_orquestador_y_tareas_checklist.md](file:///workspaces/CONECT4-/meta_harness/verifications/history/F03_orquestador_y_tareas_checklist.md).
-  - Limpieza del archivo residual redundante `F03_checklist.md` en la raíz.
-  - Auditoría de limpieza y deuda técnica de IA mediante ejecución de los scripts `init_meta.sh` y `cleanup-scanner.sh`, confirmando 0 issues de deuda técnica (reportado en [cleanup-report.md](file:///workspaces/CONECT4-/meta_harness/state/cleanup-report.md)).
+  - Verificación exitosa de los escenarios Gherkin definidos en `F04_contrato_progress_y_git_agent.feature` contra la implementación, obteniendo una calificación perfecta de 15/15 (Funcionalidad: 5/5, Alcance: 5/5, Calidad de Código: 5/5).
+  - Conservación del checklist detallado de verificación en [F04_contrato_progress_y_git_agent_checklist.md](file:///workspaces/CONECT4-/meta_harness/verifications/history/F04_contrato_progress_y_git_agent_checklist.md).
+  - Auditoría de limpieza y deuda técnica de IA mediante ejecución de `cleanup-scanner.sh`, confirmando 0 issues de deuda técnica (reportado en [cleanup-report.md](file:///workspaces/CONECT4-/meta_harness/state/cleanup-report.md)).
   - Auditoría del checklist de estado limpio ([clean-state-checklist.md](file:///workspaces/CONECT4-/meta_harness/clean-state-checklist.md)) junto con el usuario (Kevin).
 
 ## 2. Tarea Activa (Siguiente Paso)
 - **ID Activo:** Ninguno (reposo, WIP=0).
-- **Siguiente paso:** Seleccionar e iniciar la siguiente tarea en el backlog del arnés universal en la próxima sesión (que según el diseño es la característica `F04_spec_partner` u otra definida por el orquestador).
+- **Siguiente paso:** Seleccionar e iniciar la siguiente tarea en el backlog del arnés universal en la próxima sesión (que según el diseño es la característica `F05_spec_partner` o el agente correspondiente según el pipeline de desarrollo).
 
 ## 3. Decisiones clave tomadas (El "Por qué")
-- **Eliminación de archivos residuales:** Se eliminó `F03_checklist.md` por ser un duplicado redundante sin rellenar en la raíz que violaba las políticas de estado limpio (deuda técnica de IA).
-- **Replanteamiento de script físico:** Se actualizó `F03_orquestador_y_tareas.feature` para enfocar la verificación en el agente y su visualización sin forzar un script físico `.mjs` redundante.
+- **Manual de gitAGENT en modo no automático:** Se configuró `automaticMode: false` con su menú de opciones para que el desarrollador interactúe manualmente con el control de versiones, garantizando seguridad en los commits y ramas.
+- **Estructura estricta de progreso:** Se implementó `progress.json` para formalizar las secciones y campos requeridos de `progress.md` en el pipeline de desarrollo.
 
 ## 4. Bloqueos actuales (Blockers)
 - **Ninguno.** El entorno está completamente limpio y verificado para la próxima sesión.

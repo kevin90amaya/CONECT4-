@@ -5,8 +5,8 @@ Este archivo actúa como un relevo dinámico entre los agentes especialistas dur
 ## Estado de la Tarea Activa
 * **Tarea Activa:** F04_contrato_progress_y_git_agent
 * **Fase Activa:** Verificación
-* **Último Turno:** feature_verifier
-* **Siguiente Turno:** session_verifier
+* **Último Turno:** session_verifier
+* **Siguiente Turno:** Orchestrator
 
 ## Relevo Activo
 ### Decisiones tomadas:
