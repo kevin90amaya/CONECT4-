@@ -16,6 +16,7 @@
         <nav class="app-nav">
             <button id="btn-progress-tab" class="tab-btn tab-active">Progreso de Sesión</button>
             <button id="btn-tasks-tab" class="tab-btn">Backlog de Tareas</button>
+            <button id="btn-spec-tab" class="tab-btn">Especificación</button>
             <button id="btn-diagram-tab" class="tab-btn">Diagrama Interactivo</button>
         </nav>
         <div class="header-actions">
@@ -77,6 +78,16 @@
             </div>
             <div id="tasks-list-container">
                 <!-- Render dinámico de las tareas del backlog -->
+            </div>
+        </section>
+
+        <!-- PANEL DE ESPECIFICACIONES (FEATURE F05) -->
+        <section id="panel-spec" class="panel-section hidden">
+            <div class="card spec-card">
+                <h2>Especificación del Proyecto Objetivo</h2>
+                <div id="spec-content" class="spec-content">
+                    <!-- El contenido HTML renderizado se insertará aquí dinámicamente -->
+                </div>
             </div>
         </section>
 

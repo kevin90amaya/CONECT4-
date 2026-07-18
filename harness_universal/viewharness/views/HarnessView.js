@@ -5,9 +5,11 @@ export class HarnessView {
         this.btnProgressTab = document.getElementById('btn-progress-tab');
         this.btnTasksTab = document.getElementById('btn-tasks-tab');
         this.btnDiagramTab = document.getElementById('btn-diagram-tab');
+        this.btnSpecTab = document.getElementById('btn-spec-tab');
         this.panelProgress = document.getElementById('panel-progress');
         this.panelTasks = document.getElementById('panel-tasks');
         this.panelDiagram = document.getElementById('panel-diagram');
+        this.panelSpec = document.getElementById('panel-spec');
         
         this.loadingOverlay = document.getElementById('loading-overlay');
         this.errorToast = document.getElementById('error-toast');
@@ -50,6 +52,9 @@ export class HarnessView {
             this.btnTasksTab.addEventListener('click', () => handler('tasks'));
         }
         this.btnDiagramTab.addEventListener('click', () => handler('diagram'));
+        if (this.btnSpecTab) {
+            this.btnSpecTab.addEventListener('click', () => handler('spec'));
+        }
     }
 
     /**
@@ -76,10 +81,12 @@ export class HarnessView {
         this.btnProgressTab.classList.remove('tab-active');
         if (this.btnTasksTab) this.btnTasksTab.classList.remove('tab-active');
         this.btnDiagramTab.classList.remove('tab-active');
+        if (this.btnSpecTab) this.btnSpecTab.classList.remove('tab-active');
         
         this.panelProgress.classList.add('hidden');
         if (this.panelTasks) this.panelTasks.classList.add('hidden');
         this.panelDiagram.classList.add('hidden');
+        if (this.panelSpec) this.panelSpec.classList.add('hidden');
 
         if (tabName === 'progress') {
             this.btnProgressTab.classList.add('tab-active');
@@ -90,6 +97,9 @@ export class HarnessView {
         } else if (tabName === 'diagram') {
             this.btnDiagramTab.classList.add('tab-active');
             this.panelDiagram.classList.remove('hidden');
+        } else if (tabName === 'spec') {
+            if (this.btnSpecTab) this.btnSpecTab.classList.add('tab-active');
+            if (this.panelSpec) this.panelSpec.classList.remove('hidden');
         }
     }
 
@@ -344,5 +354,81 @@ export class HarnessView {
         setTimeout(() => {
             this.errorToast.classList.add('hidden');
         }, 5000);
+    }
+
+    /**
+     * Renderiza el contenido de la especificación traduciendo markdown simple a HTML.
+     * @param {string|null} specContent
+     */
+    renderSpec(specContent) {
+        const container = document.getElementById('spec-content');
+        if (!container) return;
+
+        if (!specContent || specContent.trim() === '') {
+            container.innerHTML = `<p class="empty-text">No hay especificaciones activas redactadas para la sesión actual</p>`;
+            return;
+        }
+
+        const html = this.parseMarkdownToHtml(specContent);
+        container.innerHTML = html;
+    }
+
+    /**
+     * Renderizador vanilla simple que traduce títulos, listas y negritas.
+     * @param {string} mdText
+     * @returns {string}
+     */
+    parseMarkdownToHtml(mdText) {
+        let html = mdText
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        // Títulos (###, ##, #)
+        html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+        html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+        html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+        // Negrita (**text**)
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Listas (viñetas con * o -)
+        const lines = html.split('\n');
+        let inList = false;
+        const processedLines = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            const listMatch = line.match(/^(\s*)[\-\*]\s+(.*)/);
+            
+            if (listMatch) {
+                if (!inList) {
+                    processedLines.push('<ul>');
+                    inList = true;
+                }
+                processedLines.push(`<li>${listMatch[2]}</li>`);
+            } else {
+                if (inList) {
+                    processedLines.push('</ul>');
+                    inList = false;
+                }
+                processedLines.push(line);
+            }
+        }
+        if (inList) {
+            processedLines.push('</ul>');
+        }
+
+        return processedLines
+            .map(line => {
+                if (line.startsWith('<h') || line.startsWith('<u') || line.startsWith('<l') || line.startsWith('</')) {
+                    return line;
+                }
+                if (line.trim() === '') {
+                    return '';
+                }
+                return `<p>${line}</p>`;
+            })
+            .join('\n');
     }
 }

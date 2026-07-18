@@ -5,10 +5,11 @@ export class HarnessController {
      * @param {TasksModel} tasksModel
      * @param {HarnessView} view
      */
-    constructor(progressModel, diagramModel, tasksModel, view) {
+    constructor(progressModel, diagramModel, tasksModel, specModel, view) {
         this.progressModel = progressModel;
         this.diagramModel = diagramModel;
         this.tasksModel = tasksModel;
+        this.specModel = specModel;
         this.view = view;
         
         this.pollingIntervalId = null;
@@ -220,11 +221,12 @@ export class HarnessController {
     async loadInitialData() {
         this.view.toggleLoading(true);
         try {
-            // Cargar en paralelo (Progreso, SVG y Backlog)
+            // Cargar en paralelo (Progreso, SVG, Backlog y Spec)
             await Promise.all([
                 this.progressModel.fetchProgress(),
                 this.diagramModel.fetchSvg(),
-                this.tasksModel.fetchTasks()
+                this.tasksModel.fetchTasks(),
+                this.loadAndShowSpec()
             ]);
 
             // Renderizar datos de progreso
@@ -264,7 +266,8 @@ export class HarnessController {
             await Promise.all([
                 this.progressModel.fetchProgress(),
                 this.diagramModel.fetchSvg(),
-                this.tasksModel.fetchTasks()
+                this.tasksModel.fetchTasks(),
+                this.loadAndShowSpec()
             ]);
             
             // Volver a renderizar
@@ -307,6 +310,20 @@ export class HarnessController {
                 poscondicion: { "descripcion": "Especificación no definida" },
                 invariant: { "descripcion": "Especificación no definida" }
             });
+        }
+    }
+
+    /**
+     * Carga y renderiza la especificación desde SpecModel.
+     */
+    async loadAndShowSpec() {
+        try {
+            await this.specModel.fetchSpec();
+            const content = this.specModel.getRawContent();
+            this.view.renderSpec(content);
+        } catch (error) {
+            console.warn("Error al cargar la especificación, mostrando fallback:", error);
+            this.view.renderSpec(null);
         }
     }
 
