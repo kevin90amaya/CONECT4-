@@ -3,14 +3,17 @@
 Este archivo actúa como un relevo dinámico entre los agentes especialistas durante el Flujo Bob, facilitando la continuidad entre fases.
 
 ## Estado de la Tarea Activa
-* **Tarea Activa:** Ninguna (WIP=0)
-* **Fase Activa:** Reposo
-* **Último Turno:** session_verifier
-* **Siguiente Turno:** Orchestrator
+* **Tarea Activa:** F04_contrato_progress_y_git_agent
+* **Fase Activa:** Desarrollo
+* **Último Turno:** GherkinAuthor
+* **Siguiente Turno:** generator_partner
 
 ## Relevo Activo
 ### Decisiones tomadas:
-- Se auditó formalmente la característica `F03_orquestador_y_tareas` mediante la verificación conjunta de los 10 escenarios.
+- Se definieron e incorporaron los escenarios Gherkin en F04_contrato_progress_y_git_agent.feature.
+- Se refinaron los contratos JSON para progress.json y git_agent.json, incorporando mdStructure para validar la estructura física de sus respectivos archivos MD.
+- Se incorporó la configuración de menú manual y automaticMode para gitAGENT en su JSON.
+- Se actualizó progress.md antes de tomar el rol de desarrollador según la instrucción del usuario.
 - Se actualizó el archivo Gherkin [F03_orquestador_y_tareas.feature](file:///workspaces/CONECT4-/meta_harness/features/F03_orquestador_y_tareas.feature) para eliminar las referencias al script físico `orchestator.mjs` que fue omitido por directivas del arnés, replanteándolo como interacción conceptual de agente.
 - Se generó y completó el checklist final en [F03_orquestador_y_tareas_checklist.md](file:///workspaces/CONECT4-/meta_harness/verifications/history/F03_orquestador_y_tareas_checklist.md), obteniendo una calificación perfecta de 15/15 en la rúbrica (Funcionalidad: 5/5, Respeto de Alcance: 5/5, Calidad de Código: 5/5).
 - Se actualizó el archivo [target_feature_list.json](file:///workspaces/CONECT4-/meta_harness/tareas/target_feature_list.json) marcando la tarea como `passing`.

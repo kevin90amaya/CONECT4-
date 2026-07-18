@@ -23,6 +23,12 @@
       "description": "Implementar el Agente Orchestrator y la Capa de Tareas en harness_universal, con su visualización incremental en ViewHarness.",
       "status": "passing",
       "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F03_orquestador_y_tareas_checklist.md"
+    },
+    {
+      "id": "F04_contrato_progress_y_git_agent",
+      "description": "Diseñar e implementar el contrato JSON para progress y el dúo (MD y JSON) de gitAGENT bajo demanda en harness_universal.",
+      "status": "in_progress",
+      "evidence": ""
     }
   ]
 }

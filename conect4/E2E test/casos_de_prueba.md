@@ -45,7 +45,7 @@ Para ejecutar las pruebas en este entorno de desarrollo (dentro del contenedor d
 
 Este grupo valida la interacción con los menús que requieren que la aplicación y su servidor backend estén en ejecución, ya que realizan peticiones HTTP para actualizar el estado del juego o configurarlo de manera persistente.
 
-#### Suite 1.1: Configuración de Jugadores
+#### Suite 1.1: Configuraciones de Jugadores
 
 **Descripción:** Suite de pruebas para validar la configuración de jugadores, incluyendo modificación de nombres, colores, tipos, cantidad y validación de restricciones de duplicados.
 
@@ -116,25 +116,32 @@ Este grupo valida la interacción con los menús que requieren que la aplicació
 
 **Nota:** Después de cada test en esta suite, se ejecuta automáticamente una acción de limpieza que resetea los jugadores a sus valores por defecto mediante la petición POST (`RESET_PLAYERS`) al servidor.
 
-#### Suite 1.2: Modificación de Dimensiones del Tablero
+#### Suite 1.2: configuraciones del Tablero
 
-*   **Caso 1.2.1: Editar filas del tablero**
+**Descripción:** Suite de pruebas E2E para validar la configuración del tablero (filas, columnas y fichas necesarias para ganar). Las validaciones detalladas de rangos y restricciones se encuentran en las pruebas unitarias del board.
+
+**Restricciones:**
+- **Filas:** default 6, mínimo 3, máximo 30
+- **Columnas:** default 7, mínimo 3, máximo 30
+- **Conecta para ganar:** default 4, mínimo 3, máximo dinámico (valor más grande entre filas o columnas)
+
+*   **Caso 1.2.1: Modificar las tres variables del tablero y verificar persistencia**
     *   **Acciones:**
         1.  Ir a "Configuración" -> "Tablero".
-        2.  Hacer clic en "Editar Filas", ingresar un nuevo valor (ej. 8) y guardar.
-    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `ROWS`).
+        2.  Establecer filas en 8, columnas en 9 y conectar para ganar en 5.
+        3.  Guardar cambios.
+        4.  Reabrir el modal de configuración del tablero.
+    *   **Resultado esperado:** Los tres valores se actualizan en el backend (mediante peticiones POST a `ROWS`, `COLUMNS` y `CONECT_TO_WIN`) y persisten al reabrir el modal.
 
-*   **Caso 1.2.2: Editar columnas del tablero**
+*   **Caso 1.2.2: Validar máximo dinámico de conectar para ganar**
     *   **Acciones:**
         1.  Ir a "Configuración" -> "Tablero".
-        2.  Hacer clic en "Editar Columnas", ingresar un nuevo valor (ej. 9) y guardar.
-    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `COLUMNS`).
+        2.  Establecer filas en 10 y columnas en 7, guardar.
+        3.  Establecer conectar para ganar en 10 (igual al máximo dinámico max(10, 7) = 10) y guardar.
+        4.  Reabrir el modal para verificar.
+    *   **Resultado esperado:** El valor de conectar para ganar se acepta y persiste correctamente, respetando el máximo dinámico basado en las dimensiones del tablero.
 
-*   **Caso 1.2.3: Editar fichas necesarias para ganar**
-    *   **Acciones:**
-        1.  Ir a "Configuración" -> "Tablero".
-        2.  Hacer clic en "Editar Conectar para ganar", ingresar un nuevo valor (ej. 5) y guardar.
-    *   **Resultado esperado:** Los datos se actualizan en el backend (mediante petición POST a `CONECT_TO_WIN`).
+**Nota:** Después de cada test en esta suite, se ejecuta automáticamente una acción de limpieza que resetea el tablero a sus valores por defecto (6 filas, 7 columnas, 4 para ganar) mediante peticiones POST al servidor.
 
 #### Suite 1.3: Iniciar Juego
 

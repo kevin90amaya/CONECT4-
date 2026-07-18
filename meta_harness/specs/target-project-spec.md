@@ -169,3 +169,38 @@
 - **Casos Límite:**
   - Si no hay tareas activas en `target_feature_list.json`, el script del orquestador debe informar al usuario y restringir la transición de turno hasta que se defina una.
   - Si el archivo `progress.md` tiene un formato inválido, el script debe informar del error en consola y abortar.
+
+## Feature: F04_contrato_progress_y_git_agent - Contrato de Progreso y Dúo de gitAGENT
+- **Propósito:** Diseñar e implementar el contrato estático JSON para gobernar el progreso de la sesión, y crear el dúo de agente (Markdown y JSON) para `gitAGENT` en `harness_universal`.
+- **Comportamiento y Decisiones de Diseño:**
+  1. **Contrato de Progreso (`progress.json`):**
+     - Ubicación: `/workspaces/CONECT4-/harness_universal/state/progress.json`
+     - Propósito: Actuar como especificación estática para el archivo dinámico `/workspaces/CONECT4-/harness_universal/state/progress.md`.
+     - Estructura:
+       * `mdStructure`: Define la estructura requerida del archivo `progress.md` (título: "Registro de Progreso - Relevo entre Agentes", secciones: "Estado de la Tarea Activa", "Relevo Activo" y campos: "Tarea Activa", "Fase Activa", "Último Turno", "Siguiente Turno", "Decisiones tomadas", "Recursos estudiados", "Recursos a estudiar").
+       * Diseño por Contrato (DbC): Define `precondicion`, `poscondicion` e `invariant`. Las transiciones siguen estrictamente la secuencia `Orchestrator -> SpecPartner -> GherkinAuthor -> DesignPartner -> TestPartner -> CodePartner -> Judge -> RefactorPartner -> VerifierFeature -> VerifierSession -> Orchestrator`.
+  2. **Dúo de Agente `git_agent`:**
+     - Directorio: `/workspaces/CONECT4-/harness_universal/agents/git_agent/`
+     - Archivo `git_agent.json` (Contrato DbC):
+       * `name`: `"gitAGENT"`
+       * `role`: `"Gestor de Versiones de los Agentes"`
+       * `description`: `"Agente encargado de gestionar el repositorio Git según el agente activo en el progreso."`
+       * `automaticMode`: `false` (requiere confirmación humana).
+       * `menuOptions`: Contiene un arreglo con opciones para modo manual (Crear rama de feature, Realizar commit intermedio por agente, Realizar merge a main, Verificar estado).
+       * `mdStructure`: Define la estructura de `git_agent.md` (título: "Agente gitAGENT - Instrucciones y Rol", secciones: "Rol", "Instrucciones de Control de Versiones", "Comandos Git Permitidos").
+       * DbC: Precondiciones, poscondiciones, invariantes (prohibido hacer commit directo a main durante el ciclo de desarrollo).
+     - Archivo `git_agent.md` (Instrucciones y Rol):
+       * Instrucciones explícitas de cómo y cuándo ejecutar comandos Git.
+- **Casos límite:**
+  - Archivo `progress.md` modificado externamente con turnos no reconocidos en `progress.json`.
+  - Conflictos en comandos Git o estado de trabajo sucio (dirty working tree).
+  - Intento de transición de turno sin cumplir las poscondiciones del agente saliente.
+- **DbC (Diseño por Contrato):**
+  - **Precondiciones:**
+    * El directorio `harness_universal/state/` existe.
+  - **Poscondiciones:**
+    * Creado el archivo `/workspaces/CONECT4-/harness_universal/state/progress.json` válido.
+    * Creada la carpeta `/workspaces/CONECT4-/harness_universal/agents/git_agent/`.
+    * Creados los archivos `/workspaces/CONECT4-/harness_universal/agents/git_agent/git_agent.md` y `/workspaces/CONECT4-/harness_universal/agents/git_agent/git_agent.json`.
+  - **Invariantes:**
+    * No se modifica ningún archivo del código fuente de producción del proyecto objetivo `conect4`.
