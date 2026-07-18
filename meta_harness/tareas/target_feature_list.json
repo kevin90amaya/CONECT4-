@@ -29,6 +29,12 @@
       "description": "Diseñar e implementar el contrato JSON para progress y el dúo (MD y JSON) de gitAGENT bajo demanda en harness_universal.",
       "status": "passing",
       "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F04_contrato_progress_y_git_agent_checklist.md"
+    },
+    {
+      "id": "F05_spec_partner_y_especificacion",
+      "description": "Implementar el Agente SpecPartner y la Capa de Especificación en harness_universal, incluyendo su interacción con gitAGENT y visualización incremental en ViewHarness.",
+      "status": "in_progress",
+      "evidence": ""
     }
   ]
 }

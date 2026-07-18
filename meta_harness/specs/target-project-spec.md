@@ -204,3 +204,24 @@
     * Creados los archivos `/workspaces/CONECT4-/harness_universal/agents/git_agent/git_agent.md` y `/workspaces/CONECT4-/harness_universal/agents/git_agent/git_agent.json`.
   - **Invariantes:**
     * No se modifica ningún archivo del código fuente de producción del proyecto objetivo `conect4`.
+
+## Feature: F05_spec_partner_y_especificacion - Agente SpecPartner y Capa de Especificación en harness_universal
+- **Propósito:** Implementar el Agente `SpecPartner` en `harness_universal` mediante su dúo de archivos (`spec_partner.json` y `spec_partner.md`) y desarrollar la visualización dinámica del archivo de especificaciones `target-project-spec.md` en `ViewHarness` utilizando el patrón MVC (un nuevo modelo, un método en la vista y un método en el controlador).
+- **In Scope (En Alcance):**
+  * **Dúo de archivos del Agente SpecPartner:**
+    - Crear `/workspaces/CONECT4-/harness_universal/agents/spec_partner/spec_partner.json` definiendo el contrato DbC (precondiciones, poscondiciones, invariante) y las opciones del menú conceptual.
+    - Crear `/workspaces/CONECT4-/harness_universal/agents/spec_partner/spec_partner.md` definiendo las instrucciones detalladas del rol y flujo convencional.
+  * **Integración MVC en ViewHarness:**
+    - **Model:** Agregar una nueva clase/módulo `SpecModel` para gestionar el fetch y almacenamiento de `/workspaces/CONECT4-/harness_universal/specs/target-project-spec.md`.
+    - **View:** Agregar un único método (e.g., `renderSpec(specContent)`) a la clase View existente para renderizar el contenido Markdown de la especificación en el panel correspondiente.
+    - **Controller:** Agregar un único método (e.g., `loadAndShowSpec()`) a la clase Controller existente para coordinar la llamada al `SpecModel` y delegar el pintado a la View.
+- **Out of Scope (Fuera de Alcance):**
+  * Queda excluido cualquier archivo ejecutable `.mjs` para `SpecPartner`.
+  * No se realiza la escritura de archivos de comportamiento `.feature` (Gherkin).
+  * No se altera código de producción (`/src/main`) ni de pruebas (`/src/test`).
+  * No realiza de forma directa comandos git (eso sigue siendo responsabilidad de `git_agent`).
+- **Casos Límite:**
+  * **Spec no existente o vacío:** Si el archivo `/workspaces/CONECT4-/harness_universal/specs/target-project-spec.md` no se ha creado aún o está vacío, `SpecModel` debe capturar el error de fetch y pasar un mensaje informativo a la View para que esta renderice: *"No hay especificaciones activas redactadas para la sesión actual"*.
+- **Decisiones de Diseño:**
+  * **Renderizado Vanilla:** Se implementará un formateador simple en la View que traduzca las secciones principales del Markdown (títulos, listas, negritas) a HTML para mantener la simplicidad y evitar dependencias de librerías externas.
+
