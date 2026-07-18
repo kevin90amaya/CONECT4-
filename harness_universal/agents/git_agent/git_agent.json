@@ -25,8 +25,10 @@
     "title": "Agente gitAGENT - Instrucciones y Rol",
     "requiredSections": [
       "Rol",
+      "Instrucciones y Flujo Operativo",
       "Instrucciones de Control de Versiones",
-      "Comandos Git Permitidos"
+      "Comandos Git Permitidos",
+      "reglas inquebrantables"
     ]
   },
   "precondicion": {
