@@ -1,0 +1,30 @@
+{
+  "name": "progress",
+  "description": "Contrato estático y estructura del archivo dinámico progress.md.",
+  "mdStructure": {
+    "title": "Registro de Progreso - Relevo entre Agentes",
+    "requiredSections": [
+      "Estado de la Tarea Activa",
+      "Relevo Activo"
+    ],
+    "requiredFields": [
+      "Tarea Activa",
+      "Fase Activa",
+      "Último Turno",
+      "Siguiente Turno",
+      "Decisiones tomadas",
+      "Recursos estudiados",
+      "Recursos a estudiar"
+    ]
+  },
+  "precondicion": {
+    "active_task_in_backlog": "La tarea activa registrada en progress.md debe existir en target_feature_list.json o meta_feature_list.json."
+  },
+  "poscondicion": {
+    "active_task_status_updated": "El estado de la tarea en el backlog JSON se alinea con la fase activa.",
+    "valid_turn_transition": "El Siguiente Turno es asignado al agente correspondiente según el pipeline de desarrollo."
+  },
+  "invariant": {
+    "sequential_transitions": "Las transiciones de turno siguen estrictamente la secuencia Orchestrator -> SpecPartner -> GherkinAuthor -> DesignPartner -> TestPartner -> CodePartner -> Judge -> RefactorPartner -> VerifierFeature -> VerifierSession -> Orchestrator."
+  }
+}

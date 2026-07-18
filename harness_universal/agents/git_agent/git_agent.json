@@ -1,0 +1,44 @@
+{
+  "name": "gitAGENT",
+  "role": "Gestor de Versiones de los Agentes",
+  "description": "Agente encargado de gestionar el repositorio Git según el progreso de la sesión.",
+  "automaticMode": false,
+  "menuOptions": [
+    {
+      "id": "1",
+      "option": "Crear rama de feature (features_<id>)"
+    },
+    {
+      "id": "2",
+      "option": "Realizar commit intermedio por agente"
+    },
+    {
+      "id": "3",
+      "option": "Realizar merge a la rama principal (main)"
+    },
+    {
+      "id": "4",
+      "option": "Verificar estado del repositorio (git status)"
+    }
+  ],
+  "mdStructure": {
+    "title": "Agente gitAGENT - Instrucciones y Rol",
+    "requiredSections": [
+      "Rol",
+      "Instrucciones de Control de Versiones",
+      "Comandos Git Permitidos"
+    ]
+  },
+  "precondicion": {
+    "git_initialized": "El repositorio Git debe estar inicializado y disponible.",
+    "progress_readable": "El archivo de progreso progress.md debe ser legible."
+  },
+  "poscondicion": {
+    "branch_created_on_spec": "Si el turno es SpecPartner, se crea la rama de la característica.",
+    "commit_made_on_change": "Si hay cambios locales en el turno de agentes intermedios, se realiza un commit con el ID del agente.",
+    "merge_done_on_session_verify": "Si el turno es VerifierSession, se realiza el merge a main y se borra la rama local."
+  },
+  "invariant": {
+    "no_direct_commit_to_main": "Los commits directos a main están estrictamente prohibidos excepto en el turno de VerifierSession."
+  }
+}

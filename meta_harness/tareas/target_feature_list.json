@@ -27,8 +27,8 @@
     {
       "id": "F04_contrato_progress_y_git_agent",
       "description": "Diseñar e implementar el contrato JSON para progress y el dúo (MD y JSON) de gitAGENT bajo demanda en harness_universal.",
-      "status": "in_progress",
-      "evidence": ""
+      "status": "passing",
+      "evidence": "/workspaces/CONECT4-/meta_harness/verifications/history/F04_contrato_progress_y_git_agent_checklist.md"
     }
   ]
 }
