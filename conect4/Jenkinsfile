@@ -1,0 +1,120 @@
+pipeline {
+    agent none // Desactiva el agente global para definir agentes específicos por etapa
+
+    environment {
+        DOCKER_IMAGE = 'conect4-app'
+        DOCKER_TAG   = "${BUILD_NUMBER}"
+        APP_PORT     = '8080'
+    }
+
+    stages {
+        // -------------------------------------------------------------
+        // ETAPA 1: BACKEND - Pruebas en contenedor de construcción (build target)
+        // -------------------------------------------------------------
+        stage('1. Backend - Test & Compile') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'conect4'
+                    additionalBuildArgs '--target build'
+                }
+            }
+            steps {
+                echo '=== Compilando y probando Backend (Java) en contenedor de compilación ==='
+                sh 'mvn clean test'
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ETAPA 2: FRONTEND - Pruebas en contenedor de construcción (build target)
+        // -------------------------------------------------------------
+        stage('2. Frontend - Test & Build') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'conect4'
+                    additionalBuildArgs '--target build'
+                }
+            }
+            steps {
+                echo '=== Instalando, probando JS y compilando con Vite en contenedor de compilación ==='
+                sh 'npm install'
+                sh 'npm test'
+                sh 'npm run build'
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ETAPA 3: CONSTRUCCIÓN DE LA IMAGEN DE PRODUCCIÓN
+        // -------------------------------------------------------------
+        stage('3. Packaging & Docker Build') {
+            agent any
+            steps {
+                echo '=== Empaquetando JAR y construyendo Imagen de Producción ligera ==='
+                dir('conect4') {
+                    sh './mvnw package -DskipTests'
+                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                    sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ETAPA 4: PRUEBAS E2E (Playwright)
+        // -------------------------------------------------------------
+        stage('4. Pruebas E2E (Playwright)') {
+            agent any
+            steps {
+                echo '=== Levantando contenedor temporal de la App y corriendo Playwright ==='
+                dir('conect4') {
+                    sh "docker run -d --name conect4-e2e-test -p ${APP_PORT}:8080 ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    sh 'sleep 5'
+                    sh 'npx playwright test'
+                }
+            }
+            post {
+                always {
+                    echo '=== Destruyendo contenedor temporal de Pruebas E2E ==='
+                    dir('conect4') {
+                        sh 'docker stop conect4-e2e-test || true'
+                        sh 'docker rm conect4-e2e-test || true'
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ETAPA 5: DESPLIEGUE FINAL (Producción)
+        // -------------------------------------------------------------
+        stage('5. Despliegue Final') {
+            agent any
+            steps {
+                echo '=== Reemplazando contenedor de producción viejo por el nuevo ==='
+                dir('conect4') {
+                    sh 'docker stop conect4-prod || true'
+                    sh 'docker rm conect4-prod || true'
+                    sh "docker run -d --name conect4-prod -p 8080:8080 ${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // SECCIÓN POST GLOBAL: LIMPIEZA ABSOLUTA DE BASURA
+    // -------------------------------------------------------------
+    post {
+        always {
+            echo '=== Ejecutando limpieza de archivos temporales del Workspace ==='
+            cleanWs() // Borra el espacio de trabajo en el host de Jenkins para liberar disco
+
+            echo '=== Limpiando imágenes y capas Docker huérfanas/intermedias ==='
+            sh 'docker image prune -f || true' // Limpia imágenes intermedias sin etiqueta
+        }
+        success {
+            echo '✅ Pipeline completado con éxito. Todas las etapas pasaron y la app fue desplegada.'
+        }
+        failure {
+            echo '❌ Error: El Pipeline falló en alguna etapa. Los contenedores temporales han sido destruidos.'
+        }
+    }
+}
